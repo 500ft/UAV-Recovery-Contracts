@@ -8,9 +8,9 @@ Configuration-specific recovery behavior for mixed-autopilot fleets after extern
 
 [Overview](#the-problem) · [Evidence](#evidence-snapshot) · [Quick start](#quick-start) · [First experiment](#first-experiment) · [Reviewer guide](docs/START_HERE.md)
 
-![Conceptual sequence from a configured vehicle and authority-loss event to measured recovery, a held-out trajectory envelope, and conditional fleet composition](docs/media/project-overview.svg)
+![Illustration of two UAVs with distinct possible recovery corridors after command loss](docs/media/hero.jpg)
 
-*Proposed study architecture—not a flight trace or safety result. No study result has been generated for this repository. Diagnostic development runs in SIH/SITL exist since 2026-09-20 and are not results; no HITL or flight data exists at all.*
+*AI-generated concept illustration, not a flight trace or safety result. No study result has been generated for this repository. Diagnostic development runs in SIH/SITL exist since 2026-09-20 and are not results; no HITL or flight data exists at all.*
 
 ## The problem
 
