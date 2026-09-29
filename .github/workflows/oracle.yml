@@ -41,3 +41,30 @@ jobs:
           name: native-failsafe-oracle
           path: oracle-out/
           retention-days: 90
+
+  differential:
+    # Layer A (the Python model) against layer B (the real Failsafe class) on identical sequences.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Check out the pinned PX4
+        run: |
+          git clone --filter=blob:none https://github.com/PX4/PX4-Autopilot.git px4
+          git -C px4 checkout --detach "${{ inputs.px4_ref }}"
+          git -C px4 submodule update --init --recursive --depth 1
+
+      - name: Install PX4's own build dependencies
+        run: ./px4/Tools/setup/ubuntu.sh --no-nuttx --no-sim-tools
+
+      - name: Build the adapter and run every sequence through the real class
+        run: oracle/run_differential.sh "$PWD/px4" "$PWD/differential-out"
+
+      - name: Keep the evidence whatever happened
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: differential-delay
+          path: differential-out/
+          retention-days: 90

@@ -1,0 +1,8 @@
+# Fixture 7: a link-loss action is NOT cleared by the condition going false. Without a mode change or a
+# disarm it stays selected. This is the clear condition the earlier model fixtures glossed as a boolean.
+param NAV_DLL_ACT 2
+param COM_FAIL_ACT_T 5.0
+flag gcs_connection_lost 1
+run 8 100
+flag gcs_connection_lost 0
+run 30 100

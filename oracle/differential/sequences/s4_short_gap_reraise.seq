@@ -1,0 +1,12 @@
+# Fixture 4: serve 3 s of the 5 s delay, clear the condition, then a mode change removes the latched action
+# (a link-loss action clears OnModeChangeOrDisarm, and only once the condition is already false), stay quiet, re-raise.
+param NAV_DLL_ACT 2
+param COM_FAIL_ACT_T 5.0
+flag gcs_connection_lost 1
+run 3 100
+flag gcs_connection_lost 0
+run 0.1 100       # the condition is false for one update: the action is now latched, not live
+mode ALTCTL       # the mode change removes it
+run 3 100         # quiet, longer than any delay left over from the first episode
+flag gcs_connection_lost 1
+run 10 100

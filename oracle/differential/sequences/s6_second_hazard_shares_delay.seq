@@ -1,0 +1,8 @@
+# Fixture 6: a second delayable hazard arriving during a running delay must not refill the single shared delay.
+param NAV_DLL_ACT 2
+param NAV_RCL_ACT 2
+param COM_FAIL_ACT_T 5.0
+flag gcs_connection_lost 1
+run 2 100
+flag manual_control_signal_lost 1
+run 10 100

@@ -1,0 +1,11 @@
+# Fixture 4 at a 10 ms update period.
+param NAV_DLL_ACT 2
+param COM_FAIL_ACT_T 5.0
+flag gcs_connection_lost 1
+run 3 10
+flag gcs_connection_lost 0
+run 0.01 10
+mode ALTCTL
+run 3 10
+flag gcs_connection_lost 1
+run 10 10
