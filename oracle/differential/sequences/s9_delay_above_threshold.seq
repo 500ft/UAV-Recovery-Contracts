@@ -1,0 +1,5 @@
+# Fixture 9: COM_FAIL_ACT_T = 0.15 s is just above the 0.1 s threshold, so a Hold-first delay DOES apply.
+param NAV_DLL_ACT 2
+param COM_FAIL_ACT_T 0.15
+flag gcs_connection_lost 1
+run 5 100

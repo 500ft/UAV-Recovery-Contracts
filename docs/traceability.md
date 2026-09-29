@@ -42,8 +42,8 @@ is the audit that produced it.
 
 | decision | reasoning lives in | consumes | validation | status |
 |---|---|---|---|---|
-| The delay pot is shared and recharges at a quarter rate | [px4_failsafe.py](../model/px4_failsafe.py) | `Q-RECHARGE`, `Q-FAIL-ACT-T` | `tests/test_shared_delay_memory.py`, six fixtures | **transcription checked only** |
-| No delay below 0.1 s | [px4_failsafe.py](../model/px4_failsafe.py) | `Q-DELAY-EPS` | T2's prediction turns on it | **transcription checked only** |
+| The delay pot is shared and recharges at a quarter rate | [px4_failsafe.py](../model/px4_failsafe.py) | `Q-RECHARGE`, `Q-FAIL-ACT-T` | [11 sequences, model vs the real class, exact](../evidence/task-differential-2026-09-29/README.md); `tests/test_differential.py` | **differentially checked** on the action timeline; D27, D28 |
+| No delay below 0.1 s | [px4_failsafe.py](../model/px4_failsafe.py) | `Q-DELAY-EPS` | s8 and s9 probe both sides in the real class | **differentially checked**; the exact boundary is not probed |
 | The native class is the differential oracle | [oracle script](../oracle/run_native_failsafe_test.sh) | `Q-ORACLE-BUDGET` | [run 36222455516](../evidence/task-oracle-2026-09-26/README.md): 9/9 cases pass, binary hashed | **environment closed**; D14. The differential itself has not been run: D26 |
 
 ## Literature identity
@@ -59,6 +59,6 @@ is the audit that produced it.
 | what is open | blocks | next action |
 |---|---|---|
 | `Q-RESIDUAL` has no bound | every timing verdict in this apparatus | a transport or timebase bound, or a causally post-event acknowledgment |
-| The delay-pot transcription is unconfirmed | U2 and U3, and the interaction pilot | a minimal adapter driving the six shared-delay sequences through the now-working oracle binary |
+| The selector agrees with the model but the anomaly is unexplained | Study A | instrument the running autopilot at `FailsafeBase::update` (layer C); the selector itself is now the least likely location |
 | The detector runs 1.4 to 2.0 s late against its documented timeout | T1, T2 and T5 | the oracle, then the runtime instrumentation |
 | No recovery action has ever been observed | Study A | layers A and B compared first, then the runtime instrumentation for layer C |

@@ -66,59 +66,59 @@ class Selector:
     User takeover and mode-requirement fallbacks are modelled as inputs (`takeover`, `mode_can_run`)."""
     params: dict
     active: dict = field(default_factory=dict)  # hazard -> action
-    delay_left_s: float = 0.0            # _current_delay: what is left of the delay now running
-    start_delay_s: float | None = None   # _current_start_delay: the pot the NEXT delay is filled from
     selected: str = "None"
     delayed: str = "None"
     terminated: bool = False
+    # framework.h keeps both delay counters as hrt_abstime, an unsigned integer of MICROseconds. The model does
+    # the same. Float seconds made the first RTL land at 5.0 or 5.1 s depending on accumulated rounding, which is
+    # a property of the transcription and not of the framework.
+    _delay_us: int = 0                     # _current_delay: what is left of the delay now running
+    _start_delay_us: int | None = None     # _current_start_delay: the pot the NEXT delay is filled from
+    _newly: list = field(default_factory=list)
 
     def __post_init__(self) -> None:
         # framework.cpp L50 and L146: both the constructor and updateParams seed the pot from COM_FAIL_ACT_T.
-        if self.start_delay_s is None:
-            self.start_delay_s = float(self.params.get("COM_FAIL_ACT_T", 5.0))
+        if self._start_delay_us is None:
+            self._start_delay_us = self._configured_us()
 
-    def _update_start_delay(self, dt_s: float, delay_active: bool) -> None:
-        """framework.cpp updateStartDelay L121-141. The pot drains while a delayed action is pending and refills
-        at a QUARTER of real time when none is. Its own comment says why: "Ensure that even with a toggling
-        state the delayed action is executed at some point. This is done by increasing the delay slower than
-        reducing it." So a hazard that clears and re-raises does not get its full delay back, and the second
-        episode acts sooner than the first. This is state shared across episodes, and it was the omission the
-        earlier model carried as a marker (critique 2026-09-24, F6).
+    def _configured_us(self) -> int:
+        # framework.cpp L135: `_param_com_fail_act_t.get() * 1_s`, truncated to an unsigned integer
+        return int(float(self.params.get("COM_FAIL_ACT_T", 5.0)) * 1_000_000)
+
+    @property
+    def delay_left_s(self) -> float:
+        return self._delay_us / 1e6
+
+    @delay_left_s.setter
+    def delay_left_s(self, seconds: float) -> None:
+        self._delay_us = int(round(seconds * 1e6))
+
+    @property
+    def start_delay_s(self) -> float:
+        return self._start_delay_us / 1e6
+
+    @start_delay_s.setter
+    def start_delay_s(self, seconds: float) -> None:
+        self._start_delay_us = int(round(seconds * 1e6))
+
+    def _update_start_delay(self, dt_us: int, delay_active: bool) -> None:
+        """framework.cpp updateStartDelay L121-141, in integer microseconds.
+
+        The pot drains while a delayed action is pending and refills at a QUARTER of real time when none is.
+        The source comment says why: "Ensure that even with a toggling state the delayed action is executed at
+        some point. This is done by increasing the delay slower than reducing it." A hazard that clears and
+        re-raises therefore does not get its full delay back. `dt / 4` is INTEGER division, as in the source.
         """
-        # Decision: what delay a SECOND episode gets.  [Q-RECHARGE in protocols/quantities.json]
-        #
-        #   Question    After a condition clears and re-raises, how long is the new hold delay?
-        #   Inputs      COM_FAIL_ACT_T = 5 s      sourced [B10, Q-FAIL-ACT-T]
-        #               recharge rate  = dt / 4   sourced, framework.cpp L134 at d6f12ad [Q-RECHARGE]
-        #   Model       pot(t) drains 1:1 while a delayed action is pending, refills at 1/4 real time otherwise,
-        #               capped at COM_FAIL_ACT_T. A new delayable action takes whatever the pot holds.
-        #   Worked      burn 3 s of a 5 s pot, then stay quiet 2 s:  pot = (5 - 3) + 2/4 = 2.5 s
-        #               so the second episode acts 2.5 s after the condition returns, not 5 s.
-        #   Full reset  needs 4 x the drained amount of quiet time: 3 s drained needs 12 s quiet.
-        #   Discretised The stepper lands ONE update late, because the first step after a hazard is raised runs
-        #               before a delayed action is pending and so recharges instead of draining. At dt = 0.1 s
-        #               it returns 2.600 s, at 0.01 s it returns 2.510 s, at 0.001 s it returns 2.501 s. The
-        #               real framework has the same dependence on its own update period; this is a property of
-        #               the semantics, not a rounding artefact, and it is why fixtures assert to within one dt.
-        #   Sensitivity This is the mechanism the interaction study targets. If the divisor is not 4, every
-        #               repeated-hazard prediction moves.
-        #   Validation  Transcription self-check only (tests/test_shared_delay_memory.py). The native C++ class
-        #               has not confirmed it; that is the oracle's job.
-        configured = float(self.params.get("COM_FAIL_ACT_T", 5.0))
         if delay_active:
-            self.start_delay_s = max(0.0, self.start_delay_s - dt_s)
+            self._start_delay_us = self._start_delay_us - dt_us if dt_us < self._start_delay_us else 0
         else:
-            self.start_delay_s = min(configured, self.start_delay_s + dt_s / 4.0)
+            self._start_delay_us = min(self._configured_us(), self._start_delay_us + dt_us // 4)
 
     def raise_hazard(self, hazard: str, warning: str = "critical") -> None:
         act = configured_action(hazard, self.params, warning)
-        newly = hazard not in self.active
+        if hazard not in self.active:
+            self._newly.append((hazard, act))
         self.active[hazard] = act
-        # framework.cpp L351-356: a new delayable action with no delay already running fills _current_delay from
-        # _current_start_delay -- NOT from COM_FAIL_ACT_T. On a first hazard they are equal; after a previous
-        # delayed episode the pot is lower, which is the whole point of the recharge rule.
-        if newly and float(self.params.get("COM_FAIL_ACT_T", 5.0)) > 0.1 and act != "Warn" and self.delay_left_s == 0.0 and can_be_delayed(act):
-            self.delay_left_s = self.start_delay_s
 
     def clear_hazard(self, hazard: str, mode_changed_or_disarmed: bool = False) -> None:
         # ClearCondition: link-loss/geofence/offboard actions clear OnModeChangeOrDisarm (failsafe.cpp L54, L102, L108...), position-low clears WhenConditionClears (L388-404)
@@ -126,26 +126,43 @@ class Selector:
             self.active.pop(hazard, None)
 
     def step(self, dt_s: float, armed: bool = True, takeover: bool = False, hold_can_run: bool = True) -> str:
+        """One FailsafeBase::update(), in the order framework.cpp performs it (L55-107):
+
+            updateDelay -> checkStateAndMode (registration) -> clearDelayIfNeeded -> getSelectedAction
+                        -> updateStartDelay, keyed on THIS update's delayed action
+
+        The earlier model updated the pot from the PREVIOUS update's delayed status and seeded a new delay before
+        the elapsed time was taken off it. The differential against the real class found the difference: it moved
+        the second episode of a clear and re-raise by exactly one update period (evidence/task-differential-*).
+        """
+        dt_us = round(dt_s * 1_000_000)
         if self.terminated:  # framework.cpp L446-450: Terminate never clears
             self.selected = "Terminate"; return self.selected
         if not armed:
-            self.selected = "None"; return self.selected
-        self.delay_left_s = max(0.0, self.delay_left_s - dt_s)  # framework.cpp updateDelay L149-157
-        # framework.cpp L89: updateStartDelay runs every update, keyed on whether a delayed action is pending.
-        self._update_start_delay(dt_s, self.delayed != "None")
-        # framework.cpp clearDelayIfNeeded L653-668: no Hold-first delay when already in a failsafe (selected > Hold),
+            self.selected = "None"; self._newly.clear(); return self.selected
+        # updateDelay L149-157
+        self._delay_us = self._delay_us - dt_us if dt_us < self._delay_us else 0
+        # checkStateAndMode -> checkFailsafe L351-356: a new delayable action with no delay running fills
+        # _current_delay from _current_start_delay, AFTER the elapsed time has been taken off
+        for _hazard, act in self._newly:
+            if self._configured_us() > 100_000 and act != "Warn" and self._delay_us == 0 and can_be_delayed(act):
+                self._delay_us = self._start_delay_us
+        self._newly.clear()
+        # clearDelayIfNeeded L653-668: no Hold-first delay when already in a failsafe (selected > Hold),
         # when Hold cannot run, or when the user has taken over
         if PRECEDENCE[self.selected] > PRECEDENCE["Hold"] or not hold_can_run or takeover:
-            self.delay_left_s = 0.0
+            self._delay_us = 0
         best = "None"
         for act in self.active.values():  # L462-481: worst (highest precedence) action wins
             if PRECEDENCE[act] > PRECEDENCE[best]:
                 best = act
         self.delayed = "None"
-        if self.delay_left_s > 0 and not takeover and can_be_delayed(best) and hold_can_run:  # L489-500, clearDelayIfNeeded L653-668
+        if self._delay_us > 0 and not takeover and can_be_delayed(best) and hold_can_run:  # L489-500
             self.delayed = best; best = "Hold"
         if takeover and best in ("Hold", "RTL", "Land", "Descend"):  # L502-535, actionAllowsUserTakeover L647-651
             best = "Warn"
+        # updateStartDelay L89: uses the delayed action selected in THIS update
+        self._update_start_delay(dt_us, self.delayed != "None")
         if best == "Terminate":
             self.terminated = True
         self.selected = best
@@ -164,7 +181,7 @@ def demo() -> None:
     s.raise_hazard("datalink_loss"); assert s.step(0.0) == "Hold" and s.delayed == "RTL"     # Hold first for COM_FAIL_ACT_T [B2]
     assert s.step(4.9) == "Hold" and s.step(0.2) == "RTL"                                    # then the delayed action
     s.raise_hazard("geofence_breach"); assert s.step(0.1) == "RTL"                           # Hold (geofence) < RTL: RTL stays selected
-    s2 = Selector(dict(DEFAULTS, NAV_DLL_ACT=2, GF_ACTION=5)); s2.raise_hazard("datalink_loss"); s2.step(6.0); s2.raise_hazard("geofence_breach")
+    s2 = Selector(dict(DEFAULTS, NAV_DLL_ACT=2, GF_ACTION=5)); s2.raise_hazard("datalink_loss"); s2.step(0.0); s2.step(6.0); s2.raise_hazard("geofence_breach")  # register, THEN serve the delay
     assert s2.step(0.1) == "Land"                                                            # Land > RTL takes precedence
     s3 = Selector(dict(DEFAULTS, NAV_DLL_ACT=2, COM_FAIL_ACT_T=0.0)); s3.raise_hazard("datalink_loss"); assert s3.step(0.0) == "RTL"  # no delay when COM_FAIL_ACT_T <= 0.1
     s4 = Selector(dict(DEFAULTS, NAV_DLL_ACT=2)); s4.raise_hazard("datalink_loss"); assert s4.step(0.0, takeover=True) == "Warn"       # stick takeover interrupts

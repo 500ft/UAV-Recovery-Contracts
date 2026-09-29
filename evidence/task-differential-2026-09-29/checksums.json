@@ -1,0 +1,23 @@
+{
+ "README.md": "62f7f003ab08c4e172fefce49c008705f418b8239a6081dbfd9833362d6f3d67",
+ "first-run-before-model-fix/environment.txt": "e030079c54e959b07ee394010499cdc8e76b278b6b36b61150a7d538fb209bba",
+ "first-run-before-model-fix/instrumentation.patch": "7df46bd3d3441c75a61367c1be3ac68f7d084f0a1bddd89adad5f8574fb02cc0",
+ "first-run-before-model-fix/report.json": "bc3dc15130d15abb84e9d741830b119155df6109adff8c6dd13a5ec16e63665d",
+ "second-run/adapter.sha256": "faad01d7ad16649bb9ff309eef347186e7f701247d8e59c270c323137cce369f",
+ "second-run/build.log.gz": "3a680258b2a05af5fd4e0b5a1e28b429e7083fb3a0f3e557c784da2cf1f9ffb4",
+ "second-run/environment.txt": "d5ed264fd49a627e909c8d0880a06e436a3fb7d4fb6b7805fa6823964888cd24",
+ "second-run/instrumentation.patch": "7df46bd3d3441c75a61367c1be3ac68f7d084f0a1bddd89adad5f8574fb02cc0",
+ "second-run/oracle/s1_disabled_stays_disabled.oracle.csv": "702886810114e5b10438f8f7eebabcae74ecacf16ce81f9906740cd0699b49aa",
+ "second-run/oracle/s2_delayed_response_waits.oracle.csv": "6b603a7568fff057d577d93d447e0518eef5e1d3df030f7308b9ef5da3dadd7c",
+ "second-run/oracle/s2b_delayed_response_10ms.oracle.csv": "330d8b8e2d38abfa2f61c41e9a9fc5c332ec3d178a9834e0ca722a01fdc61cd1",
+ "second-run/oracle/s3_zero_delay_removes_wait.oracle.csv": "ac68e91ca4cb16e4826f89ddaad4dbbeb10e7e57ac51459174b6d6dd6f2986d6",
+ "second-run/oracle/s4_short_gap_reraise.oracle.csv": "c9099c125d554038a1b276a3c2bd0a24ad4e8002f7febe25fec8fe220ce3c585",
+ "second-run/oracle/s4b_short_gap_reraise_10ms.oracle.csv": "f08683ea0f299c42855ceebed632da4dbe38a2b75bda60b5b1cc7a16a7344cec",
+ "second-run/oracle/s5_long_gap_restores_pot.oracle.csv": "5c587e655dd635f2c3363340e81a606499371cbe990ac73356c3889ad5447074",
+ "second-run/oracle/s6_second_hazard_shares_delay.oracle.csv": "664e80456f7de9f5448fc94f8cef9c01a33b8e4b4ec70b7becd10f6a42a830d4",
+ "second-run/oracle/s7_latched_action_persists.oracle.csv": "5a665562e546140df45a0269279f9c46d2818ec995bda023199f05756b8f34b1",
+ "second-run/oracle/s8_delay_below_threshold.oracle.csv": "480b4e7b6aae698157e8b8a770359844efb8b18c1cb12782ef2881ed975c672f",
+ "second-run/oracle/s9_delay_above_threshold.oracle.csv": "5900c52448505a462bf81f52573ceb4c9a26c8798af1cca4344daacb323b181b",
+ "second-run/report.json": "e58653a9da6071702b0022077a268ef9a773b54ebfb24f44f5c356ce6dc5c04c",
+ "second-run/result.txt": "ca48bfbbfdfc170812012dd22706c90d839aa5248a2c306f4734ff2305445bd9"
+}

@@ -1,0 +1,502 @@
+{
+ "s1_disabled_stays_disabled": {
+  "updates_model": 301,
+  "updates_oracle": 301,
+  "same_length": true,
+  "action_mismatch_updates": 0,
+  "first_mismatch_t_s": null,
+  "model_transitions": [
+   [
+    0.0,
+    "None"
+   ]
+  ],
+  "oracle_transitions": [
+   [
+    0.0,
+    "None"
+   ]
+  ],
+  "same_transition_sequence": true,
+  "oracle_minus_model_shift_s": [
+   0.0
+  ],
+  "agree_within_one_update": true,
+  "agree_exactly": true
+ },
+ "s2_delayed_response_waits": {
+  "updates_model": 201,
+  "updates_oracle": 201,
+  "same_length": true,
+  "action_mismatch_updates": 0,
+  "first_mismatch_t_s": null,
+  "model_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.1,
+    "Hold"
+   ],
+   [
+    5.1,
+    "RTL"
+   ]
+  ],
+  "oracle_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.1,
+    "Hold"
+   ],
+   [
+    5.1,
+    "RTL"
+   ]
+  ],
+  "same_transition_sequence": true,
+  "oracle_minus_model_shift_s": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "agree_within_one_update": true,
+  "agree_exactly": true
+ },
+ "s2b_delayed_response_10ms": {
+  "updates_model": 2001,
+  "updates_oracle": 2001,
+  "same_length": true,
+  "action_mismatch_updates": 0,
+  "first_mismatch_t_s": null,
+  "model_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.01,
+    "Hold"
+   ],
+   [
+    5.01,
+    "RTL"
+   ]
+  ],
+  "oracle_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.01,
+    "Hold"
+   ],
+   [
+    5.01,
+    "RTL"
+   ]
+  ],
+  "same_transition_sequence": true,
+  "oracle_minus_model_shift_s": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "agree_within_one_update": true,
+  "agree_exactly": true
+ },
+ "s3_zero_delay_removes_wait": {
+  "updates_model": 101,
+  "updates_oracle": 101,
+  "same_length": true,
+  "action_mismatch_updates": 0,
+  "first_mismatch_t_s": null,
+  "model_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.1,
+    "RTL"
+   ]
+  ],
+  "oracle_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.1,
+    "RTL"
+   ]
+  ],
+  "same_transition_sequence": true,
+  "oracle_minus_model_shift_s": [
+   0.0,
+   0.0
+  ],
+  "agree_within_one_update": true,
+  "agree_exactly": true
+ },
+ "s4_short_gap_reraise": {
+  "updates_model": 162,
+  "updates_oracle": 162,
+  "same_length": true,
+  "action_mismatch_updates": 0,
+  "first_mismatch_t_s": null,
+  "model_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.1,
+    "Hold"
+   ],
+   [
+    3.2,
+    "None"
+   ],
+   [
+    6.2,
+    "Hold"
+   ],
+   [
+    8.9,
+    "RTL"
+   ]
+  ],
+  "oracle_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.1,
+    "Hold"
+   ],
+   [
+    3.2,
+    "None"
+   ],
+   [
+    6.2,
+    "Hold"
+   ],
+   [
+    8.9,
+    "RTL"
+   ]
+  ],
+  "same_transition_sequence": true,
+  "oracle_minus_model_shift_s": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "agree_within_one_update": true,
+  "agree_exactly": true
+ },
+ "s4b_short_gap_reraise_10ms": {
+  "updates_model": 1602,
+  "updates_oracle": 1602,
+  "same_length": true,
+  "action_mismatch_updates": 0,
+  "first_mismatch_t_s": null,
+  "model_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.01,
+    "Hold"
+   ],
+   [
+    3.02,
+    "None"
+   ],
+   [
+    6.02,
+    "Hold"
+   ],
+   [
+    8.76,
+    "RTL"
+   ]
+  ],
+  "oracle_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.01,
+    "Hold"
+   ],
+   [
+    3.02,
+    "None"
+   ],
+   [
+    6.02,
+    "Hold"
+   ],
+   [
+    8.76,
+    "RTL"
+   ]
+  ],
+  "same_transition_sequence": true,
+  "oracle_minus_model_shift_s": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "agree_within_one_update": true,
+  "agree_exactly": true
+ },
+ "s5_long_gap_restores_pot": {
+  "updates_model": 1382,
+  "updates_oracle": 1382,
+  "same_length": true,
+  "action_mismatch_updates": 0,
+  "first_mismatch_t_s": null,
+  "model_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.1,
+    "Hold"
+   ],
+   [
+    5.1,
+    "RTL"
+   ],
+   [
+    8.2,
+    "None"
+   ],
+   [
+    128.2,
+    "Hold"
+   ],
+   [
+    133.2,
+    "RTL"
+   ]
+  ],
+  "oracle_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.1,
+    "Hold"
+   ],
+   [
+    5.1,
+    "RTL"
+   ],
+   [
+    8.2,
+    "None"
+   ],
+   [
+    128.2,
+    "Hold"
+   ],
+   [
+    133.2,
+    "RTL"
+   ]
+  ],
+  "same_transition_sequence": true,
+  "oracle_minus_model_shift_s": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "agree_within_one_update": true,
+  "agree_exactly": true
+ },
+ "s6_second_hazard_shares_delay": {
+  "updates_model": 121,
+  "updates_oracle": 121,
+  "same_length": true,
+  "action_mismatch_updates": 0,
+  "first_mismatch_t_s": null,
+  "model_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.1,
+    "Hold"
+   ],
+   [
+    5.1,
+    "RTL"
+   ]
+  ],
+  "oracle_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.1,
+    "Hold"
+   ],
+   [
+    5.1,
+    "RTL"
+   ]
+  ],
+  "same_transition_sequence": true,
+  "oracle_minus_model_shift_s": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "agree_within_one_update": true,
+  "agree_exactly": true
+ },
+ "s7_latched_action_persists": {
+  "updates_model": 381,
+  "updates_oracle": 381,
+  "same_length": true,
+  "action_mismatch_updates": 0,
+  "first_mismatch_t_s": null,
+  "model_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.1,
+    "Hold"
+   ],
+   [
+    5.1,
+    "RTL"
+   ]
+  ],
+  "oracle_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.1,
+    "Hold"
+   ],
+   [
+    5.1,
+    "RTL"
+   ]
+  ],
+  "same_transition_sequence": true,
+  "oracle_minus_model_shift_s": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "agree_within_one_update": true,
+  "agree_exactly": true
+ },
+ "s8_delay_below_threshold": {
+  "updates_model": 51,
+  "updates_oracle": 51,
+  "same_length": true,
+  "action_mismatch_updates": 0,
+  "first_mismatch_t_s": null,
+  "model_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.1,
+    "RTL"
+   ]
+  ],
+  "oracle_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.1,
+    "RTL"
+   ]
+  ],
+  "same_transition_sequence": true,
+  "oracle_minus_model_shift_s": [
+   0.0,
+   0.0
+  ],
+  "agree_within_one_update": true,
+  "agree_exactly": true
+ },
+ "s9_delay_above_threshold": {
+  "updates_model": 51,
+  "updates_oracle": 51,
+  "same_length": true,
+  "action_mismatch_updates": 0,
+  "first_mismatch_t_s": null,
+  "model_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.1,
+    "Hold"
+   ],
+   [
+    0.3,
+    "RTL"
+   ]
+  ],
+  "oracle_transitions": [
+   [
+    0.0,
+    "None"
+   ],
+   [
+    0.1,
+    "Hold"
+   ],
+   [
+    0.3,
+    "RTL"
+   ]
+  ],
+  "same_transition_sequence": true,
+  "oracle_minus_model_shift_s": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "agree_within_one_update": true,
+  "agree_exactly": true
+ }
+}

@@ -1,0 +1,5 @@
+# Fixture 1: an action configured to None never acts, however long the condition holds.
+param NAV_DLL_ACT 0
+param COM_FAIL_ACT_T 5.0
+flag gcs_connection_lost 1
+run 30 100

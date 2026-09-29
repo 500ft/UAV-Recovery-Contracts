@@ -155,3 +155,25 @@ What this changes about the open question: the selector logic passes its own tes
 the more likely location of the fault than the selector. That is where to look next, not a diagnosis. The
 supported statement is unchanged: no expected post-injection recovery-mode transition was observed and no new
 failsafe announcement was seen; the internal selected action and its cause remain unresolved.
+
+## 2026-09-29 addendum — the first differential, and a bug it found
+
+Layer A (the Python model) was compared against layer B (PX4's real `Failsafe` class) on identical sequences,
+using an adapter that constructs the class PX4 ships and calls `update()` as commander does. Evidence:
+[task-differential-2026-09-29](../../../evidence/task-differential-2026-09-29/README.md).
+
+**The first run found a defect in the model.** Seven of nine sequences agreed exactly. The two
+clear-and-re-raise sequences disagreed by exactly one update period, at both 100 ms and 10 ms, so the gap scaled
+with the step. The cause, which I had read off `update()` before seeing the result: the model fed
+`updateStartDelay` the previous update's delayed status where the source passes the current one, and seeded a new
+delay before the elapsed time was taken off. Corrected to the source's order, with integer microseconds.
+
+**A claim of mine is retracted.** I wrote, beside the model and in a study guide, that the discrete stepper
+"lands one update late" and that the real framework "has the same dependence on its own update period." It does
+not. That figure was the bug. The corrected model gives exactly 2.5 s at every step size.
+
+| id | decision | status |
+|---|---|---|
+| **D27** | The model follows `FailsafeBase::update()`'s own order and uses integer microseconds. Float seconds made the first RTL land at 5.0 or 5.1 s by rounding luck | decided here |
+| **D28** | D26 is partly discharged. On the selected-action timeline, model and real class agree exactly on 11 sequences. The pot's value is private to the class and was not read, and the integrated runtime is layer C, still untested | recorded |
+| **D29** | The differential agreeing means the SELECTOR is not where the missing recovery lives, on the domain these sequences cover: no mode-requirement fallback, no takeover, no deferral, one vehicle type. It does not localise the anomaly, and it does not say the integration is at fault | recorded |

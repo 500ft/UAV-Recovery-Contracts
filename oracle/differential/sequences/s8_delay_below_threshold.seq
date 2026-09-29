@@ -1,0 +1,5 @@
+# Fixture 8: COM_FAIL_ACT_T = 0.05 s is at or below the 0.1 s threshold, so NO Hold-first delay applies (framework.cpp L351-362).
+param NAV_DLL_ACT 2
+param COM_FAIL_ACT_T 0.05
+flag gcs_connection_lost 1
+run 5 100

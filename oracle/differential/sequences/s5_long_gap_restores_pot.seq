@@ -1,0 +1,11 @@
+# Fixture 5: serve the whole delay, clear, stay quiet far longer than 4 x the drained amount, re-raise.
+param NAV_DLL_ACT 2
+param COM_FAIL_ACT_T 5.0
+flag gcs_connection_lost 1
+run 8 100
+flag gcs_connection_lost 0
+run 0.1 100
+mode ALTCTL
+run 120 100
+flag gcs_connection_lost 1
+run 10 100

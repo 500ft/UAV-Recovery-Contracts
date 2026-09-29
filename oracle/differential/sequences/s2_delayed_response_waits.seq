@@ -1,0 +1,5 @@
+# Fixture 2: an enabled delayable action is served in Hold first, then acts after COM_FAIL_ACT_T.
+param NAV_DLL_ACT 2
+param COM_FAIL_ACT_T 5.0
+flag gcs_connection_lost 1
+run 20 100

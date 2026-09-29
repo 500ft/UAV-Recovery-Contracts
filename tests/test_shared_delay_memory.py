@@ -60,14 +60,15 @@ class SharedDelayMemoryTests(unittest.TestCase):
         """The pot drained during the first episode and only refills at a quarter of real time."""
         sel = Selector(dict(RTL_5S))
         sel.raise_hazard("datalink_loss")
+        sel.step(0.0)
         advance(sel, 3.0)                                       # burn 3 s of the 5 s pot in Hold
         drained = sel.start_delay_s
         self.assertLess(drained, 5.0)
         sel.clear_hazard("datalink_loss", mode_changed_or_disarmed=True)
-        sel.delay_left_s, sel.delayed, sel.selected = 0.0, "None", "None"
         advance(sel, 2.0)                                       # quiet: refills 2.0 / 4 = 0.5 s
-        self.assertAlmostEqual(sel.start_delay_s, drained + 0.5, places=1)
+        self.assertAlmostEqual(sel.start_delay_s, drained + 0.5, places=3)
         sel.raise_hazard("datalink_loss")
+        sel.step(0.0)                                           # the registering update seeds the delay
         self.assertLess(sel.delay_left_s, 5.0, "the second episode does NOT get a fresh full delay")
         self.assertAlmostEqual(sel.delay_left_s, sel.start_delay_s, places=6)
 
@@ -97,21 +98,21 @@ class SharedDelayMemoryTests(unittest.TestCase):
         advance(sel, 4.0)
         self.assertAlmostEqual(sel.start_delay_s, 1.0, places=2)
 
-    def test_the_worked_example_beside_the_model_converges_to_its_analytic_value(self):
-        """The block in px4_failsafe.py claims 2.5 s. Check it, including the one-update discretisation."""
-        got = {}
+    def test_the_worked_example_is_exact_at_every_step_size(self):
+        """burn 3 s of a 5 s pot, stay quiet 2 s: (5 - 3) + 2/4 = 2.5 s, independent of the update period.
+
+        An earlier version of this test asserted convergence and documented that the model 'lands one update
+        late', claiming the real framework did too. The differential against PX4's real Failsafe class showed
+        that was a defect in the model's update order, not a property of PX4, and it is retracted.
+        """
         for step in (0.1, 0.01, 0.001):
             sel = Selector(dict(RTL_5S))
-            sel.raise_hazard("datalink_loss")
+            sel.raise_hazard("datalink_loss"); sel.step(0.0)
             advance(sel, 3.0, step=step)
             sel.clear_hazard("datalink_loss", mode_changed_or_disarmed=True)
-            sel.delay_left_s, sel.delayed, sel.selected = 0.0, "None", "None"
             advance(sel, 2.0, step=step)
-            sel.raise_hazard("datalink_loss")
-            got[step] = sel.delay_left_s
-        self.assertAlmostEqual(got[0.1], 2.5, delta=0.1 + 1e-9)
-        self.assertAlmostEqual(got[0.001], 2.5, delta=0.001 + 1e-9)
-        self.assertLess(abs(got[0.001] - 2.5), abs(got[0.1] - 2.5), "it must converge as the step shrinks")
+            sel.raise_hazard("datalink_loss"); sel.step(0.0)
+            self.assertAlmostEqual(sel.delay_left_s, 2.5, places=6, msg=f"dt={step}")
 
     def test_a_full_reset_needs_four_times_the_drained_quiet_time(self):
         sel = Selector(dict(RTL_5S))
