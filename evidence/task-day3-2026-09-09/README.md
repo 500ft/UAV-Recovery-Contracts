@@ -7,7 +7,7 @@ Branch: `task/day-three-20260909`. Scope: Converge source provenance and narrow 
 
 Six new ledger tests preserve both acquisition routes, unknown historical query mappings, zero-result versus positive query support, unscreened status despite raw flags, all raw rows and deterministic regeneration. 21 tests and repository contract pass. All 402 raw rows retained; 90 provenance holes remain. This is not full novelty closeout.
 
-See [plan](../../docs/DAY3_PLAN.md) and [primary deliverable](../../docs/day3-source-review.md). Status is maintained only in [SPRINT_TASKS.csv](../../docs/SPRINT_TASKS.csv); original research/CAD gates remain unchanged. Delivery is a new PR, not an automatic merge or scientific release.
+See [plan](https://github.com/500ft/uav-failsafe-composition/blob/4ff22d19295cda3757afeb162496b9c3a1ad82e9/docs/DAY3_PLAN.md) and [primary deliverable](../../docs/day3-source-review.md). Status is maintained only in [SPRINT_TASKS.csv](../../docs/SPRINT_TASKS.csv); original research/CAD gates remain unchanged. Delivery is a new PR, not an automatic merge or scientific release.
 
 ## Verification and reproducibility
 

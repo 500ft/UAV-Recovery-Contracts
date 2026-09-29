@@ -17,7 +17,7 @@ forms only. Patent search remains open; URC-S08 remains the owner gate.
 
 Six new ledger tests preserve both acquisition routes, unknown historical query mappings, zero-result versus positive query support, unscreened status despite raw flags, all raw rows and deterministic regeneration. 21 tests and repository contract pass. All 402 raw rows retained; 90 provenance holes remain. This is not full novelty closeout.
 
-Review [DAY3_PLAN.md](DAY3_PLAN.md), [deliverable](day3-source-review.md), and [commands/evidence](../evidence/task-day3-2026-09-09/README.md). Base: `39578d6ef1ee765bcd53c7b2f0ba940b3f0d367f`; new PR branch: `task/day-three-20260909`. No original Owner/External gate is closed. Final source identity is the PR head, reported in its delivery record rather than embedded circularly here.
+Review [DAY3_PLAN.md](https://github.com/500ft/uav-failsafe-composition/blob/4ff22d19295cda3757afeb162496b9c3a1ad82e9/docs/DAY3_PLAN.md), [deliverable](day3-source-review.md), and [commands/evidence](../evidence/task-day3-2026-09-09/README.md). Base: `39578d6ef1ee765bcd53c7b2f0ba940b3f0d367f`; new PR branch: `task/day-three-20260909`. No original Owner/External gate is closed. Final source identity is the PR head, reported in its delivery record rather than embedded circularly here.
 
 URC-01/D02 provenance and exact-gap closeout stay unresolved unless their full acceptance evidence exists.
 

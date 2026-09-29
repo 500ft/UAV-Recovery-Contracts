@@ -21,7 +21,7 @@ Each omitted or incomplete recommendation is accounted for separately in the cur
 
 ## Day-3 work — 2026-09-09
 
-Delivery update: the preparation was committed as 500ft and pushed; [day-3 PR](https://github.com/500ft/UAV-Recovery-Contracts/pull/4) is open against main. Initial implementation source: `b23e51521f7f27b6a20288595fa59c71a5dedd1a` (later review/documentation commits are visible in the PR). This supersedes the pre-push stopping state below. Original day-1/day-2 PRs are merged; this new PR is not merged. Resume from the named unresolved project gates in [DAY3_PLAN.md](DAY3_PLAN.md), not from the already completed push step.
+Delivery update: the preparation was committed as 500ft and pushed; [day-3 PR](https://github.com/500ft/UAV-Recovery-Contracts/pull/4) is open against main. Initial implementation source: `b23e51521f7f27b6a20288595fa59c71a5dedd1a` (later review/documentation commits are visible in the PR). This supersedes the pre-push stopping state below. Original day-1/day-2 PRs are merged; this new PR is not merged. Resume from the named unresolved project gates in [DAY3_PLAN.md](https://github.com/500ft/uav-failsafe-composition/blob/4ff22d19295cda3757afeb162496b9c3a1ad82e9/docs/DAY3_PLAN.md), not from the already completed push step.
 
 Both reviewed PR layers merged into main; new work starts from `39578d6ef1ee765bcd53c7b2f0ba940b3f0d367f` on `task/day-three-20260909`. Six new ledger tests preserve both acquisition routes, unknown historical query mappings, zero-result versus positive query support, unscreened status despite raw flags, all raw rows and deterministic regeneration. 21 tests and repository contract pass. All 402 raw rows retained; 90 provenance holes remain. This is not full novelty closeout.
 
