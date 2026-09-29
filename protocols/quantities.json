@@ -358,12 +358,12 @@
     "U3's mechanism"
    ],
    "rationale": "PX4's own comment: increase the delay slower than it is reduced, so a toggling condition still acts at some point.",
-   "what_it_is_not": "not a tunable of ours; changing it would make the model disagree with the implementation",
+   "what_it_is_not": "not a tunable of ours; changing it would make the model disagree with the implementation. Checked on the action timeline only: the pot value itself is private to the class and was not read, so an offsetting error in both the drain and the refill would not have been seen",
    "depends_on": [
     "Q-FAIL-ACT-T"
    ],
    "sensitivity": "it is the whole mechanism the interaction study targets",
-   "validation": "transcription self-check only; the native oracle has not confirmed it. Unchanged by the 2026-09-26 oracle run: PX4's own suite passing is not a comparison against this transcription, and no such comparison has been made"
+   "validation": "Differentially checked 2026-09-29: the model and PX4's real Failsafe class produced identical selected-action timelines, update for update, on 11 sequences including partial-refill (s4, s4b) and capped-refill (s5) cases, which a different divisor would have broken. A first run found the MODEL's update order wrong, not the divisor; see evidence/task-differential-2026-09-29"
   },
   {
    "id": "Q-DELAY-EPS",
@@ -381,7 +381,7 @@
    "what_it_is_not": "not chosen by us",
    "depends_on": [],
    "sensitivity": "T2's whole prediction turns on it",
-   "validation": "transcription self-check only. Unchanged by the 2026-09-26 oracle run: PX4's own suite passing is not a comparison against this transcription, and no such comparison has been made"
+   "validation": "Differentially checked 2026-09-29 from both sides: COM_FAIL_ACT_T = 0.05 s gives no Hold-first delay and 0.15 s gives one, in the real class and the model alike (s8, s9). The exact 0.1 s boundary value was not probed"
   },
   {
    "id": "Q-HB-RATE",

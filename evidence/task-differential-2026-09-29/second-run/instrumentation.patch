@@ -1,0 +1,14 @@
+diff --git a/src/modules/commander/failsafe/CMakeLists.txt b/src/modules/commander/failsafe/CMakeLists.txt
+index 0d7b3bd366..3d8a88a428 100644
+--- a/src/modules/commander/failsafe/CMakeLists.txt
++++ b/src/modules/commander/failsafe/CMakeLists.txt
+@@ -80,3 +80,7 @@ px4_add_library(failsafe
+ px4_add_functional_gtest(SRC failsafe_test.cpp
+ 	LINKLIBS failsafe mode_util
+ )
++
++px4_add_functional_gtest(SRC differential_delay_test.cpp
++	LINKLIBS failsafe mode_util
++)
+ M src/modules/commander/failsafe/CMakeLists.txt
+?? src/modules/commander/failsafe/differential_delay_test.cpp

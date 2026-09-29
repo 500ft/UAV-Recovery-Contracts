@@ -1,0 +1,6 @@
+px4_commit=d6f12ad1c4f70ad3230afd7d86e971421e02fef4
+binary=/home/runner/work/uav-failsafe-composition/uav-failsafe-composition/px4/build/px4_sitl_test/functional-differential_delay_test
+binary_sha256=5109c84e4f63ec242d6c8613ad1dd8125fb4f0228f08632eceaacd70c889e93a
+uname=Linux 6.17.0-1022-azure x86_64
+cxx=c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+recorded_at=2026-09-29T17:54:29Z
