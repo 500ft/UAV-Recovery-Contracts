@@ -101,7 +101,7 @@ class RegisterMatchesTheCodeTests(unittest.TestCase):
 
     def test_the_delay_recharge_rate_matches_the_model(self):
         src = (ROOT / "model/px4_failsafe.py").read_text()
-        self.assertIn("dt_s / 4.0", src, "the recharge divisor moved away from the pinned source's dt/4")
+        self.assertIn("dt_us // 4", src, "the recharge divisor moved away from the pinned source's dt/4 (integer division)")
         self.assertEqual(BY_ID["Q-RECHARGE"]["value"], 0.25)
 
     def test_the_repeat_range_is_not_used_as_an_input_anywhere(self):
