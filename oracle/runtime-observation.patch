@@ -1,0 +1,67 @@
+diff --git a/src/modules/commander/Commander.cpp b/src/modules/commander/Commander.cpp
+index 663223c..48ea241 100644
+--- a/src/modules/commander/Commander.cpp
++++ b/src/modules/commander/Commander.cpp
+@@ -2353,7 +2353,8 @@ bool Commander::handleModeIntentionAndFailsafe()
+ 	// If a failsafe is active we must pass the request along as it might lead to a user-takeover.
+ 	bool mode_change_requested = _user_mode_intention.getHadModeChangeAndClear();
+ 
+-	uint8_t updated_user_intented_mode = _failsafe.update(hrt_absolute_time(), state, mode_change_requested,
++	const hrt_abstime diagnostic_update_us = hrt_absolute_time();
++	uint8_t updated_user_intented_mode = _failsafe.update(diagnostic_update_us, state, mode_change_requested,
+ 					     _failsafe_user_override_request,
+ 					     _failsafe_flags);
+ 	_failsafe_user_override_request = false;
+@@ -2385,6 +2386,9 @@ bool Commander::handleModeIntentionAndFailsafe()
+ 		break;
+ 	}
+ 
++	PX4_INFO("UAV_DIAG commit t=%llu armed=%d intended=%u action=%d nav=%u",
++		 (unsigned long long)diagnostic_update_us, (int)state.armed, (unsigned)state.user_intended_mode,
++		 (int)_failsafe.selectedAction(), (unsigned)_vehicle_status.nav_state);
+ 	_vehicle_status.failsafe = _failsafe.inFailsafe();
+ 	_vehicle_status.failsafe_and_user_took_over = _failsafe.userTakeoverActive();
+ 
+diff --git a/src/modules/commander/failsafe/failsafe.cpp b/src/modules/commander/failsafe/failsafe.cpp
+index 6a61d65..df02a86 100644
+--- a/src/modules/commander/failsafe/failsafe.cpp
++++ b/src/modules/commander/failsafe/failsafe.cpp
+@@ -512,6 +512,13 @@ void Failsafe::checkStateAndMode(const hrt_abstime &time_us, const State &state,
+ 	const bool dll_loss_ignored = dll_loss_ignored_mission || dll_loss_ignored_loiter || dll_loss_ignored_offboard ||
+ 				      dll_loss_ignored_takeoff || ignore_any_link_loss_vtol_takeoff_fixedwing || dll_loss_ignored_land;
+ 
++	PX4_INFO("UAV_DIAG check t=%llu armed=%d mode=%u gcs=%d fence=%d",
++		 (unsigned long long)time_us, (int)state.armed, (unsigned)state.user_intended_mode,
++		 (int)status_flags.gcs_connection_lost, (int)status_flags.geofence_breached);
++	PX4_INFO("UAV_DIAG params t=%llu dll=%d gf=%d except=%d ignored=%d",
++		 (unsigned long long)time_us, (int)_param_nav_dll_act.get(), (int)_param_gf_action.get(),
++		 (int)_param_com_dll_except.get(), (int)dll_loss_ignored);
++
+ 	if (_param_nav_dll_act.get() != int32_t(gcs_connection_loss_failsafe_mode::Disabled) && !dll_loss_ignored) {
+ 		CHECK_FAILSAFE(status_flags, gcs_connection_lost,
+ 			       fromNavDllOrRclActParam(_param_nav_dll_act.get()).causedBy(Cause::GCSConnectionLoss));
+diff --git a/src/modules/commander/failsafe/framework.cpp b/src/modules/commander/failsafe/framework.cpp
+index 19528b5..359ca6c 100644
+--- a/src/modules/commander/failsafe/framework.cpp
++++ b/src/modules/commander/failsafe/framework.cpp
+@@ -48,6 +48,7 @@ using namespace time_literals;
+ FailsafeBase::FailsafeBase(ModuleParams *parent) : ModuleParams(parent)
+ {
+ 	_current_start_delay = _param_com_fail_act_t.get() * 1_s;
++	PX4_INFO("UAV_DIAG init t=%llu delay=%.6f", (unsigned long long)hrt_absolute_time(), (double)_param_com_fail_act_t.get());
+ }
+ 
+ uint8_t FailsafeBase::update(const hrt_abstime &time_us, const State &state, bool user_intended_mode_updated,
+@@ -103,6 +104,12 @@ uint8_t FailsafeBase::update(const hrt_abstime &time_us, const State &state, boo
+ 	_last_update = time_us;
+ 	_last_status_flags = status_flags;
+ 	_last_armed = state.armed;
++	PX4_INFO("UAV_DIAG update t=%llu action=%d delayed=%d takeover=%d deferred=%d",
++		 (unsigned long long)time_us, (int)action_state.action, (int)action_state.delayed_action,
++		 (int)action_state.user_takeover, (int)action_state.failsafe_deferred);
++	PX4_INFO("UAV_DIAG delay t=%llu current=%llu start=%llu configured=%.6f",
++		 (unsigned long long)time_us, (unsigned long long)_current_delay,
++		 (unsigned long long)_current_start_delay, (double)_param_com_fail_act_t.get());
+ 	return _last_user_intended_mode;
+ }
+ 

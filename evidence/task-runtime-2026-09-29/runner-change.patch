@@ -1,0 +1,106 @@
+diff --git a/harness/run_case.py b/harness/run_case.py
+index f2767b1..46f9e87 100644
+--- a/harness/run_case.py
++++ b/harness/run_case.py
+@@ -85,6 +85,7 @@ class Vehicle:
+         self.boot_s = 0.0
+         self.prearm_ok = False
+         self.health = None
++        self.param_types = {}
+ 
+     def pump(self, timeout=1.0):
+         m = self.gcs.recv_match(blocking=True, timeout=timeout)
+@@ -101,24 +102,48 @@ class Vehicle:
+         """Send the value and move on. Confirmation is not done here: every parameter is read back afterwards
+         and compared against the request in the configuration_applied stage, which is the check that matters.
+         Confirming each one inline as well made the run fail on a single dropped PARAM_VALUE reply."""
+-        ptype = mav.MAV_PARAM_TYPE_REAL32 if isinstance(value, float) else mav.MAV_PARAM_TYPE_INT32
++        if name not in self.param_types:
++            self.read_param(name)
++        ptype = self.param_types[name]
++        if ptype == mav.MAV_PARAM_TYPE_INT32:
++            if int(value) != value:
++                raise ValueError(f"integer parameter {name} cannot take {value}")
++            wire = struct.unpack("<f", struct.pack("<i", int(value)))[0]
++            if struct.unpack("<i", struct.pack("<f", wire))[0] != value:
++                raise ValueError(f"integer parameter {name} cannot round-trip through the MAVLink float field")
++        else:
++            wire = float(value)
+         for _ in range(3):
+-            self.gcs.mav.param_set_send(1, 1, name.encode(), float(value), ptype)
++            self.gcs.mav.param_set_send(1, 1, name.encode(), wire, ptype)
+             t0 = time.monotonic()
+             while time.monotonic() - t0 < 0.6:
+                 m = self.gcs.recv_match(type="PARAM_VALUE", blocking=True, timeout=0.5)
+-                if m and m.param_id.rstrip("\x00") == name and abs(m.param_value - float(value)) < 1e-4:
+-                    return m.param_value
++                if m and m.param_id.rstrip("\x00") == name and abs(self.decode_param(m) - value) < 1e-4:
++                    return self.decode_param(m)
+         return None
+ 
++    def decode_param(self, message):
++        """PX4 bytewise PARAM_VALUE, for both explicit reads and broadcasts.
++
++        Pinned mavlink_parameters.cpp send_param() memcpy's integer storage to
++        the wire float. Its magnitude is never an encoding discriminator.
++        """
++        ptype = message.param_type
++        if ptype == mav.MAV_PARAM_TYPE_INT32:
++            value = struct.unpack("<i", struct.pack("<f", message.param_value))[0]
++        elif ptype == mav.MAV_PARAM_TYPE_REAL32:
++            value = message.param_value
++        else:
++            raise ValueError(f"unsupported PX4 parameter type {ptype}")
++        self.param_types[message.param_id.rstrip("\x00")] = ptype
++        return value
++
+     def read_param(self, name):
+-        """Read one parameter, taking the reply to our own request.
++        """Read the typed value, draining queued replies before the request.
+ 
+-        PX4 emits a PARAM_VALUE broadcast after a set as well as a reply to an explicit read, and the two do not
+-        use the same encoding for integer parameters: the reply carries the numeric value in the float field,
+-        while the broadcast carries the integer's bit pattern (a value of 1 arrives as 1.4e-45). Reading without
+-        draining first can therefore pick up the broadcast and report a denormal. Drain, then request, then
+-        accept either encoding (observed 2026-09-23)."""
++        Both reply routes use the same bytewise encoding. The old magnitude
++        heuristic accepted corrupted integer storage as a successful readback.
++        """
+         for _ in range(8):
+             while self.gcs.recv_match(type="PARAM_VALUE", blocking=False):
+                 pass
+@@ -127,10 +152,7 @@ class Vehicle:
+             while time.monotonic() - t0 < 1.5:
+                 m = self.gcs.recv_match(type="PARAM_VALUE", blocking=True, timeout=1.0)
+                 if m and m.param_id.rstrip("\x00") == name:
+-                    value = m.param_value
+-                    if 0 < abs(value) < 1e-30:      # a bit-cast integer, not a real value
+-                        value = float(struct.unpack("<i", struct.pack("<f", value))[0])
+-                    return value
++                    return self.decode_param(m)
+         raise RuntimeError(f"parameter {name} could not be read")
+ 
+     def command(self, cmd, *params):
+@@ -245,6 +267,12 @@ def main(argv=None) -> int:
+     _load_mavlink()
+     work = out / "px4-work"
+     work.mkdir()
++    # Keep the source patch with the run that actually uses it. A pinned commit
++    # alone does not identify the instrumented runtime (NP-8).
++    source_diff = subprocess.run(["git", "-C", str(build.parents[1]), "diff", "HEAD", "--"],
++                                 capture_output=True, text=True)
++    if source_diff.returncode == 0 and source_diff.stdout:
++        (out / "source.patch").write_text(source_diff.stdout)
+     env = dict(os.environ, PX4_SIM_MODEL="sihsim_quadx", PX4_SIMULATOR="sihsim", PX4_SYS_AUTOSTART="10040")
+     px4 = subprocess.Popen([str(build / "bin/px4"), "-d", str(build / "etc"), "-s", "etc/init.d-posix/rcS",
+                             "-i", str(INSTANCE), "-w", str(work)],
+@@ -255,7 +283,8 @@ def main(argv=None) -> int:
+              build_identity=dict(target="px4_sitl_default", path=str(build),
+                                  git_head=subprocess.run(["git", "-C", str(build.parents[1]), "rev-parse", "HEAD"],
+                                                          capture_output=True, text=True).stdout.strip() or None,
+-                                 instrumentation="none")))
++                                 instrumentation=("unrecorded" if source_diff.returncode else
++                                                  file_sha256(out / "source.patch") or "none"))))
+     stage("launch", "ok", evidence=str(out / "px4.log"), pid=px4.pid)
+     gcs = mavutil.mavlink_connection(f"udpin:0.0.0.0:{GCS_PORT}", source_system=255, source_component=190)
+     v = Vehicle(gcs, log)
