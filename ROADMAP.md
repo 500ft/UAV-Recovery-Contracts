@@ -1,72 +1,63 @@
-# Research Roadmap
+# Roadmap
 
-This roadmap is gate-driven. Later stages do not start merely because an earlier date has passed.
+This is the plan for finishing the project. The long-term backlog is
+[docs/TASKS.md](docs/TASKS.md); work history is in
+[docs/SPRINT_PROGRESS.md](docs/SPRINT_PROGRESS.md) and
+[docs/REVIEW_READY.md](docs/REVIEW_READY.md).
 
-**2026-09-16 programme note.** The merged [formal-composition programme](docs/specs/formal-composition/README.md) proposes making an extracted, checkable model of PX4 failsafe logic (Study A–C) the spine, with Stage 1 below as its measurement layer and fallback; Stages 2–4 map to its trigger-gated items. Stage statuses below are unchanged: no trace exists yet.
+## Finish line
 
-## Stage 0 — Research contract
+The project is finished when **Study A** has run: 60 single-event SITL cases
+on pinned PX4 v1.17.0, each compared with the prediction from the Python model
+of PX4's failsafe logic, and judged by the registered agreement rule
+([decision D7](docs/specs/formal-composition/decisions-2026-09-19.md)):
 
-**Status:** complete for the concept repository.
+- 3 or fewer disagreements: the model is a usable predictor. Release it with
+  the benchmark.
+- 4 to 6: every disagreement is root-caused, and the owner decides.
+- 7 or more: drop the formal model and release the benchmark on its own.
 
-- Define the configured-vehicle unit of analysis.
-- Separate established prior art from the candidate research gap.
-- Register hypotheses, observables, baselines, and failure branches.
-- Define configuration and data manifests.
+Every branch ends in a release: pinned configurations, injection harness,
+traces, and the comparison against the model. A result where the model fails
+still finishes the project.
 
-**Exit gate:** a cold reader can identify the question, evidence state, first experiment, and stop condition without assuming results exist.
+This is PX4 only. ArduPilot was dropped on 2026-09-24 because PX4's own
+behaviour was not yet explained ([critique](docs/specs/formal-composition/critique-2026-09-24.md)).
 
-## Stage 1 — SITL conformance pilot
+## Where it stands (2026-09-30)
 
-**Status:** not started.
+- **The model matches PX4's real failsafe class.** On 11 input sequences the
+  Python model and PX4's compiled `Failsafe` class agree update for update. The
+  first comparison exposed an ordering bug in the model, which was fixed
+  ([evidence](evidence/task-differential-2026-09-29/README.md)).
+- **SITL runs now produce failsafes.** From 2026-09-21 to 09-29 every SITL run
+  showed no failsafe action at all. The cause was the harness: it sent integer
+  PX4 parameters as floats, so PX4 read a garbage action setting and chose
+  "none". With the encoding fixed, a datalink loss in Auto Loiter gives Hold,
+  then RTL, including on the unmodified PX4 binary
+  ([evidence](evidence/task-runtime-2026-09-29/README.md)).
+- The RTL arrives 16.4–16.7 s after the link is cut. The configured timers
+  account for 15 s (10 s detection, 5 s hold). The extra time is open item NP-3.
+- RC loss can't be injected in this simulator setup (decision D13), so Study A
+  covers the other event classes.
 
-- Pin one PX4 and one ArduPilot release.
-- Configure equivalent Hold, Land, and RTL intentions.
-- Archive every parameter and environmental assumption.
-- Remove offboard authority from randomized bounded states.
-- Record mode traces, transition latencies, trajectories, and reconnection behavior.
+## What's left
 
-**Exit gate:** the pilot estimates variability and invalid-run frequency. Then freeze the coverage target, sample size, split, horizon, and volume rule before generating separate confirmatory traces. Only the confirmatory set can establish held-out coverage and the provisional 10% volume-reduction continuation target.
+| # | Step | Who | Done when |
+|---|---|---|---|
+| 1 | Sign off decisions D1–D12. The work already runs on them, but they are still marked "proposed" with the owner boxes unticked | Owner | Boxes ticked, or changes requested. **Current step.** |
+| 2 | Close the open measurement items that affect Study A timing: NP-3 (the extra 1.4–1.7 s), NP-4 (full parameter snapshot per run), NP-6 (timing tolerance calibrated before any held-out run) | Agent | Each recorded as resolved, or as a stated limit of the rig |
+| 3 | Run the 60 single-event cases and compare each with the model | Agent | Traces committed; D7 verdict recorded |
+| 4 | Take the D7 branch. If the model passes, run the 12 paired-event cases (D9) | Agent, owner decides at 4–6 | Branch recorded |
+| 5 | Release the benchmark: configurations, harness, traces, model, comparison report | Agent | Tagged release with a README that states the verdict |
 
-**Failure branch:** if differences are below 5% and operationally negligible, stop the fleet algorithm and release a versioned conformance benchmark.
+The model checker (UPPAAL, decision D8) is only needed for composition
+properties beyond Study A. Decide on its licence if and when step 4 passes.
 
-**Indeterminate branch:** a 5–10% reduction or uncertainty spanning a decision boundary does not authorize fleet expansion. Report the interval; preregister one additional bounded confirmation or stop at the benchmark. Do not recycle pilot observations as confirmation or move the threshold after inspection.
+## Not in this version
 
-## Stage 2 — HITL replication
-
-**Status:** blocked on Stage 1.
-
-- Repeat the decisive conditions with matched flight-controller hardware.
-- Measure timing jitter and hardware-specific transition delays.
-- Update, but do not retrospectively relax, the registered uncertainty model.
-
-**Exit gate:** the qualitative Stage 1 finding survives held-out HITL trials.
-
-## Stage 3 — Offline fleet composition
-
-**Status:** blocked on positive Stage 1 confirmation. Stage 2 is not required for explicitly simulated/offline composition; it remains required for hardware-timing claims.
-
-- Insert held-out recovery traces into prerecorded or simulated fleet encounters.
-- Compare native behavior, a global tube, individualized tubes, and neighbor evacuation.
-- Report safety margins and mission-cost differences together.
-
-**Exit gate:** individualized contracts improve the registered mission-cost estimand at matched recovery-tube coverage.
-
-## Stage 4 — Contained physical validation
-
-**Status:** contingent; not authorized.
-
-- Begin with one airframe flashed alternately with both stacks.
-- Use a second airframe only for external-validity checks.
-- Progress to two slow vehicles only after single-vehicle conformance is established.
-
-**Exit gate:** facility approval, completed risk review, trained operators, independent kill path, and no unresolved Stage 1–3 conformance failures.
-
-## Stage 5 — Thesis-scale extensions
-
-These do not block the minimum publishable core:
-
-- Abstract failsafe-intent compiler
-- Online distribution-shift detection
-- Capability-aware mission allocation
-- Joint mission and recovery optimization
-- Larger heterogeneous fleet demonstration
+- ArduPilot or any second autopilot.
+- HITL, flight tests and multi-vehicle work. These need hardware, a facility
+  and a safety owner (TASKS.md tier 2).
+- The per-configuration recovery-envelope comparison from the original plan.
+  It can follow a passing Study A.

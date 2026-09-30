@@ -1,10 +1,8 @@
 # UAV Recovery Contracts — long-term research backlog
 
-The active 2026-09-05 integrity sprint is governed by [SPRINT_ROADMAP.md](SPRINT_ROADMAP.md)
-and the sole status ledger [SPRINT_TASKS.csv](SPRINT_TASKS.csv). This document
-retains long-term research dependencies; “executable now” means no intrinsic
-hardware dependency, not that every predecessor is complete. It is not the
-active ready queue.
+This is the long-term backlog. The current plan and finish line are in
+[ROADMAP.md](../ROADMAP.md); task status for the older 2026-09-05 sprint is in
+[SPRINT_TASKS.csv](SPRINT_TASKS.csv).
 
 > **Objective.** Produce the strongest, most honestly packaged evidence—not a completed
 > fleet. Priority flows from leverage, falsifiability, and executability. It does not flow
@@ -21,6 +19,9 @@ closes. No dates or estimates appear, by design.
 A [formal-composition plan set](specs/formal-composition/README.md) proposes making formal composition of PX4 failsafes (timed-automata model, reachability, SITL witness replay) the thesis spine, with the empirical recovery-contract work below as its measurement layer and fallback. It is proposed only: no task, tier, gate or claim below changes until the owner merges it and a follow-up PR reconciles this backlog, the roadmap and the claim ledger.
 
 ## Two finish lines
+
+The finish line now lives in [ROADMAP.md](../ROADMAP.md): PX4 only, Study A.
+The two lines below predate that and still name ArduPilot.
 
 **Ceiling.** Configuration-specific recovery contracts retain their registered coverage in
 SITL, HITL, and contained single-vehicle tests; offline fleet composition shows lower mission

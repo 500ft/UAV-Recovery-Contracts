@@ -53,7 +53,7 @@ because a commit cannot embed its own identity. No deployment, publication,
 outreach or spending occurred. Original checkout/user changes were preserved.
 Base includes the existing unmerged task PR #1 head; it is not origin/main.
 
-[Roadmap](SPRINT_ROADMAP.md) · [Authoritative ledger](SPRINT_TASKS.csv) ·
+[Roadmap](https://github.com/500ft/uav-failsafe-composition/blob/a92578fed957f8e6616f2b73b62d37ba93a5e3e4/docs/SPRINT_ROADMAP.md) · [Authoritative ledger](SPRINT_TASKS.csv) ·
 [Progress](SPRINT_PROGRESS.md) · [Selected candidate hashes](../evidence/sprint-2026-09-05/candidate.json).
 
 ## Completed deliverables and evidence
