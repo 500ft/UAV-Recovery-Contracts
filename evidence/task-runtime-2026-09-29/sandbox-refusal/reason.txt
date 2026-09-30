@@ -1,0 +1,1 @@
+Initial sandbox launch refused before UDP bind: Operation not permitted (exit 2). Repeated with sandbox approval in baseline-authorized; no simulator ran on the refused attempt.

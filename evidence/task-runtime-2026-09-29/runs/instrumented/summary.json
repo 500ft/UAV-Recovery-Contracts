@@ -1,0 +1,20 @@
+{
+ "case_id": "px4-v1.17.0-sih-quadx-rtl__datalink_loss__seed1",
+ "exit": 0,
+ "valid": {
+  "valid": true,
+  "reasons": []
+ },
+ "transitions": [
+  {
+   "from": "AUTO_LOITER",
+   "to": "AUTO_TAKEOFF",
+   "vehicle_status_failsafe": false
+  },
+  {
+   "from": "AUTO_TAKEOFF",
+   "to": "AUTO_LOITER",
+   "vehicle_status_failsafe": false
+  }
+ ]
+}

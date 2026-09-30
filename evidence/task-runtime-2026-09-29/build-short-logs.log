@@ -1,0 +1,13 @@
+[1/12] Generating px4 event json file from source
+[2/12] Building CXX object src/modules/commander/failsafe/CMakeFiles/failsafe.dir/framework.cpp.o
+[3/12] Building CXX object src/modules/commander/failsafe/CMakeFiles/failsafe.dir/failsafe.cpp.o
+[4/12] Linking CXX static library src/modules/commander/failsafe/libfailsafe.a
+[5/12] Generating combined event json file
+[6/12] Generating component_general.json and checksums.h
+[7/12] Building CXX object src/modules/logger/CMakeFiles/modules__logger.dir/logger.cpp.o
+[8/12] ROMFS: copying extras
+[9/12] Building CXX object src/modules/mavlink/CMakeFiles/modules__mavlink.dir/mavlink_messages.cpp.o
+[10/12] Linking CXX static library src/modules/logger/libmodules__logger.a
+[11/12] Linking CXX static library src/modules/mavlink/libmodules__mavlink.a
+[12/12] Linking CXX executable bin/px4
+ld: warning: ignoring duplicate libraries: '-lm', 'platforms/common/px4_work_queue/libpx4_work_queue.a', 'platforms/common/uORB/libuORB.a', 'platforms/posix/src/px4/common/libpx4_layer.a', 'platforms/posix/src/px4/common/lockstep_scheduler/liblockstep_scheduler.a', 'platforms/posix/src/px4/common/px4_daemon/libpx4_daemon.a', 'src/lib/parameters/libparameters.a', 'src/modules/dataman/libmodules__dataman.a', 'src/modules/navigator/MissionFeasibility/libmission_feasibility_checker.a', 'src/modules/navigator/libmodules__navigator.a'

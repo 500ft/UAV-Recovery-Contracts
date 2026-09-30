@@ -1,0 +1,397 @@
+{
+ "evidence_state": "executed SIH SITL development diagnostic",
+ "runs": {
+  "baseline-authorized": {
+   "valid": {
+    "valid": true,
+    "reasons": []
+   },
+   "binary_sha256": "89e5ff695c5e6fcf973be8ae04ab85e7cf6afcc0a3c5ec9215865927ffec60ff",
+   "instrumentation": "none",
+   "reported_override_readback": {
+    "COM_DLL_EXCEPT": 0.0,
+    "COM_LOW_BAT_ACT": 1.0,
+    "COM_OBL_RC_ACT": 3.0,
+    "COM_POS_LOW_ACT": 3.0,
+    "COM_RCL_EXCEPT": 0.0,
+    "COM_RC_IN_MODE": 3.0,
+    "GF_ACTION": 3.0,
+    "GF_PREDICT": 0.0,
+    "MIS_TAKEOFF_ALT": 10.0,
+    "NAV_DLL_ACT": 2.0,
+    "NAV_RCL_ACT": 2.0,
+    "RTL_DESCEND_ALT": 30.0,
+    "RTL_LAND_DELAY": 0.0,
+    "RTL_RETURN_ALT": 60.0,
+    "SYS_FAILURE_EN": 1.0
+   },
+   "injection_cached_vehicle_s": 58.712,
+   "injection_timing_scope": "lower bound only; no calibrated injection latency",
+   "native_log_counts": {},
+   "joined_check_update_commit": 0,
+   "complete_native_tuples": 0,
+   "incomplete_native_tuples": 0,
+   "armed_gcs_loss_updates": 0,
+   "effective_nav_dll_act": [],
+   "selected_actions_during_armed_gcs_loss": [],
+   "committed_modes_during_armed_gcs_loss": [],
+   "first_consumed_armed_gcs_loss_us": null,
+   "first_selected_rtl_us": null,
+   "selected_rtl_after_consumed_flag_s": null,
+   "state_changes": [],
+   "post_injection_native_mode_events": [],
+   "observation_limit": "logging can perturb scheduling; this is a development diagnostic"
+  },
+  "corrected-instrumented": {
+   "valid": {
+    "valid": true,
+    "reasons": []
+   },
+   "binary_sha256": "deac357fddf80991cf8e11e48149415172efdc42a14df663195b4b0bae82961e",
+   "instrumentation": "3e22ec38eb6715e60a3ae148c74b0a00618c4b9caafb53fb32fe19c73a3fb65a",
+   "reported_override_readback": {
+    "COM_DLL_EXCEPT": 0,
+    "COM_LOW_BAT_ACT": 1,
+    "COM_OBL_RC_ACT": 3,
+    "COM_POS_LOW_ACT": 3,
+    "COM_RCL_EXCEPT": 0,
+    "COM_RC_IN_MODE": 3,
+    "GF_ACTION": 3,
+    "GF_PREDICT": 0,
+    "MIS_TAKEOFF_ALT": 10.0,
+    "NAV_DLL_ACT": 2,
+    "NAV_RCL_ACT": 2,
+    "RTL_DESCEND_ALT": 30.0,
+    "RTL_LAND_DELAY": 0.0,
+    "RTL_RETURN_ALT": 60.0,
+    "SYS_FAILURE_EN": 1
+   },
+   "injection_cached_vehicle_s": 58.9,
+   "injection_timing_scope": "lower bound only; no calibrated injection latency",
+   "native_log_counts": {
+    "init": 1,
+    "check": 8642,
+    "params": 8642,
+    "update": 8642,
+    "delay": 8642,
+    "commit": 8642
+   },
+   "joined_check_update_commit": 8642,
+   "complete_native_tuples": 8642,
+   "incomplete_native_tuples": 0,
+   "armed_gcs_loss_updates": 1971,
+   "effective_nav_dll_act": [
+    2
+   ],
+   "selected_actions_during_armed_gcs_loss": [
+    5,
+    6
+   ],
+   "committed_modes_during_armed_gcs_loss": [
+    4,
+    5
+   ],
+   "first_consumed_armed_gcs_loss_us": 70552000,
+   "first_selected_rtl_us": 75556000,
+   "selected_rtl_after_consumed_flag_s": 5.004,
+   "state_changes": [
+    {
+     "t_us": 52000,
+     "armed": 0,
+     "gcs": 0,
+     "intended": 4,
+     "dll": 0,
+     "ignored": 0,
+     "action": 0,
+     "delayed": 0,
+     "takeover": 0,
+     "deferred": 0,
+     "nav": 4
+    },
+    {
+     "t_us": 64000,
+     "armed": 0,
+     "gcs": 1,
+     "intended": 4,
+     "dll": 0,
+     "ignored": 0,
+     "action": 0,
+     "delayed": 0,
+     "takeover": 0,
+     "deferred": 0,
+     "nav": 4
+    },
+    {
+     "t_us": 2536000,
+     "armed": 0,
+     "gcs": 0,
+     "intended": 4,
+     "dll": 0,
+     "ignored": 0,
+     "action": 0,
+     "delayed": 0,
+     "takeover": 0,
+     "deferred": 0,
+     "nav": 4
+    },
+    {
+     "t_us": 3832000,
+     "armed": 0,
+     "gcs": 0,
+     "intended": 4,
+     "dll": 2,
+     "ignored": 0,
+     "action": 0,
+     "delayed": 0,
+     "takeover": 0,
+     "deferred": 0,
+     "nav": 4
+    },
+    {
+     "t_us": 5668000,
+     "armed": 1,
+     "gcs": 0,
+     "intended": 4,
+     "dll": 2,
+     "ignored": 0,
+     "action": 0,
+     "delayed": 0,
+     "takeover": 0,
+     "deferred": 0,
+     "nav": 4
+    },
+    {
+     "t_us": 5680000,
+     "armed": 1,
+     "gcs": 0,
+     "intended": 17,
+     "dll": 2,
+     "ignored": 0,
+     "action": 0,
+     "delayed": 0,
+     "takeover": 0,
+     "deferred": 0,
+     "nav": 17
+    },
+    {
+     "t_us": 17380000,
+     "armed": 1,
+     "gcs": 0,
+     "intended": 4,
+     "dll": 2,
+     "ignored": 0,
+     "action": 0,
+     "delayed": 0,
+     "takeover": 0,
+     "deferred": 0,
+     "nav": 4
+    },
+    {
+     "t_us": 70552000,
+     "armed": 1,
+     "gcs": 1,
+     "intended": 4,
+     "dll": 2,
+     "ignored": 0,
+     "action": 5,
+     "delayed": 6,
+     "takeover": 0,
+     "deferred": 0,
+     "nav": 4
+    },
+    {
+     "t_us": 75556000,
+     "armed": 1,
+     "gcs": 1,
+     "intended": 4,
+     "dll": 2,
+     "ignored": 0,
+     "action": 6,
+     "delayed": 0,
+     "takeover": 0,
+     "deferred": 0,
+     "nav": 5
+    },
+    {
+     "t_us": 94224000,
+     "armed": 0,
+     "gcs": 1,
+     "intended": 4,
+     "dll": 2,
+     "ignored": 0,
+     "action": 0,
+     "delayed": 0,
+     "takeover": 0,
+     "deferred": 0,
+     "nav": 4
+    }
+   ],
+   "post_injection_native_mode_events": [
+    {
+     "t_vehicle_s": 75.556,
+     "from": "AUTO_LOITER",
+     "to": "AUTO_RTL",
+     "vehicle_status_failsafe": true
+    },
+    {
+     "t_vehicle_s": 94.224,
+     "from": "AUTO_RTL",
+     "to": "AUTO_LOITER",
+     "vehicle_status_failsafe": false
+    }
+   ],
+   "observation_limit": "logging can perturb scheduling; this is a development diagnostic"
+  },
+  "corrected-original-binary": {
+   "valid": {
+    "valid": true,
+    "reasons": []
+   },
+   "binary_sha256": "89e5ff695c5e6fcf973be8ae04ab85e7cf6afcc0a3c5ec9215865927ffec60ff",
+   "instrumentation": "none",
+   "reported_override_readback": {
+    "COM_DLL_EXCEPT": 0,
+    "COM_LOW_BAT_ACT": 1,
+    "COM_OBL_RC_ACT": 3,
+    "COM_POS_LOW_ACT": 3,
+    "COM_RCL_EXCEPT": 0,
+    "COM_RC_IN_MODE": 3,
+    "GF_ACTION": 3,
+    "GF_PREDICT": 0,
+    "MIS_TAKEOFF_ALT": 10.0,
+    "NAV_DLL_ACT": 2,
+    "NAV_RCL_ACT": 2,
+    "RTL_DESCEND_ALT": 30.0,
+    "RTL_LAND_DELAY": 0.0,
+    "RTL_RETURN_ALT": 60.0,
+    "SYS_FAILURE_EN": 1
+   },
+   "injection_cached_vehicle_s": 58.14,
+   "injection_timing_scope": "lower bound only; no calibrated injection latency",
+   "native_log_counts": {},
+   "joined_check_update_commit": 0,
+   "complete_native_tuples": 0,
+   "incomplete_native_tuples": 0,
+   "armed_gcs_loss_updates": 0,
+   "effective_nav_dll_act": [],
+   "selected_actions_during_armed_gcs_loss": [],
+   "committed_modes_during_armed_gcs_loss": [],
+   "first_consumed_armed_gcs_loss_us": null,
+   "first_selected_rtl_us": null,
+   "selected_rtl_after_consumed_flag_s": null,
+   "state_changes": [],
+   "post_injection_native_mode_events": [
+    {
+     "t_vehicle_s": 74.524,
+     "from": "AUTO_LOITER",
+     "to": "AUTO_RTL",
+     "vehicle_status_failsafe": true
+    },
+    {
+     "t_vehicle_s": 93.364,
+     "from": "AUTO_RTL",
+     "to": "AUTO_LOITER",
+     "vehicle_status_failsafe": false
+    }
+   ],
+   "observation_limit": "logging can perturb scheduling; this is a development diagnostic"
+  },
+  "instrumented": {
+   "valid": {
+    "valid": true,
+    "reasons": []
+   },
+   "binary_sha256": "32bcbfe3abf6af7ad87418f783ac3b51d22e85e6f8026b8123a93cd01d0308f3",
+   "instrumentation": "3d8d73add7db3c910ffc9a5b9e3bdf93e8a89c0269d32c4fe0c1a8247bb81b45",
+   "reported_override_readback": {
+    "COM_DLL_EXCEPT": 0.0,
+    "COM_LOW_BAT_ACT": 1.0,
+    "COM_OBL_RC_ACT": 3.0,
+    "COM_POS_LOW_ACT": 3.0,
+    "COM_RCL_EXCEPT": 0.0,
+    "COM_RC_IN_MODE": 3.0,
+    "GF_ACTION": 3.0,
+    "GF_PREDICT": 0.0,
+    "MIS_TAKEOFF_ALT": 10.0,
+    "NAV_DLL_ACT": 2.0,
+    "NAV_RCL_ACT": 2.0,
+    "RTL_DESCEND_ALT": 30.0,
+    "RTL_LAND_DELAY": 0.0,
+    "RTL_RETURN_ALT": 60.0,
+    "SYS_FAILURE_EN": 1.0
+   },
+   "injection_cached_vehicle_s": 58.904,
+   "injection_timing_scope": "lower bound only; no calibrated injection latency",
+   "native_log_counts": {
+    "init": 1,
+    "check": 8655,
+    "update": 8655,
+    "commit": 8655
+   },
+   "joined_check_update_commit": 8655,
+   "complete_native_tuples": 0,
+   "incomplete_native_tuples": 8655,
+   "armed_gcs_loss_updates": 2769,
+   "effective_nav_dll_act": [
+    1073741824
+   ],
+   "selected_actions_during_armed_gcs_loss": [
+    0
+   ],
+   "committed_modes_during_armed_gcs_loss": [
+    4
+   ],
+   "first_consumed_armed_gcs_loss_us": 70684000,
+   "first_selected_rtl_us": null,
+   "selected_rtl_after_consumed_flag_s": null,
+   "state_changes": [],
+   "post_injection_native_mode_events": [],
+   "observation_limit": "first log format truncated: missing fields unknown"
+  }
+ },
+ "artifact_sha256": {
+  "analyze.py": "6109e9f8c118946f7466e0b0a4fbdee384c0efccfe5b85b50945ec5a17d55500",
+  "build-short-logs.log": "05adcb45af086b9d81d6683d15245d029f92a395f3bb06f81ef4ad27d51cc15e",
+  "build.log": "b8a088ea3d59c2893fff1034e82c2b1c5523201a4b15b7c7e5d6b660de4aeba5",
+  "compiler.txt": "177513c3b586d0c9c98a4031fb7d03b9d2b118958bcd567525cd77d0080a7c8a",
+  "environment.json": "8179c7d105aec094cfc7b9911840f05e113718c605bf87344b8e6d8d915aa63b",
+  "first-observation.patch": "a890ab9db436608578d16a14b756a8460916f062d9274280cd7b1147b6a1f77b",
+  "runner-change.patch": "667b78dcdbc9b2224a50a0039323b69f25da5a6e1dfd2072c6712d08bc6cfdc0",
+  "runs/baseline-authorized/case.json": "8656aed857cd34ce87e590647ba3ac6fb7c511b381e931e3cfdba39acad15fe4",
+  "runs/baseline-authorized/flight.ulg.gz": "0a15a77f684ed2198ac50b47ad1a18145c86a04ec52d5d0b6e59aaaca9bf782f",
+  "runs/baseline-authorized/px4.log.gz": "6fbbdd7a2a953ca9a9242099a0b58c6a63d41a066cf3961e7b84b97de867176d",
+  "runs/baseline-authorized/raw.jsonl.gz": "f056f50b2b885c03386942f31d2b515ac0b34db8b6e54a1eaf50493cce623ddf",
+  "runs/baseline-authorized/summary.json": "87d6116246e5fb852cbf18fd4309f55a05c94d1d3da97f384b1ecc9ca09af5e7",
+  "runs/baseline-authorized/trace.json.gz": "c21a4fb1c786aa92aaf4059a3328e4c4607b52e453c1647e49156feec48cf83b",
+  "runs/corrected-instrumented/case.json": "8656aed857cd34ce87e590647ba3ac6fb7c511b381e931e3cfdba39acad15fe4",
+  "runs/corrected-instrumented/flight.ulg.gz": "27bf5e537dca2d4b9d0fd05aff113627fa6740b6c09a83664acc682de1c8df13",
+  "runs/corrected-instrumented/px4.log.gz": "049759ce916ab11b090b333b2cbf8b271b27d35c62aadccac37c200e66bcb3e8",
+  "runs/corrected-instrumented/raw.jsonl.gz": "bb233a5bb914d21f1220e6adc1e392e774700a86a58b2d54c144ccba8da1980a",
+  "runs/corrected-instrumented/source.patch": "3e22ec38eb6715e60a3ae148c74b0a00618c4b9caafb53fb32fe19c73a3fb65a",
+  "runs/corrected-instrumented/summary.json": "77f991bff8127265d4835fe1a8e6eb305238f0b2754fc7a4343c0e3729b57e6b",
+  "runs/corrected-instrumented/trace.json.gz": "3935c07e8b89091cf3fc7c4d04cab8921f3e40734a56408278d72a6ae8fceadf",
+  "runs/corrected-original-binary/case.json": "8656aed857cd34ce87e590647ba3ac6fb7c511b381e931e3cfdba39acad15fe4",
+  "runs/corrected-original-binary/flight.ulg.gz": "ae92512574e967874e3862a28a67848e74f286e6cadc27ad6ecd8f9892673a96",
+  "runs/corrected-original-binary/px4.log.gz": "eda7ae06d4e0b2352daa751790349e5c0394867d8e82953041f7010f1bfc96fe",
+  "runs/corrected-original-binary/raw.jsonl.gz": "8af278d4a5c5bc6a125c8eb80c3f29f47d87d539e492e14ca58bd6399c4a7338",
+  "runs/corrected-original-binary/summary.json": "77f991bff8127265d4835fe1a8e6eb305238f0b2754fc7a4343c0e3729b57e6b",
+  "runs/corrected-original-binary/trace.json.gz": "7c328b8f436a825f92b2a195d75eb52bf47a647f733ded8738205c7f42f4d946",
+  "runs/instrumented/case.json": "8656aed857cd34ce87e590647ba3ac6fb7c511b381e931e3cfdba39acad15fe4",
+  "runs/instrumented/flight.ulg.gz": "e55dcd5fb4964a885c2eb484ce2b42d5de4e92a49f383f447b05fc27de9c052f",
+  "runs/instrumented/px4.log.gz": "7cedb29554f4f2bb0b6875bf6cbc4828cb4b2085691e7693ad34642fe5a8a3ae",
+  "runs/instrumented/raw.jsonl.gz": "0d2fef73b44dfa80f621bd4e015a03b69c1d3a9dc835c8105f079725a2354a53",
+  "runs/instrumented/source.patch": "3d8d73add7db3c910ffc9a5b9e3bdf93e8a89c0269d32c4fe0c1a8247bb81b45",
+  "runs/instrumented/summary.json": "87d6116246e5fb852cbf18fd4309f55a05c94d1d3da97f384b1ecc9ca09af5e7",
+  "runs/instrumented/trace.json.gz": "11d09c037d0ecdbfc1a668bbdd5fdf512f202e8fd8735fd97a51a5d64f29f962",
+  "sandbox-refusal/case.json": "8656aed857cd34ce87e590647ba3ac6fb7c511b381e931e3cfdba39acad15fe4",
+  "sandbox-refusal/raw.jsonl": "829bc06a9798b40dfad03044711b4cb1a5086f02b0333f49fc31da4395f7b47f",
+  "sandbox-refusal/reason.txt": "8aaf13f9fc6079f08d62ddbf1664a09ceaf92b3b7d0bfe520317ddc45428f3c7",
+  "submodules.txt": "3f37d006dff691196090e7456803773a5804bdb7a05c2cd83c6ed3c86eeba01a"
+ },
+ "limitations": [
+  "not a conformance campaign or a symbolic proof",
+  "all integer overrides corrected together; not a single-parameter causal isolation",
+  "native action codes follow framework.h; RTL=6",
+  "historical raw captures and verdicts are preserved unchanged"
+ ]
+}

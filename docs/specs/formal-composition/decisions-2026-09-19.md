@@ -177,3 +177,18 @@ not. That figure was the bug. The corrected model gives exactly 2.5 s at every s
 | **D27** | The model follows `FailsafeBase::update()`'s own order and uses integer microseconds. Float seconds made the first RTL land at 5.0 or 5.1 s by rounding luck | decided here |
 | **D28** | D26 is partly discharged. On the selected-action timeline, model and real class agree exactly on 11 sequences. The pot's value is private to the class and was not read, and the integrated runtime is layer C, still untested | recorded |
 | **D29** | The differential agreeing means the SELECTOR is not where the missing recovery lives, on the domain these sequences cover: no mode-requirement fallback, no takeover, no deferral, one vehicle type. It does not localise the anomaly, and it does not say the integration is at fault | recorded |
+
+## 2026-09-29 addendum — runtime diagnosis
+
+**D30.** The reproduced Auto Loiter datalink-loss anomaly is localized to the
+harness's integer parameter encoding and readback. The live selector consumed
+an invalid integer action setting and returned `None`; corrected bytewise
+transport restored Hold then RTL. The response also occurred on the original
+uninstrumented executable. NP-8 is closed for this domain.
+
+[The executed packet](../../../evidence/task-runtime-2026-09-29/README.md) records
+the mechanism and limits; its [results JSON](../../../evidence/task-runtime-2026-09-29/results.json)
+is the canonical home for measurements. This updates the unresolved inference
+in D29 without altering the historical captures or declaring Study A complete.
+Injection timing remains uncalibrated; a complete conformance campaign and the
+matched interaction pilot still require their declared gates.
