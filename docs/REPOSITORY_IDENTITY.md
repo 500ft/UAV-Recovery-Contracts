@@ -35,19 +35,14 @@ does not replace the authoritative protocol or task ledger.
 
 ## Visual provenance
 
-The README lead image, [`media/hero.jpg`](media/hero.jpg), is AI-generated
-concept art. The shaded corridors are illustrative, not a recovered trajectory,
-measured envelope, or safety guarantee.
-
-[`media/project-overview.svg`](media/project-overview.svg) is an original,
-editable conceptual diagram created for the repository presentation. It contains
-no measured values, synthetic plots or purported hardware photographs.
-Sources for its relationships: [Research plan](research-plan.md), [Experiment 01](experiment-01-authority-loss.md) and [source review](day3-source-review.md).
-
-Each stage carries an explicit text label. Meaning does not depend on red/green
-color differences. The diagram has an SVG title and description; its caption and
-the adjacent README text state the evidence limits. Existing analytical figures
-retain their original files, generators and provenance contracts.
+The README leads with [`media/project-overview.svg`](media/project-overview.svg),
+an editable diagram of the project's three steps and their status. It
+summarises results recorded elsewhere
+([differential](../evidence/task-differential-2026-09-29/README.md),
+[runtime](../evidence/task-runtime-2026-09-29/README.md)) and is not itself a
+result plot. Each step has a text label, so the meaning doesn't depend on
+colour, and the SVG has a title and description for screen readers. Update it
+in the same PR as any change to the roadmap's status.
 
 ## Keeping navigation reproducible
 

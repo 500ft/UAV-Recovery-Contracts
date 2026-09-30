@@ -13,11 +13,9 @@ and when.
 [Where it stands](#where-it-stands) · [Roadmap](ROADMAP.md) ·
 [Quick start](#quick-start) · [Reviewer guide](docs/START_HERE.md)
 
-![Illustration of two UAVs with distinct possible recovery corridors after command loss](docs/media/hero.jpg)
+![Project overview: model of PX4 failsafe logic matches the compiled class on 11 of 11 sequences, SITL shows Hold then RTL after link loss, and Study A (60 SITL cases) is next](docs/media/project-overview.svg)
 
-*Concept illustration (AI-generated), not a flight trace.
-No study result has been generated yet. The runs described below are development
-runs, and no HITL or flight data exists.*
+*Project overview diagram. It summarises the status below; it is not a result plot.*
 
 ## The question
 
@@ -95,8 +93,9 @@ decisions the work already uses.
 
 ## Limits
 
-- Everything so far is development work in simulation. The confirmation
-  campaign has not run.
+- Everything so far is development work in simulation.
+  No study result has been generated yet; the confirmation campaign has not run,
+  and no HITL or flight data exists.
 - RC loss can't be injected in this simulator setup, so it is excluded.
 - Injection times are lower bounds; the injection latency has not been
   calibrated.
