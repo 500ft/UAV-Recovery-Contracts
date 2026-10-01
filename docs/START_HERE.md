@@ -14,8 +14,8 @@ The project has a Python model of PX4's failsafe logic, written from the
 source. It agrees with PX4's compiled `Failsafe` class on 11 of 11 input
 sequences. The simulator harness now reproduces PX4's failsafes (Hold, then
 RTL after a datalink loss) after a parameter-encoding bug in the harness was
-fixed. The next step is Study A: 60 single-event simulator cases compared with
-the model. Everything so far is simulation.
+fixed. The next step is Study A: every required single-event simulator cell compared
+with the model, judged by a coverage gate. Everything so far is simulation.
 
 ## Reading paths
 

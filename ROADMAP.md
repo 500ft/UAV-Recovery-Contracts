@@ -7,17 +7,22 @@ This is the plan for finishing the project. The long-term backlog is
 
 ## Finish line
 
-The project is finished when **Study A** has run: 60 single-event SITL cases
-on pinned PX4 v1.17.0, each compared with the prediction from the Python model
-of PX4's failsafe logic, and judged by the registered agreement rule
-([decision D7](docs/specs/formal-composition/decisions-2026-09-19.md)):
+The project is finished when **Study A** has run: the required single-event
+SITL cells on pinned PX4 v1.17.0, each compared with the prediction from the
+Python model of PX4's failsafe logic, and judged by the coverage gate in
+[decision D7](docs/specs/formal-composition/decisions-2026-09-19.md) (as
+revised on 2026-09-25, signed off 2026-09-30):
 
-- 3 or fewer disagreements: the model is a usable predictor. Release it with
-  the benchmark.
-- 4 to 6: every disagreement is root-caused, and the owner decides.
-- 7 or more: drop the formal model and release the benchmark on its own.
+- every required cell has a valid, observable, classified result, reported by
+  mechanism, order and boundary;
+- any unexplained discrepancy blocks claims for its subdomain;
+- a disagreement that is a model-structure error, and can't be fixed without
+  adding state the pinned code doesn't contain, ends the formal model.
 
-Every branch ends in a release: pinned configurations, injection harness,
+The required cells are at least the five injectable event classes on each
+configuration where the class has a configured action, at seeds 1, 2, 3, 5
+and 8 ([protocol §7b](docs/specs/formal-composition/study-a-protocol.md)).
+Every outcome ends in a release: pinned configurations, injection harness,
 traces, and the comparison against the model. A result where the model fails
 still finishes the project.
 
@@ -45,14 +50,14 @@ behaviour was not yet explained ([critique](docs/specs/formal-composition/critiq
 
 | # | Step | Who | Done when |
 |---|---|---|---|
-| 1 | Sign off decisions D1–D12. The work already runs on them, but they are still marked "proposed" with the owner boxes unticked | Owner | Boxes ticked, or changes requested. **Current step.** |
-| 2 | Close the open measurement items that affect Study A timing: NP-3 (the extra 1.4–1.7 s), NP-4 (full parameter snapshot per run), NP-6 (timing tolerance calibrated before any held-out run) | Agent | Each recorded as resolved, or as a stated limit of the rig |
-| 3 | Run the 60 single-event cases and compare each with the model | Agent | Traces committed; D7 verdict recorded |
-| 4 | Take the D7 branch. If the model passes, run the 12 paired-event cases (D9) | Agent, owner decides at 4–6 | Branch recorded |
+| 1 | Sign off decisions D1–D13 | Owner | Done 2026-09-30 ([addendum](docs/specs/formal-composition/decisions-2026-09-19.md)) |
+| 2 | Close the open measurement items that affect Study A timing: NP-3 (the extra 1.4–1.7 s), NP-4 (full parameter snapshot per run), NP-6 (timing tolerance calibrated before any held-out run) | Agent | Each recorded as resolved, or as a stated limit of the rig. **Current step.** |
+| 3 | Commit the required cell list as scenario identities (D25), then run every cell and compare each with the model | Agent | Traces committed; every cell classified |
+| 4 | Apply the D7 gate. If the model holds, run the first supported hazard pair (D9) | Agent | Gate result and any blocked subdomains recorded |
 | 5 | Release the benchmark: configurations, harness, traces, model, comparison report | Agent | Tagged release with a README that states the verdict |
 
-The model checker (UPPAAL, decision D8) is only needed for composition
-properties beyond Study A. Decide on its licence if and when step 4 passes.
+The model checker (UPPAAL) is deferred under D8 option (b): it is only needed
+for composition properties beyond Study A.
 
 ## Not in this version
 

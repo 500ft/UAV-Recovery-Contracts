@@ -13,7 +13,7 @@ and when.
 [Where it stands](#where-it-stands) · [Roadmap](ROADMAP.md) ·
 [Quick start](#quick-start) · [Reviewer guide](docs/START_HERE.md)
 
-![Project overview: model of PX4 failsafe logic matches the compiled class on 11 of 11 sequences, SITL shows Hold then RTL after link loss, and Study A (60 SITL cases) is next](docs/media/project-overview.svg)
+![Project overview: model of PX4 failsafe logic matches the compiled class on 11 of 11 sequences, SITL shows Hold then RTL after link loss, and Study A (every required SITL cell) is next](docs/media/project-overview.svg)
 
 *Project overview diagram. It summarises the status below; it is not a result plot.*
 
@@ -85,11 +85,11 @@ git diff -- evidence/task-day3-2026-09-09/acquisition-ledger.json
 
 ## What's next
 
-Run Study A: 60 single-event SITL cases, each compared with the model, judged
-by a rule fixed in advance. Three or fewer disagreements and the model is kept;
-seven or more and the benchmark is released without it. The
-[roadmap](ROADMAP.md) lists the steps, starting with signing off the study
-decisions the work already uses.
+Run Study A: every required single-event SITL cell (five event classes across
+the pinned configurations) compared with the model. Each cell needs a valid,
+classified result, and any unexplained disagreement blocks claims for that
+area. The study decisions were signed off on 2026-09-30; the
+[roadmap](ROADMAP.md) lists the remaining steps.
 
 ## Limits
 
