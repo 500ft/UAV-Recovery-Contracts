@@ -21,9 +21,11 @@ Nothing here has had an independent review.
    checking: the byte-level encoding against PX4's source (linked from the
    record), and the unexplained 1.4–1.7 s between the timers' 15 s and the
    observed RTL.
-3. **Study A decisions D1–D12**
-   ([decisions](specs/formal-composition/decisions-2026-09-19.md)). These still
-   need the owner's sign-off.
+3. **Study A decisions and the protocol amendment**
+   ([decisions](specs/formal-composition/decisions-2026-09-19.md),
+   [protocol §7b](specs/formal-composition/study-a-protocol.md)). Signed off on
+   2026-09-30. Worth checking: that the coverage gate and the required-cell
+   minimum are fixed before the first confirmation run.
 
 ## Reproduce
 

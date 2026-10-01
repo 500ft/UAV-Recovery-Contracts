@@ -9,8 +9,8 @@ current plan, read the [roadmap](../../ROADMAP.md).
 
 | File | What it is |
 | --- | --- |
-| [formal-composition/study-a-protocol.md](formal-composition/study-a-protocol.md) | The Study A protocol: what the model is compared against in SITL, and the agreement thresholds |
-| [formal-composition/decisions-2026-09-19.md](formal-composition/decisions-2026-09-19.md) | Decisions D1–D14: PX4 version, vehicle, event classes, configurations, the D7 agreement rule. **D1–D12 still need owner sign-off** |
+| [formal-composition/study-a-protocol.md](formal-composition/study-a-protocol.md) | The Study A protocol: what the model is compared against in SITL. §7b (2026-09-30) replaces §1's count rule with the D7 coverage gate |
+| [formal-composition/decisions-2026-09-19.md](formal-composition/decisions-2026-09-19.md) | Decisions D1–D30: PX4 version, vehicle, event classes, configurations, the D7 coverage gate. Signed off 2026-09-30 |
 | [formal-composition/scope.md](formal-composition/scope.md) | What counts as an unsafe combined state, and what is in and out of scope |
 
 ## Records

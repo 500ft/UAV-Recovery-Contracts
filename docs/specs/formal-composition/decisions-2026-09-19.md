@@ -1,24 +1,24 @@
 # Frozen decisions for the first software study — 2026-09-19
 
-Status: **proposed by the agent, awaiting owner sign-off.** A proposed value is not a frozen value. Sign off by editing the Owner column in this PR; every value with "owner" outstanding blocks the task named beside it. Decisions D1-D6 and D10-D12 are already realised in the files cited; D7-D9 and D13 need your answer before the corresponding day's work.
+Status: **signed off 2026-09-30** (see the last addendum). Originally proposed by the agent, awaiting owner sign-off. A proposed value is not a frozen value. Sign off by editing the Owner column in this PR; every value with "owner" outstanding blocks the task named beside it. Decisions D1-D6 and D10-D12 are already realised in the files cited; D7-D9 and D13 need your answer before the corresponding day's work.
 
 Base: main `929cc8a` (the merge of PR #6, merged 2026-09-16). Critique of the handoff that produced these: [plan-critique-2026-09-19.md](plan-critique-2026-09-19.md). Baseline sources cited as `[Bn]`: [docs/baselines/README.md](../../baselines/README.md).
 
 | id | decision | frozen value | basis | blocks | owner |
 |---|---|---|---|---|---|
-| **D1** | PX4 identity | `v1.17.0`, commit `d6f12ad1c4f70ad3230afd7d86e971421e02fef4`, built here as `px4_sitl_default` | newest tagged release that built and launched in this environment; not chosen from documentation [B1][B10] | everything | ☐ |
-| **D2** | Vehicle model | `10040_sihsim_quadx` — PX4's simulation-in-hardware quadrotor, no external physics simulator | fewest moving parts, no Gazebo dependency, ships with the pinned release; mass 1.0 kg, inertia diag(0.025, 0.025, 0.030) [B10] | URC-02 | ☐ |
-| **D3** | Simulator mode | lockstep enabled (default for `px4_sitl_default`) | deterministic simulation time; note that it does **not** make host-side injection deterministic, see D6 | URC-04 | ☐ |
-| **D4** | Event classes (six, all injectable) | offboard loss (stop the setpoint stream), datalink loss (stop GCS heartbeats), RC loss (stop `MANUAL_CONTROL`), GPS/estimator-validity loss (`failure gps off`), battery (`failure battery wrong` at `SYS_FAIL_BAT_LVL`), geofence breach (`GF_MAX_HOR_DIST` + commanded fly-out) | each has a distinct, repeatable stimulus [B3][B4]; **the handoff's "setpoint-only loss" is not separable over MAVLink** and is deferred, see D11 | URC-02, URC-04 | ☐ |
-| **D5** | Configuration variants | one intention family per row: vendor defaults, Hold, RTL, Land, plus two one-factor timer variants (`COM_FAIL_ACT_T=0`, `COM_DL_LOSS_T=5`) | one-factor changes only; the equivalence rule is computed from the pinned parameter maps, not asserted | URC-02 | ☐ |
-| **D6** | Injection scheduling | on **vehicle** time: wait for a telemetry timestamp to cross the scheduled value, then inject; record scheduled and observed vehicle timestamps | lockstep does not bound host-side UDP jitter (critique finding 7) | URC-04 | ☐ |
-| **D7** | Agreement decision rule | by count, not percentage: **≤3** disagreements of 60 → proceed; **4-6** → owner decision with every disagreement root-caused; **≥7** → kill the formalisation and release the benchmark. Report a Wilson 95% interval beside every agreement figure | 95% of 60 is 57 runs; the plan's 95%/90% boundary is one run wide (critique finding 5) | Study A analysis | ☐ **needs your answer** |
-| **D8** | Checker | **not available.** `verifyta`/UPPAAL is absent on this machine and needs an accepted academic licence. Options: (a) accept the UPPAAL academic licence and pin its version, (b) build the model and queries now and defer checking, (c) name a different timed-automata checker | no homemade reachability engine, per the handoff's own rule | Study B | ☐ **needs your answer** |
-| **D9** | Paired-event tier | after the 60 single-event cases: 4 ordered hazard pairs × 1 configuration × 3 seeds = 12 cases; until they pass, any checker prediction that depends on two simultaneous hazards is a hypothesis | U2 and U3 are defined over simultaneous hazards; a single-event matrix cannot validate them (critique finding 4) | Study B interpretation | ☐ **needs your answer** |
-| **D10** | Paths | `protocols/configuration-matrix.{json,md}`, `protocols/trace-schema.json`, `protocols/unsafe-composition-properties.json`, `model/`, `harness/` | the handoff proposed `tools/sitl/` and different protocol filenames; `tools/` already holds the presentation checkers CI runs, and the contracts were built on 2026-09-16 under these names. The handoff permits recorded deviations | — | ☐ |
-| **D11** | Deferred: setpoint-only loss | needs a uXRCE-DDS/ROS 2 offboard path so the keep-alive and the setpoint topics are separable [B4]. Trigger: the single-event tier passes and the ROS 2 path is available in this environment | — | — | ☐ |
-| **D13** | RC loss is not injectable in this rig | Recorded as a frozen class that the campaign excludes, not deleted. PX4 in SIH SITL did not accept MAVLink `MANUAL_CONTROL` as a manual-control source (2026-09-20: `manual_control_signal_lost` stayed true while the stream ran at 10 Hz), so there is no RC signal to remove | a class with no stimulus cannot be a case; the alternative is a simulated RC source or a joystick bridge | Study A coverage | ☐ **needs your answer**: accept five injectable classes, or fund an RC source |
-| **D12** | Horizon and tolerances | horizon = injection + 45 s or terminal mode, whichever first; timing tolerance unchanged from the protocol (median \|Δt\| ≤ 0.2 s, p95 ≤ 1.0 s) | 45 s covers `COM_DL_LOSS_T` + `COM_FAIL_ACT_T` + an RTL from 60 m with margin [B10] | Study A | ☐ |
+| **D1** | PX4 identity | `v1.17.0`, commit `d6f12ad1c4f70ad3230afd7d86e971421e02fef4`, built here as `px4_sitl_default` | newest tagged release that built and launched in this environment; not chosen from documentation [B1][B10] | everything | ☑ 2026-09-30 |
+| **D2** | Vehicle model | `10040_sihsim_quadx` — PX4's simulation-in-hardware quadrotor, no external physics simulator | fewest moving parts, no Gazebo dependency, ships with the pinned release; mass 1.0 kg, inertia diag(0.025, 0.025, 0.030) [B10] | URC-02 | ☑ 2026-09-30 |
+| **D3** | Simulator mode | lockstep enabled (default for `px4_sitl_default`) | deterministic simulation time; note that it does **not** make host-side injection deterministic, see D6 | URC-04 | ☑ 2026-09-30 |
+| **D4** | Event classes (six, all injectable) | offboard loss (stop the setpoint stream), datalink loss (stop GCS heartbeats), RC loss (stop `MANUAL_CONTROL`), GPS/estimator-validity loss (`failure gps off`), battery (`failure battery wrong` at `SYS_FAIL_BAT_LVL`), geofence breach (`GF_MAX_HOR_DIST` + commanded fly-out) | each has a distinct, repeatable stimulus [B3][B4]; **the handoff's "setpoint-only loss" is not separable over MAVLink** and is deferred, see D11 | URC-02, URC-04 | ☑ 2026-09-30 |
+| **D5** | Configuration variants | one intention family per row: vendor defaults, Hold, RTL, Land, plus two one-factor timer variants (`COM_FAIL_ACT_T=0`, `COM_DL_LOSS_T=5`) | one-factor changes only; the equivalence rule is computed from the pinned parameter maps, not asserted | URC-02 | ☑ 2026-09-30 |
+| **D6** | Injection scheduling | on **vehicle** time: wait for a telemetry timestamp to cross the scheduled value, then inject; record scheduled and observed vehicle timestamps | lockstep does not bound host-side UDP jitter (critique finding 7) | URC-04 | ☑ 2026-09-30 |
+| **D7** | Agreement decision rule | by count, not percentage: **≤3** disagreements of 60 → proceed; **4-6** → owner decision with every disagreement root-caused; **≥7** → kill the formalisation and release the benchmark. Report a Wilson 95% interval beside every agreement figure | 95% of 60 is 57 runs; the plan's 95%/90% boundary is one run wide (critique finding 5) | Study A analysis | ☑ 2026-09-30, as replaced 2026-09-25 |
+| **D8** | Checker | **not available.** `verifyta`/UPPAAL is absent on this machine and needs an accepted academic licence. Options: (a) accept the UPPAAL academic licence and pin its version, (b) build the model and queries now and defer checking, (c) name a different timed-automata checker | no homemade reachability engine, per the handoff's own rule | Study B | ☑ 2026-09-30: option (b) |
+| **D9** | Paired-event tier | after the 60 single-event cases: 4 ordered hazard pairs × 1 configuration × 3 seeds = 12 cases; until they pass, any checker prediction that depends on two simultaneous hazards is a hypothesis | U2 and U3 are defined over simultaneous hazards; a single-event matrix cannot validate them (critique finding 4) | Study B interpretation | ☑ 2026-09-30, as replaced 2026-09-25 |
+| **D10** | Paths | `protocols/configuration-matrix.{json,md}`, `protocols/trace-schema.json`, `protocols/unsafe-composition-properties.json`, `model/`, `harness/` | the handoff proposed `tools/sitl/` and different protocol filenames; `tools/` already holds the presentation checkers CI runs, and the contracts were built on 2026-09-16 under these names. The handoff permits recorded deviations | — | ☑ 2026-09-30 |
+| **D11** | Deferred: setpoint-only loss | needs a uXRCE-DDS/ROS 2 offboard path so the keep-alive and the setpoint topics are separable [B4]. Trigger: the single-event tier passes and the ROS 2 path is available in this environment | — | — | ☑ 2026-09-30 |
+| **D13** | RC loss is not injectable in this rig | Recorded as a frozen class that the campaign excludes, not deleted. PX4 in SIH SITL did not accept MAVLink `MANUAL_CONTROL` as a manual-control source (2026-09-20: `manual_control_signal_lost` stayed true while the stream ran at 10 Hz), so there is no RC signal to remove | a class with no stimulus cannot be a case; the alternative is a simulated RC source or a joystick bridge | Study A coverage | ☑ 2026-09-30: five injectable classes |
+| **D12** | Horizon and tolerances | horizon = injection + 45 s or terminal mode, whichever first; timing tolerance unchanged from the protocol (median \|Δt\| ≤ 0.2 s, p95 ≤ 1.0 s) | 45 s covers `COM_DL_LOSS_T` + `COM_FAIL_ACT_T` + an RTL from 60 m with margin [B10] | Study A | ☑ 2026-09-30 |
 
 ## 2026-09-21 addendum
 
@@ -192,3 +192,22 @@ is the canonical home for measurements. This updates the unresolved inference
 in D29 without altering the historical captures or declaring Study A complete.
 Injection timing remains uncalibrated; a complete conformance campaign and the
 matched interaction pilot still require their declared gates.
+
+## 2026-09-30 addendum — owner sign-off
+
+The owner delegated these decisions on 2026-09-30 ("make a decision for the
+other repos"). They were made by Claude on the owner's behalf and are recorded
+as the owner's decisions.
+
+| id | decision |
+| --- | --- |
+| D1–D6, D10, D12 | Approved as built. D12's horizon stands; its timing tolerance is not a gate for confirmation runs until the injection instant is bounded (D24) and a tolerance is calibrated in advance (NP-6) |
+| D7 | Approved **as replaced on 2026-09-25**: a deterministic coverage gate. Every required cell needs a valid, observable, classified result, reported by mechanism, order and boundary; an unexplained discrepancy blocks claims for that subdomain; no population claim from a designed set of offsets. The original count rule (≤3 of 60) is not used |
+| D8 | Option (b): build the model and its queries, and defer checking. No checker is needed for Study A. Revisit UPPAAL's academic licence only if Study A passes and composition properties are next |
+| D9 | Approved **as replaced on 2026-09-25**: one supported pair first (neither, A only, B only, A then B, B then A, one near-boundary schedule) |
+| D11 | Approved: setpoint-only loss stays deferred until a ROS 2 offboard path exists |
+| D13 | Accept five injectable event classes. No RC source is funded; RC loss stays component evidence through the native-class oracle |
+
+Consequence for Study A: the [protocol](study-a-protocol.md) gains a matching
+dated amendment (§7b) before any confirmation run.
+

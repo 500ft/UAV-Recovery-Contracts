@@ -7,8 +7,12 @@ log is kept at
 
 ## Week of 2026-09-28
 
-- **09-30** One roadmap: the finish line is Study A (60 single-event SITL cases
-  judged by the D7 rule), PX4 only. README rewritten
+- **09-30** Study A decisions signed off (owner-delegated). D7 and D9 stand
+  as replaced on 09-25; five injectable event classes (no RC source); model
+  checking deferred. The protocol gained a dated §7b amendment before any
+  confirmation run.
+- **09-30** One roadmap: the finish line is Study A judged by the D7 coverage
+  gate, PX4 only. README rewritten
   ([#41](https://github.com/500ft/uav-failsafe-composition/pull/41)).
 - **09-30** SITL failsafes restored. The harness had been sending integer PX4
   parameters as floats, so PX4 read a nonsense action setting and chose "none".

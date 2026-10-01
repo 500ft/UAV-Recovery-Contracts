@@ -66,6 +66,33 @@ The tolerance is **not** widened. Two things change instead, and both are fixed 
 2. The measured apparatus jitter is reported beside every timing figure. A disagreement smaller than the
    apparatus spread is recorded as inconclusive, never as a model error.
 
+## 7b. Amendment, 2026-09-30 — success criterion after the decision sign-off
+
+Made before any confirmation run. Every earlier injected run is a development
+run, and those before 2026-09-30 were affected by the harness's
+parameter-encoding defect (D30).
+
+1. **Event classes.** Five injectable classes: offboard loss, datalink loss,
+   GPS/estimator-validity loss, battery and geofence breach. RC loss is excluded
+   from the integrated campaign (D13).
+2. **Success criterion.** §1's count rule (≥ 95% of ≥ 60 runs, kill below 90%)
+   is replaced by D7 as revised on 2026-09-25: every required cell has a valid,
+   observable, classified result, reported by mechanism, order and boundary.
+   Any unexplained discrepancy blocks claims for its subdomain. No population
+   claim is made from a designed set of offsets.
+3. **Required cells.** The list is committed as scenario identities (D25)
+   before the first confirmation run. At minimum it covers each of the five
+   classes on each configuration row in `protocols/configuration-matrix.json`
+   where that class has a configured action, at the frozen seeds 1, 2, 3, 5
+   and 8.
+4. **Timing.** Discrete agreement decides. Timing is reported but cannot pass
+   or fail a cell until the injection instant has an upper bound (D24) and a
+   tolerance has been calibrated in advance (NP-6).
+5. **Kill criterion.** The model-structure part of §1 stands: a disagreement
+   classified as a model-structure error that can't be fixed without adding
+   state the pinned code doesn't contain ends the formalisation. The benchmark
+   is released either way.
+
 ## 8. What Study A cannot claim
 
 Hardware timing; behaviour outside the tested envelope; anything about ArduPilot; novelty on the formal axis (unsearched); fleet safety.
