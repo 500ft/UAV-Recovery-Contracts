@@ -64,6 +64,13 @@ class ExecutionIdentityTests(unittest.TestCase):
         self.assertFalse(ex["overrides_readback_complete"])
         self.assertIn("explicitly set", ex["overrides_readback_scope"])
 
+    def test_full_snapshot_is_separate_from_override_readback(self):
+        snapshot = {'before': {'sha256': 'a' * 64, 'complete': True}}
+        ex = self._ex(parameter_snapshots=snapshot)
+        self.assertEqual(ex['parameter_snapshots'], snapshot)
+        self.assertFalse(ex['overrides_readback_complete'])
+        self.assertNotEqual(ex['execution_id'], self._ex()['execution_id'])
+
     def test_missing_components_stay_unknown_and_are_not_invented(self):
         ex = self._ex(executable_sha256=None, build=None, overrides_readback=None, raw_artifacts=None)
         self.assertEqual(ex["executable_sha256"], "unknown")

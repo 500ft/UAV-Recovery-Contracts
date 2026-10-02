@@ -1,0 +1,558 @@
+UAV FAILSAFE COMPOSITION — TODAY'S CLOSEOUT PLAN AND PR #29 REVIEW
+Date: 2026-09-25
+For Claude to review and implement; this session remains planning-only.
+
+REVIEW BASIS
+============
+Main inspected: 822fec4 (after the measurement repair, PR #28).
+PR #29: OPEN, head 60f63acb2b75f31644b66201024c9cf0b6ff7527.
+All reported GitHub checks at that head were successful when reviewed.
+PR: https://github.com/500ft/uav-failsafe-composition/pull/29
+Pinned PX4: d6f12ad1c4f70ad3230afd7d86e971421e02fef4, v1.17.0.
+
+This review inspected the diff, current harness, decision ledger and evidence.
+Three small in-memory probes exercised PR #29's reproducibility function with
+synthetic input records. No repository implementation was edited, no simulator
+or oracle ran, and no GitHub review, merge or workflow dispatch was submitted.
+
+This handoff supersedes conflicting scheduling advice in the September 24
+critique. It does not turn proposed decisions into recorded owner approvals.
+Recheck the actual PR head before implementing; do not apply against stale main.
+
+THE MAIN CHANGES TO THE PROPOSED PLAN
+===================================
+
+1. Add WP0: fix the remaining measurement claims and acceptance defects before
+   calling PR #29's consistency work complete. Green CI misses these cases.
+2. Resolve the oracle environment as an early execution probe, not an indefinite
+   choice among hypothetical machines. This repository ALREADY uses Ubuntu
+   GitHub Actions. A focused oracle job there is the recommended first route.
+3. Replace the blanket D14 dependency with per-deliverable dependencies. An
+   oracle run blocks differential results, not fixture preparation, property
+   design, artifact packaging or the literature intent audit.
+4. Run diagnostic oracle work while WP1/WP2 proceed. The amended research
+   protocol gates confirmation runs, not every development diagnostic.
+5. Bound WP3 to the source state needed for the first discriminating case.
+   Do not attempt a complete fallback/takeover/transcription project today.
+6. WP4 is an identity-and-intent audit of 45 entries, not a full-text review of
+   45 papers. Keep its verdicts separate from claim support and URC-01.
+7. Produce the artifact manifest at the start. Waiting until the end risks
+   losing exactly the build, parameters and oracle inputs needed for diagnosis.
+
+The present 'four blocked packages' account overstates the blocker. Also,
+'without D14 no cause can ever be found' is too strong: direct instrumentation
+of the existing runtime can establish whether the update executes and what it
+consumes. The standalone oracle is a valuable comparison route, not the only
+possible source of diagnostic evidence.
+
+PR #29 — CHANGES REQUESTED BEFORE CALLING THE MEASUREMENT REPAIR COMPLETE
+======================================================================
+
+R1 — HIGH: RECEIVE-TIME NEIGHBORS ARE NOT AUTOMATIC EVENT-TIME BOUNDS
+
+Location: protocols/event-semantics.md section 7; inherited implementation in
+harness/trace.py bracket(), host_instant(), vehicle_instant(); D16.
+
+The assertion that two monotonically advancing clocks guarantee containment
+between neighboring received telemetry timestamps is false without a transport
+or sampling assumption. For example, in a simple common-time illustration:
+  sample generated at 8 arrives at host time 10;
+  local injection occurs at host time 11;
+  sample generated at 9 arrives at host time 12.
+Both clocks and the two received samples are monotone, yet the apparent [8,9]
+interval does not contain the event at 11. Delayed telemetry causes the error.
+For a delayed HEARTBEAT or STATUSTEXT, its own generation time is another unknown.
+
+The runner's v.boot_s is also the timestamp of the most recently pumped
+telemetry message. Recording that value while stopping a stream preserves a
+real vehicle observation; it does not establish that the stream stopped at
+that exact vehicle instant. Currently vehicle_instant makes it a point interval.
+
+Minimum correction today:
+- Preserve sample time, host receive time and local action time as different
+  quantities. Name cached telemetry observations as such and retain their age.
+- Native uLog event timestamps remain useful event observations, subject to
+  timestamp resolution and event-definition semantics.
+- Mark heuristic reconstructed bounds as uncalibrated. Without a justified
+  finite bound, use an open interval and an inconclusive timing comparison.
+- A finite upper bound needs a defensible latency/timebase bound or a causally
+  post-event sample/acknowledgment with specified timestamp semantics. Merely
+  receiving the next queued packet does not supply that.
+- Do not clamp a point estimate into an unjustified interval and call it known.
+
+Acceptance fixture: the delayed-telemetry example above cannot yield an exact
+injection time or a confident timing verdict. Historical qualitative absence
+of recovery may remain reportable; recompute timing conclusions separately.
+
+R2 — HIGH: THE NEW 'JITTER_QUOTABLE' FLAG BYPASSES COHORT VALIDITY
+
+Location: harness/reproducibility.py compare(), especially identities, pairs,
+quality, apparatus_jitter_s and jitter_quotable.
+
+Observed in-memory probes of the actual PR function:
+- One valid record at t=10 and an invalid, differently configured record at
+  t=99: all_valid=false, identical_identity=false, BUT jitter_quotable=true
+  and apparatus_jitter_s reports 89 seconds.
+- Two different intended modes: identical_identity=true, because mode is
+  collected but omitted from the identity key.
+- One vehicle_observation and one autopilot_log value: quality='measured';
+  both values are pooled despite the promise to report per source.
+
+The CLI's nonzero exit in the first case does not repair contradictory output
+fields that another consumer can quote. Sharing a clock domain can justify
+some cross-source comparisons, but equal event semantics must be established;
+the current source-membership test does not establish them.
+
+Minimum correction today:
+- Keep every input record visible, but form explicit comparable cohorts.
+- Require valid runs, matching scenario semantics and build/configuration,
+  matching event definition and a justified observation path for each statistic.
+- Report counts for total, included, excluded and missing-event runs.
+- Reject insufficient required observations rather than infer reproducibility
+  from two empty but identical mode sequences.
+- Split source groups, or explicitly document and test a source-equivalence
+  rule. Do not claim both 'never pooled' and implement unconditional pooling.
+- Until WP1 lands, use the strongest available composite identity including
+  intended mode; label missing historical components rather than guess them.
+
+Acceptance: all three probes above produce appropriately separated or
+non-comparable results; invalid observations cannot populate an accepted spread.
+
+R3 — HIGH FOR INTERPRETATION: REPEATABILITY IS NOT MEASUREMENT ACCURACY
+
+Location: protocols/expected-timelines.json tolerance basis; D20/D21;
+harness/reproducibility.py names and docstring; evidence README.
+
+The 0.352-second value is the observed range of a particular event's boot-relative
+timestamps across four valid control repeats. It can contain startup, execution,
+sampling and detection variability. It is not by itself an upper bound on the
+error of an injection-relative latency. Four repeats do not establish a tail
+bound, and clock provenance alone does not isolate apparatus error.
+
+Recommendation:
+- KEEP 1.5 seconds for re-analysis under the historical development criterion.
+- Call 0.352 seconds the observed repeat-to-repeat timestamp range; report the
+  four-run sample size, event anchor and observation route.
+- Remove 'the safe direction' and '4.3 times real jitter' as validation claims.
+  A wider tolerance reduces false mismatch alarms but can hide real deviations.
+- Do not replace the number with 1.1 seconds just by multiplying this range.
+- For FUTURE confirmation, a new protocol version may use separate development
+  calibration to choose a defensible tolerance. Freeze it before new held-out
+  runs and keep historical reports under their original criterion.
+- Keep the development 1.5-second criterion distinct from Study A's proposed
+  median 0.2-second/p95 1.0-second criteria; supersede or retain them explicitly.
+
+This fixes the reasoning without rewriting historical results to look better.
+
+R4 — MEDIUM: RETAIN THE OBSERVATION/INFERENCE DISTINCTION IN CURRENT PROSE
+
+The trace deliberately labels selected_action='unobserved'. Current decision
+text still says the repair proves 'no action is selected'. Replace current
+conclusions with: 'No expected post-injection recovery-mode transition was
+observed; the internal selected action and cause remain unresolved.'
+
+Historical prose can remain with dated corrections, but the current summary
+must not revive a stronger claim than its channels support. A missing new
+announcement is also not a continuous record of selector state.
+
+WP0 ADDITIONAL CHECKS BEFORE THE REVISED PROPERTY OBSERVER IS USED
+
+These are inherited from PR #28, not new claims that PR #29 introduced them:
+- flags_at_injection currently takes the first sample at/after injection. That
+  may be a changed state, not the state entering the response window. Preserve
+  preceding state and its age; if unknown, say unknown.
+- battery_warning is an enum. Converting every flag value to bool erases
+  low-to-critical-to-emergency changes. Preserve native values and derive
+  specific Boolean predicates only in the property monitor.
+- Channel availability is different from the presence of a transition. An
+  available channel that stayed constant is not absent; a missing channel is
+  not evidence its flag never rose. Store coverage/initial state independently
+  of edge events and gate detector verdicts on that availability.
+- When the injection interval overlaps a transition, response-window membership
+  can itself be uncertain. Do not settle that ordering using a guessed point.
+
+Each gets one meaningful fixture: an enum 1->2->3, an edge across the window
+boundary, a present constant channel versus an absent channel, and an uncertain
+event ordering. Reuse tests/test_conversion_and_silent_failure.py.
+
+DECISIONS TO WRITE DOWN, WITH RECOMMENDED VALUES
+==============================================
+
+D14 — Recommended route: standard GitHub-hosted Ubuntu runner in this repo.
+  Existing .github/workflows/ci.yml already runs on ubuntu-latest. This proves
+  the repository uses Linux CI, not that PX4 has successfully built there.
+  Use a dedicated focused oracle job, a supported explicit Ubuntu image and
+  recorded toolchain/container identity. No GPU or physical device is needed
+  for the standalone class test. Try the pinned upstream target before adding
+  new infrastructure. Resolve ordinary CI setup under the executor's existing
+  authority; only genuinely missing permissions/resources need a new decision.
+  Do not provision a paid cloud instance or reboot the headless host by default.
+
+D8 — Recommended scope for today: oracle and conformance closeout first.
+  If an appropriately licensed checker is already usable, record its identity
+  and run the narrow queries. Otherwise close the property SPECIFICATION and
+  leave symbolic verification explicitly pending. A successful C++ oracle does
+  not require UPPAAL; Python model fixtures are not a replacement model checker.
+
+D17 — Response entry now; physical recovery completion deferred.
+  U1 = selector response obligation after an eligible monitored condition.
+  U4 = commitment to an allowed navigation response, with its own observables.
+  Landing/containment/completion stay separate outcomes. No speed-limit quotient
+  is used as a completion deadline. Already being in an allowed response mode
+  can satisfy a state obligation if its preconditions hold; require a fresh mode
+  transition only when the requirement actually calls for one.
+
+D7 — Deterministic coverage gate instead of a pooled binomial gate.
+  Every required cell needs a valid, observable, classified result. Report
+  matches and mismatches by mechanism, order and boundary; no statistical
+  population claim from a designed set of offsets. Any unexplained discrepancy
+  blocks claims for that affected subdomain. A localized implementation defect
+  is a useful result and need not be 'fixed' by making the model reproduce it.
+  Require all source-correspondence fixtures to meet the declared comparison,
+  or explicitly narrow the supported model boundary. Do not silently tolerate
+  three systematic errors merely because the aggregate once allowed 57/60.
+
+D9 — Small interaction pilot with declared cells, then separate confirmation.
+  Start with one supported pair: neither, A only, B only, A then B, B then A,
+  and a nominated near-boundary schedule. Equal inputs must be realized and
+  observed, not merely requested. Add precise before/after boundary cells when
+  the first six are interpretable. A same-update case is unavailable in SITL
+  if the apparatus cannot demonstrate that ordering. It can remain an oracle
+  fixture without being counted as an integrated run.
+
+D13 — RC stimulus remains excluded from today's integrated coverage.
+  Document that exclusion. The native-class oracle may still exercise RC input
+  flags; that is component evidence, not a successful physical/MAVLink injection.
+  Do not hold all work for a joystick, ROS 2 bridge or hardware purchase.
+
+WP1 — COMPLETE IDENTITY WITHOUT A CIRCULAR PRE-LAUNCH HASH
+=======================================================
+
+Critique: a case cannot be preselected by the hash of actual runtime readback
+that does not exist until launch. Separate intended scenario and observed
+execution. Keep these as fields in existing records; do not build an identity
+service or parallel manifest hierarchy.
+
+1. scenario_id hashes a canonical, versioned scenario description:
+   firmware/source identity, requested build/vehicle, intended mode, initial
+   conditions, typed requested overrides, event schedule including origin,
+   offsets/order/restoration, surviving streams and observation horizon.
+   A seed label alone is insufficient. Include CLI restore_after and all
+   event/mode-specific overrides. Use integer time units or explicit decimal
+   encoding, not ambiguous floating-point stringification.
+2. execution identity records scenario_id, actual executable hash, build
+   target/toolchain/submodules/instrumentation, effective parameter readback,
+   realized event times, repetition identity and raw artifact hashes.
+   Distinguish a scenario from its individual repeat; never overwrite a repeat.
+3. analysis identity records input artifact hashes, normalizer revision,
+   property/protocol version and verdict configuration. Re-analysis can change
+   this identity while preserving the same execution and original raw bytes.
+
+Critical detail: current run_case.py calls param_export on the subset of
+parameters it explicitly sets. A hash of those values is not a complete vehicle
+configuration. Obtain a complete effective snapshot for new runs, with a
+completeness rule, or explicitly scope and name it overrides_readback_sha256.
+Record effective changes during execution as events or forbid them by contract.
+
+Historical mapping:
+- The repair packet contains TEN captures: five controls (one invalid) and five
+  injected runs. Do not migrate only the five injected runs.
+- Key aliases by legacy ID PLUS packet/raw-content identity; legacy case IDs
+  repeat and are not globally unique. An ambiguous alias must be rejected.
+- Map every known capture to a typed legacy record with missing build/full-
+  parameter fields explicitly unknown. No invented binary hash or defaults.
+- Historical records can remain interpretable without meeting the new complete
+  identity standard. Do not manufacture that stronger evidence retroactively.
+
+Paths: harness/cases.py, run_case.py, trace.py, normalize.py, verify.py,
+protocols/trace-schema.json, existing manifest schema, focused existing tests.
+Acceptance: changing schedule, restore policy, mode, an applied parameter or
+executable changes the relevant identity; key ordering does not; all ten known
+captures resolve uniquely or return an explained ambiguity/missing-data result.
+
+WP2 — PROPERTY CONTRACT AND PROTOCOL AMENDMENT
+============================================
+
+Start drafting immediately; finalize against actual observation capability.
+Do not wait for WP1 hashing or D14 to write property examples. Keep diagnostic
+fixtures explicitly separate from the amended held-out study.
+
+For each U1-U4 specify the eleven fields in the proposed plan, PLUS:
+- requirement source versus implementation-derived conformance rule;
+- eligible/disabled/unobservable state, and model boundary;
+- time-progress/environment assumptions and uncertain event order;
+- observer/query identifier and versioned source-to-observer mapping;
+- behavior on truncated trace, missing outcome and tool timeout;
+- current executability: offline fixture, native oracle, SITL or checker.
+
+Corrections to keep:
+- Detection timeout appears once, at the correct time origin.
+- U2 represents legitimate pending Hold delay without hiding overdue action.
+- U3's ten-second window is a study choice, not a literature-derived guarantee.
+- U3 gets an explicit query/monitor; deadlock and non-vacuity are diagnostics,
+  not silent replacements for one of U1-U4.
+- U4 describes response commitment, not physical completion.
+
+Do not freeze an unsupported numerical deadline merely to fill the template.
+Derive the source-controlled delay and identify the remaining update/transport
+bound. If that residual bound is unknown, label the timing component not yet
+evaluable while retaining evaluable mode/action requirements. A specification
+with an explicit unresolved bound is a scoped design deliverable, not a fully
+executable completed timing property.
+
+Keep TWO verdict vocabularies:
+- Per-run observation: satisfied, violated, inconclusive, unverified, or not
+  applicable, with reason and component boundary.
+- Study/checker claim: no violation observed in tests; no violation within
+  checked bounds; property established in the specified abstract model; unknown.
+Do not combine a simulation pass and symbolic proof in one status field.
+
+Missing recovery remains a discrete failure when a valid, complete window
+establishes it. Missing/truncated observation produces uncertainty. Neither
+silently disappears from latency reporting. Report detector, selector and
+mode-entry latencies separately; mark physical completion not evaluated.
+
+Paths: protocols/unsafe-composition-properties.json, event-semantics.md,
+expected-timelines.json, formal-composition study-a-protocol.md, scope.md and
+decisions document; relevant tests and baseline text.
+Acceptance: satisfying, violating, uncertain and non-triggered fixtures per
+property; one explicit query mapping per in-scope obligation; no contradiction
+among protocol, machine contract, observer, decision ledger and summary.
+
+WP3 — MINIMAL SOURCE-CORRESPONDENCE SLICE
+=======================================
+
+The existing omission marker is a reason to add a discriminating case before
+the composition study, not to wait until the study rediscovers the omission.
+
+Today's slice:
+- current delay versus rechargeable starting delay;
+- recharge saturation and reset semantics;
+- the selected hazard's actual clear condition;
+- relevant arming/mode-change behavior and the real source update order.
+
+Hand-derived fixture set:
+1. Disabled action stays disabled.
+2. Enabled delayed response follows its delay.
+3. Zero delay removes that waiting behavior.
+4. Clear and re-raise after a short gap exercises reduced available delay.
+5. Longer quiet gap restores the source-defined delay, up to its cap.
+6. A second eligible action during a running delay exercises the shared state.
+Add a prerequisite-loss/fallback case only if that boundary is represented and
+the input is available. Do not transcribe every mode-eligibility rule today.
+
+Important: choose a source clear condition that really permits the nominated
+clear/re-raise sequence. A latched action cannot be treated like an automatically
+clearing flag merely to make the fixture convenient. Keep source-required
+integer-time arithmetic, initialization and update sequencing explicit.
+
+Paths: model/px4_failsafe.py, source mapping alongside it, minimal fixture file
+shared with the native test adapter, existing focused test location.
+Acceptance states are separate: implemented with discriminating fixtures;
+matches pinned C++ on the fixture domain; agrees with observed integrated runs.
+Only claim the level actually reached. A hand-transcription self-test does not
+complete differential validation.
+
+WP4 — BOUNDED LITERATURE INTENT AUDIT
+===================================
+
+Current register: 55 entries. Nested identity.intended_work_matched counts are
+8 verified, 45 unverified, 2 corrected. Access counts are 9 inspected_earlier,
+45 metadata_only, 1 identifier_unresolved. These are different partitions; do
+not assume the two groups of 45 are exactly the same set.
+
+For every unverified-intent entry, compare intended work, returned title,
+authors/year and abstract/scope against why_selected. Prioritize the model,
+interaction and assurance references used by WP2/WP3, then finish the remainder.
+
+Each receives an explicit disposition: matches intended work, mismatch, or
+unresolved, plus source locator/access scope and a one-sentence reason. Preserve
+the original acquisition route. Prefer extending the existing vocabulary with
+a documented meaning over inventing parallel statuses.
+
+Identity acceptance does not mark a paper read or a claim supported. A title
+match alone does not establish the selection rationale. Unreachable abstracts
+stay unresolved; conclude the AUDIT once every row has a documented disposition,
+while leaving the corresponding literature uncertainty open. L43's title repair
+does not by itself validate every prior narrative claim about its contents.
+
+Paths: literature/register.json, generated axes.md, audit_identity.py and
+test_literature_register.py; dated audit evidence. Reuse the existing generator.
+Acceptance: count reconciliation covers all 45 original unverified-intent rows,
+no silent promotion of access status, corrections retain old identifiers, and
+URC-01 is not declared closed by metadata work.
+
+ORACLE TRACK — START EARLY, WITH A DECISIVE OUTPUT
+===============================================
+
+Route: a dedicated ordinary Ubuntu Actions job, using existing repository CI
+permissions, with contents: read. Avoid privileged runners and extra services.
+Prepare the complete job/fixture locally for review; actual execution belongs
+to Claude's authorized implementation scope, not this planning session.
+
+Execution procedure:
+1. Record the PX4 pin, submodule pins, runner image, compiler and build settings.
+2. Discover the actual failsafe test registration from the pinned source. PX4
+   documents make tests / TESTFILTER and native GTest binaries, but do not invent
+   an executable name or assume today's main documentation exactly matches the pin.
+3. Build the smallest applicable upstream test target and list its test cases.
+   A regex selecting zero tests must fail the job.
+4. Run an existing upstream failsafe test first. Then run the minimal fixture
+   adapter against the actual Failsafe class, rather than duplicate its selector.
+5. Confirm fixture parameters in the C++ object's effective state, not only in
+   the parameter store. Supply every relevant State/flags input and time update.
+6. Run each parameter/uORB-dependent functional test in a fresh process where
+   appropriate. PX4 warns that repeated setup in one process may not clean up
+   fully. Record actual command, test count, output, binary and fixture hashes.
+7. Export structured input/expected/actual records plus full logs on success
+   and failure. Preserve the evidence outside transient runner storage.
+
+One focused build attempt with a bounded setup/debug budget comes first. Allow
+one evidence-driven environment correction; do not spend the day trying WSL,
+cloud, several distributions and sanitizer workarounds in succession. Failure
+to run the test remains an environment result, not a PX4 result.
+
+Once executable, compare:
+  hand-derived requirement/model -> native C++ class -> integrated consumed state.
+The first two can be compared without a new SITL flight. For the third, instrument
+the existing runtime at FailsafeBase::update / checkStateAndMode and the returned
+selection, logging a synchronized minimal tuple:
+  update count/time, armed state, intended mode, relevant flags, relevant effective
+  parameters, selected and delayed action, takeover/deferral and committed mode.
+Include constructor/initialization evidence if the function is never reached.
+The instrumentation patch and executable get distinct identities from baseline.
+
+Diagnostic outcomes:
+- No update executes: investigate scheduling/call/build path; do not rewrite
+  the behavior model to predict silence.
+- Consumed inputs differ from externally logged inputs: investigate delivery,
+  instance selection, initialization or parameter application.
+- Inputs/state agree, model and native class differ: localize transcription or
+  oracle-fixture setup first.
+- Native class predicts an action, runtime returns it but commits no mode:
+  investigate downstream mode acceptance and eligibility.
+- All measured layers agree and meet the fixture: apparatus milestone complete;
+  the interaction pilot can proceed under the amended scope.
+- Unresolved: report the smallest surviving hypothesis and next discriminating
+  observation, with attempted routes. Do not claim the scientific cause closed.
+
+The oracle does not mechanically explain the integrated anomaly just by running.
+What closes that task is evidence distinguishing these branches.
+
+TODAY'S EXECUTION ORDER AND EFFORT LIMITS
+=======================================
+
+These are planning allowances, not promises about build duration. For a single
+executor, move among independent document/code tasks while CI runs. No separate
+agents or infrastructure are required by this plan.
+
+First 30 minutes:
+- Rebase/review actual PR head; create the closeout manifest and initial task ledger.
+- Record D14's recommended CI route and make the focused build job concrete.
+- Identify raw-capture availability; count all ten historical captures.
+
+Next 60-90 minutes:
+- WP0: repair the time-bound claim, reproducibility eligibility and terminology.
+- Add the discriminating fixtures; run focused checks and update PR #29's
+  description to reflect final behavior, if that is the executor's chosen branch.
+- Start the native oracle build as soon as its inputs and job are reviewable.
+
+Next 90 minutes:
+- WP1 identity and legacy mapping, including actual-versus-requested configuration.
+- Draft WP2's source-backed response contracts and revised D7/D9/D17.
+
+Next 90 minutes:
+- WP3's minimal timer-state slice and native differential fixtures.
+- Inspect the oracle result; choose the one diagnostic it actually motivates.
+- Finalize WP2's executable versus unresolved parts without invented bounds.
+
+Remaining focused block, approximately 60-90 minutes:
+- Finish WP4's bounded dispositions; do not turn it into 45 full-paper readings.
+- Run appropriate offline gates, check artifacts and write the closeout table.
+- If the oracle and observation gates pass with time remaining, run the first
+  matched development pilot. Otherwise leave its ready inputs and explicit trigger.
+
+If time is tight, prioritize WP0, a decisive oracle attempt, WP1 and the WP2
+contracts required for that attempt. Complete and report every other bounded
+deliverable reached; do not label an unfinished package done because the day ends.
+The broad mode-eligibility model and a full confirmation campaign are not part
+of today's minimum scope. Query design/artifact preparation remain possible.
+
+PR GROUPING AND EVIDENCE CLOSEOUT
+===============================
+
+Avoid four serial PRs each estimated at 'one session' when the stated objective
+is today's closeout. Recommended grouping:
+- Finish #29 with WP0 as a coherent measurement-correctness change.
+- One follow-on branch for identity, protocol and the bounded model/oracle slice,
+  with reviewable commits per concern. If oracle outputs arrive later, append
+  an evidence commit with its exact tested identity.
+- The literature audit can be an independent commit or PR; it must not block
+  a trustworthy oracle or repair to the observation chain.
+
+If #29 merges before revisions land, base the repair on the actual merged SHA.
+Do not silently assume the old reviewed head is the current baseline. This
+planning handoff does not merge or submit any PR itself.
+
+Closeout ledger columns:
+  package | criterion | artifact/hash | check/run identity | status | remaining dependency
+Statuses: complete, partial, blocked, or explicitly deferred. Use scoped labels
+such as 'identity audit complete, full-text evidence unresolved'. Never mark a
+native differential result complete based only on a successful build.
+
+Evidence required to call today's engineering closeout complete:
+- WP0 defects corrected with discriminating checks; historical results preserved.
+- Scenario/execution/analysis identity separated and historical records accounted for.
+- Revised properties and reporting rules consistent, with executable limitations stated.
+- Minimal model slice has source mappings and meaningful fixtures.
+- Every targeted literature row has an explicit audit disposition.
+- Oracle has either an executed, pinned output or a specific documented blocking
+  result; missing behavior's scientific cause remains open if not localized.
+- Existing offline repository, acquisition, coverage and presentation gates pass
+  for the final changed tree. CI results refer to the final submitted head.
+- Raw logs and derivations have stable locations and hashes; unavailable raw
+  files are identified as missing, not replaced by reconstructed summaries.
+
+If any required deliverable is unfinished, say partial. A bounded documented
+environment failure can close the environment investigation for today, while
+leaving differential validation explicitly blocked. It cannot close Study A.
+
+COPYABLE CLAUDE INSTRUCTION
+==========================
+
+Review PR #29 at its current head before assuming it is ready. Address WP0 in
+TODAY-CLOSEOUT-PLAN-2026-09-25.txt, preserving historical evidence. Keep the old
+1.5-second development threshold, correct its justification, and do not present
+uncalibrated receive-time brackets as event-time bounds. Use the repository's
+existing Ubuntu Actions route as the first native-oracle environment; prepare
+and run the smallest pinned upstream test plus our discriminating fixtures
+within existing authorization. Do not wait for the full protocol rewrite to
+run labelled development diagnostics. Implement minimal versioned identities,
+amend response obligations and deterministic coverage gates, add only the model
+state required for the first timer interaction, and audit the 45 unverified
+literature-intent rows without promoting unread papers. Inventory all ten stored
+captures. Start artifact capture immediately. End with exact changed files,
+tested commits, evidence, completed/partial/blocked statuses and the remaining
+scientific uncertainty. Do not invent a successful oracle, a validated timing
+bound, a completed model proof or a diagnosed firmware bug to meet today's date.
+
+REFERENCE ROUTES CHECKED FOR THIS PLAN
+====================================
+
+Repository CI at reviewed PR head:
+https://github.com/500ft/uav-failsafe-composition/blob/60f63acb2b75f31644b66201024c9cf0b6ff7527/.github/workflows/ci.yml
+
+PR #29 reproducibility code (basis of the in-memory probes):
+https://github.com/500ft/uav-failsafe-composition/blob/60f63acb2b75f31644b66201024c9cf0b6ff7527/harness/reproducibility.py
+
+PX4 official unit/functional-test guidance, inspected 2026-09-25; actual commands
+must be checked against the pinned firmware target:
+https://docs.px4.io/main/en/test_and_ci/unit_tests
+
+GitHub official hosted-runner reference, inspected 2026-09-25:
+https://docs.github.com/en/actions/reference/runners/github-hosted-runners
+
+The CI route is a feasibility recommendation based on existing infrastructure;
+no successful PX4-on-Actions build is claimed in this review.
+
+END OF PLANNING HANDOFF

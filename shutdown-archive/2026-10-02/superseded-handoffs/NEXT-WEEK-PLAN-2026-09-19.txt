@@ -1,0 +1,1057 @@
+UAV FAILSAFE COMPOSITION
+NEXT-WEEK BUILD PLAN FOR CLAUDE
+Planning handoff date: 2026-09-19
+Target execution week: 2026-09-21 through 2026-09-25
+Planning supplement added: 2026-09-21, CAD/simulation verification guidance
+
+Review update, 2026-09-24: Read
+LITERATURE-CRITIQUE-AND-REVISED-PLAN-2026-09-24.txt before using this handoff.
+It reviews main 9db5112 after PR #27 and supersedes conflicting recommendations
+below. This file's repository status and original week schedule are historical.
+
+======================================================================
+0. HOW TO USE THIS FILE
+======================================================================
+
+This is a planning handoff. Claude should use it to build the next task
+branch, but should not treat any proposed number as an executed result.
+
+The repository is a research project, not a flight-safety product. The work
+planned here is software-only PX4 SITL work. It does not authorize hardware,
+HITL, flight tests, facility activity, publication, patent disclosure,
+external issue filing, or a fleet demonstration.
+
+Before changing code, Claude must:
+
+1. Start from a fresh branch based on the latest main.
+2. Read AGENTS.md, CLAUDE.md, README.md, ROADMAP.md, docs/START_HERE.md,
+   docs/TASKS.md, docs/claim-ledger.md, and every file under
+   docs/specs/formal-composition/.
+   Also read 500ft/engineering-audit -> docs/cad_agent_briefing.md and
+   Section 12 below for the guidance adopted into this project.
+3. Record the actual starting commit, Python executable, dependency versions,
+   operating system, PX4 availability, and whether UPPAAL/verifyta is
+   available. A remembered version is not a pinned version.
+4. Run the baseline checks before making a change and save the outputs in the
+   task evidence directory.
+5. Stop and report a planning blocker if the owner has not approved the
+   formal-composition direction, the required PX4 software cannot be obtained
+   lawfully, or the planned simulator path requires a physical resource.
+
+Claude should work task by task, committing coherent checkpoints. Every
+generated trace, model, or result must carry its evidence state: planned,
+simulation, HITL, or measured. This week may produce a harness and model
+design, but it must not call a design artifact a result.
+
+======================================================================
+1. CURRENT REPOSITORY STATE
+======================================================================
+
+Latest known main at planning time: 929cc8a (2026-09-16). The local checkout
+may be behind it; fetch and compare before starting.
+
+The repository has completed:
+
+- Research-manifest validation and provenance checks.
+- The bounded prior-art packet URC-R03.
+- Screening and full-text review of S1 UAVConfigFuzzer, S2 ADGFuzz, and S3
+  PGPatch, plus a pinned PGFuzz code inspection.
+- Deterministic acquisition/reference-coverage outputs and negative controls.
+- The formal-composition programme proposal: steelman, scored directions,
+  adaptive scope, and Study A protocol.
+- A repository audit and current pointers.
+
+The repository has not completed:
+
+- URC-02: a committed, executable PX4 configuration matrix.
+- URC-03: a frozen event and trace schema used by real runs.
+- URC-04: a working SITL harness that creates a manifest-backed trace.
+- Study A: extraction and validation of the PX4 failsafe model.
+- Study B: model checking of the four unsafe-composition properties.
+- Study C: replay of checker witnesses in SITL.
+- Any hardware, HITL, flight, fleet, or safety validation.
+
+URC-01 remains partial. The current evidence still has seven relevant
+full-text candidates and ten unresolved metadata rows, and no native patent,
+dissertation, or standards search. Do not reopen broad prior-art searching this
+week. The formal-composition axis still requires the bounded re-screen described
+in docs/specs/formal-composition/README.md before any distinctiveness statement.
+
+The programme decision currently says:
+
+- Study A / D1 is the spine: extract a timed PX4 failsafe model, validate it
+  against lockstep SITL, and report a verified-null or interaction result.
+- The empirical recovery-contract benchmark remains a fallback and calibration
+  layer, not a second simultaneous build.
+- ArduPilot extraction is deferred until Study C produces either a confirmed
+  interaction or a verified null with the model artifact released.
+- Fleet composition, HITL, physical testing, and volume optimization are
+  trigger-gated. They do not enter this week's implementation branch.
+
+======================================================================
+2. WEEKLY OUTCOME
+======================================================================
+
+By the end of this week, the implementation branch should have one of two
+honest outcomes:
+
+A. Preferred outcome: a reviewable PX4 SITL foundation with a frozen matrix,
+   trace contract, minimal runner design, reproducibility fixture, and a
+   model-extraction design that can begin validation next week.
+
+B. Valid blocked outcome: a precise blocker report showing which software,
+   version, simulator, checker, or owner decision is missing, plus a smaller
+   offline deliverable that does not pretend a trace exists.
+
+The week is successful only if a fresh Claude session can answer these
+questions from the repository without asking the same design questions again:
+
+- What exact PX4 release and vehicle model are being studied?
+- What does each failure event mean, and which stream is interrupted?
+- What channels are required before a run is valid?
+- How does one command create a manifest, raw log, normalized trace, and
+  validation record?
+- What timed automata are being extracted, from which source files, and with
+  what source hashes?
+- What are the four unsafe-composition properties?
+- What result causes continuation, pivot, or termination?
+- How is a disagreement classified without changing the model after seeing the
+  data?
+
+======================================================================
+3. WORKING RULES FOR THE ENTIRE WEEK
+======================================================================
+
+Evidence and reproducibility
+
+- Pin every external identity by immutable version or commit. A documentation
+  URL is not a firmware pin.
+- Store raw simulator outputs and derived normalized traces separately.
+- Every run directory must contain a manifest that points to the exact command,
+  commit, configuration hash, seed, event class, and input files.
+- Hash source files used to extract the model. If source bytes change, the model
+  validation identity changes.
+- Never overwrite a prior evidence directory. Use a new dated directory.
+- Keep invalid runs. Mark them invalid with a reason; do not delete them or
+  silently remove them from denominators.
+- Never turn an empty result into a success, and never turn a simulator crash
+  into a safety observation.
+
+Scientific boundaries
+
+- SITL results are simulation evidence. They do not establish hardware timing,
+  flight safety, fleet safety, or safe operation outside the registered domain.
+- A verified null is a result: if no unsafe composition is reachable under the
+  frozen model and scope, report it rather than adding hazards until something
+  is found.
+- A model disagreement is evidence about model fidelity. It is not allowed to
+  be hidden by changing the model structure after validation runs.
+- The model may be repaired only for a pre-registered guard-input modelling
+  error. A change to discrete state structure requires a new model identity,
+  new validation seeds, and a new validation record.
+- Do not compare PX4 with ArduPilot this week. Do not make brand-level claims.
+- Do not use “safe,” “validated,” “guaranteed,” “proven,” or “real-world” for
+  this work. Use “matches the registered SITL criterion” when appropriate.
+
+Ponytail / scope discipline
+
+- Reuse the repository's manifest schema, tests, provenance patterns, and event
+  vocabulary wherever possible.
+- Do not build a new model checker. Use UPPAAL/verifyta only if it is actually
+  available and its version is recorded. If it is unavailable, produce the
+  model contract and a blocker; do not replace it with an unreviewed homemade
+  reachability engine.
+- Do not add a general plugin architecture, database, web dashboard, or fleet
+  allocator. They are unrelated to the first trace.
+- One vehicle, one pinned PX4 release, one simulator model, six single-event
+  classes, two parameter configurations per class, and fixed seeds are enough
+  for the first validation matrix.
+
+======================================================================
+4. REQUIRED REPOSITORY DELIVERABLES
+======================================================================
+
+The following paths are proposed. Claude may adjust a path only if an existing
+repository convention makes the proposed path incorrect; the change must be
+recorded in the task evidence.
+
+Documentation and decisions
+
+- docs/specs/formal-composition/README.md
+  Update the programme index only after the owner approves the formal axis and
+  the week-level decisions below. Keep the status PROPOSED until approval.
+
+- docs/specs/formal-composition/week-plan-2026-09-19.md
+  If Claude needs a durable implementation plan in addition to this handoff,
+  copy the approved decisions here. This TXT file remains the human-to-Claude
+  handoff; the Markdown file is the repository's execution record.
+
+- docs/specs/formal-composition/decisions-2026-09-19.md
+  Record the exact owner decisions: PX4 release, vehicle model, checker
+  availability, event classes, configuration variants, trace horizon, seeds,
+  and continuation/kill interpretation. Do not hide decisions in code.
+
+Protocols and schemas
+
+- protocols/px4-study-a-matrix.json
+  Frozen run matrix. Each row must identify configuration, event class, seed,
+  injection time, expected monitor, expected action family, and evidence state.
+
+- protocols/authority-loss-trace.schema.json
+  JSON Schema for normalized traces and their provenance. It must distinguish
+  raw timestamps from normalized timestamps and require invalid-run reasons.
+
+- protocols/unsafe-composition-properties.json
+  Machine-readable definitions of U1–U4, including units, horizon, tolerance,
+  required channels, and the source/protocol paragraph that justifies each
+  threshold.
+
+Implementation skeleton for the later build
+
+- tools/sitl/run_px4_case.py or the repository-approved equivalent
+  Single-case runner. It must accept a manifest path, create an isolated run
+  directory, launch the pinned simulator, inject one registered event, collect
+  logs, and return a nonzero exit for setup or recording failure.
+
+- tools/sitl/normalize_trace.py
+  Convert one raw run into the frozen normalized trace. Preserve raw labels and
+  add normalized authority/action labels; never discard an unmapped raw value.
+
+- tools/sitl/validate_trace.py
+  Check manifest, required channels, monotonic timestamps, event ordering,
+  terminal state, and hash/provenance relationships. It must classify invalid
+  runs rather than repair them.
+
+- models/px4-study-a/
+  Store the extracted model, model README, source-file manifest, model hash, and
+  checker query/property files. Do not put downloaded simulator binaries here.
+
+- tests/test_trace_contract.py and tests/test_sitl_runner_contract.py
+  Offline tests using tiny synthetic fixtures. Tests must not launch a real
+  simulator or access the network.
+
+Evidence
+
+- evidence/task-formal-composition-2026-09-19/README.md
+  Starting state, decisions, commands, environment, blockers, and the exact
+  evidence state of every output.
+
+- evidence/task-formal-composition-2026-09-19/manifests/
+  One manifest per case or a manifest index that points to immutable case
+  manifests.
+
+- evidence/task-formal-composition-2026-09-19/fixtures/
+  Small deterministic raw-log and normalized-trace fixtures used by tests.
+
+- evidence/task-formal-composition-2026-09-19/decisions.json
+  Machine-readable copy of the frozen design decisions. It must hash the
+  matrix, schemas, and model source manifest.
+
+Do not commit full PX4 binaries, full copyrighted papers, private credentials,
+or unreviewed simulator caches.
+
+======================================================================
+5. DAY-BY-DAY PLAN
+======================================================================
+
+MONDAY — STARTING STATE, OWNER DECISIONS, AND RESOURCE PROBE
+
+Goal: remove ambiguity before any harness or model code is written.
+
+Task M1.1 — Refresh and baseline the repository
+
+Files: no product files; evidence/task-formal-composition-2026-09-19/README.md
+
+Procedure:
+
+1. Fetch origin and create a new branch from the latest main.
+2. Record HEAD, origin/main, Python executable/version, jsonschema version,
+   operating system, shell, git version, and available disk space.
+3. Run the existing contract, unit, presentation, acquisition, and coverage
+   checks from the repository's current gate list.
+4. Record whether local PX4 source, a PX4 SITL binary, make/ninja, CMake, and
+   any required simulator dependencies are already installed. Do not install
+   them yet if installation would make an owner/resource decision necessary.
+5. Record whether UPPAAL/verifyta is available, its version, and whether it can
+   run a trivial local model. No model claim is made by this probe.
+
+Done when:
+
+- The baseline output is committed in the task evidence directory.
+- Every unavailable tool has a named reason and a proposed next decision.
+- A clean baseline is distinguished from an environment failure.
+
+Task M1.2 — Freeze the owner decisions needed for the first software study
+
+Files: docs/specs/formal-composition/decisions-2026-09-19.md
+
+The owner must approve or edit these decisions before implementation:
+
+- PX4 release or commit. Recommendation: choose the newest release that is
+  installable and reproducible in the available environment, then freeze it by
+  commit or release archive hash. Do not choose a release merely because the
+  docs mention it.
+- Vehicle model. Recommendation: one standard multicopter SITL model already
+  supported by the pinned PX4 release. Do not add a custom airframe this week.
+- Simulator mode. Recommendation: lockstep SITL for deterministic timing.
+- Checker. Recommendation: UPPAAL/verifyta if available. If unavailable, stop
+  before model implementation and record the dependency blocker.
+- Event horizon. Recommendation: begin at event injection and continue until
+  terminal mode or a fixed maximum horizon; the exact horizon must be stated in
+  seconds and tied to the largest configured delay.
+- Event classes. Freeze six primary classes: offboard proof-of-life loss,
+  offboard setpoint-only loss, datalink/heartbeat loss, RC loss, battery
+  failsafe, and estimator-validity loss. Geofence can replace one class only if
+  its guard can be observed and injected repeatably. User takeover is a control
+  condition, not a seventh unplanned event.
+- Configuration variants. Recommendation: two variants per event class, a
+  documented nominal configuration and a one-factor sensitivity configuration.
+  Change one relevant failsafe delay/action at a time; do not alter the vehicle
+  model, estimator, logging, or unrelated parameters.
+- Seed matrix. Recommendation: five fixed seeds per class/config pair, giving
+  6 x 2 x 5 = 60 validation cases. Freeze the seed list before model validation.
+- Timing tolerance. Retain the protocol's median absolute error <= 0.2 s and
+  95th percentile <= 1.0 s unless the owner explicitly edits the protocol
+  before runs.
+
+Done when the decisions document has a signed-off status line, exact values or
+explicit blockers, and a hash recorded in the task evidence. A proposed value
+is not a frozen value.
+
+TUESDAY — URC-02 MATRIX AND URC-03 EVENT/TRACE CONTRACT
+
+Goal: make experimental identity and trace interpretation executable before
+building the runner.
+
+Task T2.1 — Build the configuration matrix design
+
+Files: protocols/px4-study-a-matrix.json; docs/specs/formal-composition/
+decisions-2026-09-19.md
+
+For each configuration, record:
+
+- configuration_id and human description;
+- PX4 release/commit and source hash;
+- vehicle model and airframe identifier;
+- complete parameter export path and SHA-256;
+- estimator, battery, geofence, RC, datalink, and offboard settings that can
+  affect the selected events;
+- recovery intention/action and the documented expected monitor;
+- simulator build identity, lockstep setting, environment seed, initial state
+  bounds, and coordinate frame;
+- unsupported or inapplicable event cases;
+- manifest schema version and configuration hash.
+
+Validation rules:
+
+- The same vehicle model, mass/inertia, environment, logging rate, command
+  history, and analysis code apply to both variants unless the matrix says a
+  factor is intentionally varied.
+- A configuration hash changes if any parameter, firmware, vehicle, or intended
+  event semantics change.
+- Every matrix row names the exact parameter keys changed from the nominal row.
+- A matrix row cannot be marked executable if its complete parameter export is
+  missing.
+
+Done when a checker can load the matrix, detect duplicate IDs, detect missing
+hashes, and prove that every planned validation case maps to one matrix row.
+
+Task T2.2 — Define the event state machine
+
+Files: protocols/authority-loss-trace.schema.json; docs/specs/formal-
+composition/study-a-protocol.md; docs/specs/formal-composition/
+decisions-2026-09-19.md
+
+Define these event states and allowed transitions:
+
+PRECONDITIONING -> NORMAL_TRACKING -> EVENT_SCHEDULED -> INPUT_INTERRUPTED
+-> MONITOR_TRIGGERED -> ACTION_SELECTED -> MODE_OBSERVED -> TERMINAL_OR_TIMEOUT
+-> RECONNECT_ATTEMPTED -> AUTHORITY_ACCEPTED_OR_REJECTED.
+
+The trace must record which transition was observed and which was not. Do not
+infer a transition from elapsed time alone.
+
+For each event, specify:
+
+- the exact interrupted signal or process;
+- publisher identity and message type;
+- the final accepted setpoint/heartbeat timestamp;
+- the scheduled and observed interruption timestamps;
+- monitor name and configured delay;
+- first action/mode selected and every later mode change;
+- commands or setpoints that continued to exist from other publishers;
+- reconnect stimulus, acceptance/rejection, and authority owner after return;
+- terminal mode, disarm state, or timeout reason;
+- clock source, units, sampling rates, and alignment rule.
+
+The normalized trace must retain raw mode names, raw action names, and a list of
+unmapped values. Normalization may add labels; it may not erase ambiguity.
+
+Done when a valid fixture and at least three invalid fixtures are specified:
+missing final setpoint, non-monotonic clock, and mode transition before event
+injection. Invalid traces are rejected with stable error codes.
+
+Task T2.3 — Define the manifest and invalid-run policy
+
+Files: protocols/authority-loss-trace.schema.json; protocols/
+configuration-manifest.schema.json; tests/test_trace_contract.py
+
+Extend or reference the existing configuration manifest rather than creating a
+second incompatible identity system. Add fields only where the trace requires
+them: event class, event schedule, simulator build, run seed, source hashes,
+raw-log paths, normalized-trace path, validation status, and invalid reason.
+
+Required policy:
+
+- setup failure, missing channel, simulator crash, clock failure, and malformed
+  output are invalid runs;
+- invalid runs remain in the run index and do not contribute to agreement or
+  timing statistics;
+- a run that reaches an unexpected mode is valid evidence unless the trace is
+  otherwise malformed;
+- a model disagreement is never an invalid run merely because it is inconvenient.
+
+Done when schema validation passes the positive fixture and rejects each invalid
+fixture with a useful path-specific message.
+
+WEDNESDAY — MINIMAL SITL HARNESS DESIGN AND REPRODUCIBILITY CHECK
+
+Goal: create the smallest runner that can generate one trustworthy baseline
+trace; avoid building the full 60-run campaign before one case works.
+
+Task W3.1 — Specify the runner contract
+
+Files: tools/sitl/README.md; tools/sitl/run_px4_case.py; tests/
+test_sitl_runner_contract.py
+
+The runner interface should be one command shaped like:
+
+    python tools/sitl/run_px4_case.py \
+      --matrix protocols/px4-study-a-matrix.json \
+      --case PX4-OFFBOARD-LOSS-NOMINAL-1001 \
+      --out evidence/task-formal-composition-2026-09-19/runs/
+
+The exact CLI may change, but it must provide the same contract:
+
+1. Resolve one case from the frozen matrix.
+2. Refuse missing or mismatched firmware/configuration/source hashes.
+3. Create an isolated run directory before launching the simulator.
+4. Write the resolved manifest before injection.
+5. Launch the pinned PX4 SITL process with explicit working directory and
+   environment.
+6. Verify NORMAL_TRACKING before injecting the event.
+7. Inject exactly one registered event at the scheduled time.
+8. Capture raw stdout/stderr, telemetry, mode/action events, and exit status.
+9. Stop at terminal state or registered horizon.
+10. Validate and normalize the trace.
+11. Return nonzero for setup, capture, or schema failure; return zero for a
+    completed valid run even if the observed behavior differs from the model.
+
+The runner must not silently download software, choose a default configuration,
+retry an event with a different seed, or overwrite an existing run directory.
+
+Done when the contract test can exercise argument parsing, missing-case refusal,
+output-directory refusal, and valid-run/invalid-run exit behavior without
+starting PX4.
+
+Task W3.2 — Define the first no-fault control
+
+Files: protocols/px4-study-a-matrix.json; evidence/task-formal-composition-
+2026-09-19/fixtures/; tools/sitl/README.md
+
+Before authority-loss cases, specify one normal-operation control that runs the
+same command history without injecting a failure. It must demonstrate:
+
+- offboard tracking remains active for the pre-failure interval;
+- required telemetry channels are present;
+- timestamps are monotonic and aligned;
+- no spontaneous failsafe occurs;
+- the runner can terminate and preserve the output cleanly.
+
+Use a fixed seed and one nominal configuration. The control is not a safety
+result. Its purpose is to prove the apparatus can observe normal operation.
+
+Done when the control produces a manifest-backed trace or a precise environment
+blocker. If the control cannot be produced, do not start the 60-case validation.
+
+Task W3.3 — Verify lockstep reproducibility
+
+Files: evidence/task-formal-composition-2026-09-19/README.md; run manifests;
+tests/test_sitl_runner_contract.py
+
+Run the same control case five times with the same seed and identical hashes.
+Compare:
+
+- normalized mode/action sequence;
+- event and transition timestamps;
+- position/velocity/attitude channels;
+- simulator exit status;
+- raw-log hashes where byte identity is expected.
+
+The Study A protocol assumes deterministic lockstep timing, but labels it an
+optimistic assumption. Measure jitter before freezing the timing analysis.
+
+Decision:
+
+- If sequences differ, root-cause simulator, injection, logging, or model-state
+  nondeterminism before proceeding.
+- If sequences match but timestamps differ, record measured jitter and decide
+  whether the registered timing thresholds remain meaningful.
+- If the same case cannot be reproduced, stop formal model validation and report
+  the benchmark/harness failure as the week's primary result.
+
+Done when five manifests and a reproducibility table are committed, or a
+blocker record names the failed prerequisite and preserves the attempted runs.
+
+THURSDAY — PX4 MODEL-EXTRACTION AND STUDY B DESIGN
+
+Goal: make the model traceable to pinned PX4 source and ready for checker use.
+
+Task R4.1 — Select and hash the PX4 failsafe source boundary
+
+Files: models/px4-study-a/source-manifest.json; evidence/task-formal-
+composition-2026-09-19/README.md
+
+Identify the exact source files that implement:
+
+- offboard proof-of-life/setpoint monitoring;
+- RC and datalink loss monitoring;
+- battery and estimator validity guards;
+- geofence/position conditions if included;
+- configured delay timers;
+- action-priority selection;
+- user takeover and exception handling;
+- mode/action publication visible to the trace.
+
+Record path, source commit, file SHA-256, relevant symbol/function, and the
+reason it is included. Compare the selected firmware tree with any docs
+simulator code path before treating the docs simulator as an oracle.
+
+Do not copy code into the model without recording the source location. Do not
+claim full coverage of PX4 failsafes when only the selected classes are modeled.
+
+Done when every model transition has at least one source locator and every
+selected source file is hash-pinned.
+
+Task R4.2 — Define the timed automata decomposition
+
+Files: models/px4-study-a/README.md; models/px4-study-a/px4-failsafe.xml or
+the checker-approved model format; models/px4-study-a/properties.q
+
+Use the smallest decomposition that can represent the registered scope:
+
+- one hazard/input automaton per selected event class;
+- a delay timer with explicit units and reset behavior;
+- an action selector encoding the pinned priority/exception rules;
+- a user-takeover automaton if it affects a selected property;
+- an environment automaton that raises, clears, and optionally flaps one input;
+- interval-valued continuous guards only where the protocol explicitly permits
+  abstraction.
+
+Each state, clock, guard, synchronization channel, and update must have a
+plain-language explanation in the model README. The model must record which
+parts are exact discrete extraction and which parts are conservative or
+optimistic abstraction.
+
+Do not introduce a fifth unsafe property because a model makes it easy. New
+properties require a protocol revision before validation.
+
+Done when the model is syntactically accepted by the selected checker, has a
+stable hash, and its README maps every component to a source locator and a
+trace channel.
+
+Task R4.3 — Freeze the four Study B properties
+
+Files: protocols/unsafe-composition-properties.json; models/px4-study-a/
+properties.q; docs/specs/formal-composition/study-a-protocol.md
+
+Encode these properties exactly as the merged protocol defines them:
+
+U1. A hazard remains active beyond its configured delay plus 1.0 second without
+    an engaged failsafe action.
+
+U2. Two hazards are active and the engaged action has lower documented priority
+    than the highest active hazard's action.
+
+U3. An action engages and disengages without the hazard clearing, more than once
+    in ten seconds.
+
+U4. Time from hazard onset to a terminal safe mode exceeds the sum of configured
+    delays plus 2.0 seconds.
+
+For every property record:
+
+- formal query;
+- natural-language interpretation;
+- units and clock semantics;
+- required model state;
+- expected witness format;
+- whether a violation can be replayed in SITL;
+- known false-positive/false-negative limitations;
+- status: planned, not executed.
+
+Do not call the terminal modes safe in a universal sense. Use “registered
+terminal mode” in implementation prose and reserve “unsafe composed state” for
+the operational definition in the protocol.
+
+Done when an independent reviewer can determine what a witness means without
+opening the model source.
+
+FRIDAY — INTEGRATION, DECISION TREE, AND CLAUDE HANDOFF
+
+Goal: leave a buildable, reviewable foundation and a deterministic next branch.
+
+Task F5.1 — Define the witness interchange contract
+
+Files: protocols/witness-trace.schema.json; models/px4-study-a/README.md;
+tools/sitl/README.md; tests/test_trace_contract.py
+
+Every checker witness must export:
+
+- model hash and property ID;
+- configuration ID and event class;
+- initial state and parameter values;
+- event schedule with timestamps;
+- expected hazard/action/mode sequence;
+- horizon and terminal condition;
+- source/model version;
+- replay status: not_attempted, confirmed, refuted, or invalid;
+- refutation reason or confirmation evidence path.
+
+The SITL runner must accept a witness only if its model/configuration hashes
+match the replay environment. A refuted witness is not deleted; it becomes a
+model-defect record and triggers the registered disagreement process.
+
+Done when a synthetic witness round-trips through schema validation and the
+runner contract rejects a mismatched model hash.
+
+Task F5.2 — Write the validation and disagreement decision tree
+
+Files: docs/specs/formal-composition/study-a-protocol.md; evidence/task-formal-
+composition-2026-09-19/README.md
+
+Use this exact decision tree:
+
+1. Setup or recording failure -> invalid run; preserve it; do not count it.
+2. Valid run, model sequence matches, timing within registered thresholds ->
+   agreement.
+3. Valid run, sequence differs -> root-cause as simulator artifact, injection
+   artifact, guard-input modelling error, or model-structure error.
+4. Guard-input modelling error -> repair only the guard abstraction, create a
+   new model hash, and rerun the registered validation set.
+5. Model-structure error -> stop; do not patch after the fact. Reopen the model
+   design and restart validation with a new identity.
+6. Agreement >=95%, median timing error <=0.2 s, p95 <=1.0 s -> proceed to Study B.
+7. Agreement 90–95% -> proceed only with every disagreement root-caused and
+   documented, and obtain owner approval before checker interpretation.
+8. Agreement <90% -> kill the formalization on this model and release the
+   conformance/trace benchmark as the valid floor.
+9. Study B reaches no U1–U4 witness -> report a verified null; do not add new
+   hazards to create a positive result.
+10. Study B produces witnesses -> replay every witness in SITL. Report confirmed,
+    refuted, and invalid witnesses separately.
+11. Any confirmed interaction -> prepare an upstream issue draft, but do not
+    submit it without owner approval and a separate disclosure review.
+
+Done when this tree is cited by the run report, model README, and final claim
+ledger update.
+
+Task F5.3 — Define the evidence and claim updates
+
+Files: evidence/task-formal-composition-2026-09-19/README.md; docs/claim-ledger.md;
+docs/REVIEW_READY.md; docs/SPRINT_PROGRESS.md; docs/SPRINT_TASKS.csv
+
+The evidence README must state:
+
+- what was planned;
+- what was actually executed;
+- which artifacts are simulation versus design;
+- exact commands and exit statuses;
+- source/model/configuration hashes;
+- invalid runs and blockers;
+- what cannot be claimed.
+
+Update the claim ledger only for evidence actually produced. Examples:
+
+- A manifest schema is a planned software contract until tested.
+- A five-run control is simulation apparatus evidence, not safety validation.
+- A validated Study A model can support a scoped simulation claim only after the
+  frozen 60-case matrix and disagreement analysis complete.
+- A verified-null Study B result is a scoped model result, not proof that PX4 is
+  safe or that fleets are safe.
+
+Do not mark URC-S08, URC-02, URC-03, URC-04, Study A, Study B, or Study C done
+unless the corresponding acceptance evidence exists. If this week only creates
+design artifacts, mark the work as planned/in-progress.
+
+Task F5.4 — Run the full repository gate and prepare the build handoff
+
+Files: task evidence README; PR description; no source changes outside the
+approved implementation scope
+
+Run the current repository gate from the actual branch interpreter:
+
+    python -m unittest discover -s tests -q
+    python scripts/check_repo_contract.py
+    python scripts/acquisition_ledger.py --check
+    python scripts/reference_coverage.py --check
+    python evidence/task-2026-09-09/rerun_search.py --audit evidence/task-2026-09-11-public/database-export.json
+    python tools/check_presentation.py . "UAV Failsafe Composition" uav-failsafe-composition
+    python tools/test_presentation.py
+    git diff --check
+
+If SITL or checker tools are unavailable, the repository gate can still pass;
+record the environment blocker separately. Do not downgrade the protocol or
+pretend the simulator was run.
+
+The PR should contain:
+
+- a short problem statement;
+- exact decisions frozen this week;
+- files added/changed;
+- evidence state of each output;
+- baseline and final command results;
+- known limitations and next trigger;
+- an explicit statement that no flight, HITL, fleet, or safety result exists.
+
+Done when a new Claude session can clone the branch, read the handoff, run the
+offline checks, and see precisely what must happen before the first 60-case
+validation campaign.
+
+======================================================================
+6. STUDY A RUN MATRIX AND ANALYSIS SPECIFICATION
+======================================================================
+
+The first full validation campaign should be 60 valid planned cases:
+
+    6 event classes x 2 configuration variants x 5 fixed seeds = 60 cases
+
+The five-run same-control reproducibility check occurs before this campaign and
+does not replace any of the 60 cases.
+
+Each case must have:
+
+- a deterministic case ID;
+- one matrix row;
+- one manifest;
+- one raw-output directory;
+- one normalized trace;
+- one validation record;
+- one model comparison record;
+- one validity status.
+
+The analysis must report, at minimum:
+
+- valid/invalid count by event class and configuration;
+- mode/action sequence agreement;
+- median absolute transition-time error;
+- 95th-percentile transition-time error;
+- per-class and per-configuration results;
+- every disagreement with root-cause class;
+- timing jitter from the five-run control;
+- missing-channel and simulator-crash counts;
+- the registered continuation/kill decision.
+
+Do not pool all event classes into one headline number without showing the
+stratified table. A strong overall number can hide one event class that the
+model cannot represent.
+
+The run report must distinguish:
+
+- planned cases;
+- attempted cases;
+- valid cases;
+- invalid cases;
+- excluded cases with a reason;
+- cases not run because a prerequisite failed.
+
+No denominator may silently change after inspecting the traces.
+
+======================================================================
+7. FORMAL-MODEL DESIGN DETAILS CLAUDE MUST NOT SKIP
+======================================================================
+
+Source-to-model traceability
+
+For each automaton transition, include a table with:
+
+- model component and transition;
+- PX4 source path and symbol;
+- parameter names used;
+- guard condition;
+- timer/reset behavior;
+- expected observable trace channel;
+- abstraction status: exact, interval, or assumed;
+- validation test that can expose an error.
+
+This table is more important than a large model file. If a transition cannot be
+traced to code or protocol, it is a hypothesis and must be labeled as such.
+
+Priority and interaction semantics
+
+The model must specify what happens when two hazards are active at once. Record
+the source-backed priority order, exception flags, and whether a later event can
+preempt an active action. Do not derive priority from the order in which code
+was read or from an observed trace alone.
+
+Clock semantics
+
+Use one declared time unit in the model and trace. Record how simulator time,
+message timestamps, wall-clock timestamps, and injected-event timestamps relate.
+Never compare wall time to simulated time without a declared conversion.
+
+Continuous guard abstraction
+
+The initial model may use interval-valued battery, estimator, geofence, or
+position inputs. For each interval, record lower/upper bound, source of the
+bound, assumed rate, and whether the abstraction is conservative for the
+property. If monotonicity is not demonstrated, flag the property as potentially
+inconclusive and trigger the hybrid-reachability decision from scope.md.
+
+Reconnection and user takeover
+
+Study A may log reconnection and takeover even if the first formal model does
+not include them as state. Explicitly label those channels as observed-but-out-
+of-model. Do not claim the model covers reconnection until it has an automaton,
+property, and validation test.
+
+======================================================================
+8. STOP CONDITIONS AND PIVOTS
+======================================================================
+
+Stop before implementation if:
+
+- no owner-approved PX4 identity exists;
+- the selected simulator cannot be reproduced;
+- the control run cannot establish normal tracking;
+- the required channels cannot be observed;
+- checker availability is unresolved and no approved checker path exists;
+- the trace schema cannot distinguish setup failure from model disagreement.
+
+Pivot to the benchmark floor if:
+
+- the model achieves less than 90% sequence agreement after root-cause work;
+- the selected PX4 release does not expose enough state to support the planned
+  properties;
+- timing jitter is larger than the registered tolerance and cannot be explained;
+- the model requires state that the pinned firmware does not contain.
+
+Continue to Study B only if:
+
+- the model source boundary is pinned;
+- the matrix and trace contracts are frozen;
+- the control is reproducible;
+- the 60-case validation reaches the protocol's agreement/timing criteria;
+- every disagreement has a recorded classification.
+
+Continue to Study C only if:
+
+- every checker witness is schema-valid;
+- every witness has a replayable event schedule;
+- replay uses matching model/configuration hashes;
+- confirmed, refuted, and invalid outcomes are counted separately.
+
+Defer all of the following until their triggers are satisfied: ArduPilot
+extraction, HITL, physical flight, fleet composition, RQ3 volume comparison,
+RQ4 neighbor evacuation, formal security claims, and native patent searching.
+
+======================================================================
+9. CLAUDE'S FINAL REVIEW CHECKLIST
+======================================================================
+
+Before opening the implementation PR, Claude must answer yes/no to each item
+in the evidence README:
+
+- Did the branch start from the latest main?
+- Is the owner-approved direction recorded?
+- Is the exact PX4 identity pinned by hash or immutable release?
+- Is the vehicle model fixed?
+- Is every event class explicit about the interrupted input?
+- Are configuration variants one-factor changes?
+- Are seeds, horizon, units, clocks, and coordinate frames frozen?
+- Can the runner refuse a mismatched or missing configuration?
+- Does a no-fault control exist or is the blocker documented?
+- Are invalid runs preserved and excluded without deletion?
+- Are raw and normalized traces separate?
+- Is every model transition source-linked and hash-backed?
+- Are U1–U4 formal properties frozen before model checking?
+- Can witness files be replayed with matching hashes?
+- Is every disagreement classified without post hoc model changes?
+- Are simulation claims separated from safety, hardware, and fleet claims?
+- Did the full repository gate pass using the recorded interpreter?
+- Does the PR describe what was not done?
+
+If any answer is no, the PR should say “foundation incomplete” and name the
+next task. Do not turn an incomplete foundation into a green-looking result.
+
+======================================================================
+10. RECOMMENDED PR STRUCTURE FOR CLAUDE
+======================================================================
+
+Keep the implementation reviewable by splitting the week into at most three
+PRs if the diff becomes large:
+
+PR A — Contracts and decisions
+
+- owner decisions;
+- configuration matrix;
+- trace/schema contracts;
+- protocol tests and synthetic fixtures;
+- no simulator launch yet.
+
+PR B — Minimal runner and control
+
+- runner contract;
+- one reproducible no-fault control;
+- raw/normalized trace handling;
+- evidence directory;
+- no formal-model claim yet.
+
+PR C — Model and validation design
+
+- source manifest;
+- timed-model skeleton;
+- U1–U4 properties;
+- witness schema;
+- decision tree and handoff.
+
+If the repository's workflow requires one PR, keep these as three clearly
+separated commits and make the commit order follow the dependency order.
+
+Never merge a PR that contains a simulator result without its manifest, source
+hashes, configuration hash, raw log, normalized trace, and validity record.
+
+======================================================================
+11. ONE-PARAGRAPH HANDOFF TO CLAUDE
+======================================================================
+
+Build the software-only PX4 formal-composition foundation. Start from latest
+main, record the environment, and get owner approval for the exact PX4 release,
+vehicle model, checker, six event classes, two one-factor configurations, five
+fixed seeds, horizon, clocks, and timing thresholds. Freeze URC-02 and URC-03
+contracts before writing the runner. Build only the smallest URC-04 runner that
+can produce one manifest-backed no-fault control; repeat it five times to measure
+lockstep reproducibility before attempting the 60-case matrix. Pin the PX4
+failsafe source boundary and extract a traceable timed model with four frozen
+properties U1–U4. Define a witness interchange format and a replay decision tree.
+Keep every output labeled planned or simulation, preserve invalid runs, and stop
+at the stated kill conditions. Do not add ArduPilot, hardware, fleet logic,
+native patent searching, or a new model checker. End with a PR whose evidence
+lets a fresh agent see exactly whether the first real validation campaign is
+ready or blocked.
+
+======================================================================
+12. CAD/SIMULATION BRIEFING ADOPTED FOR FUTURE PLANNING (2026-09-21)
+======================================================================
+
+Required cross-project reference:
+  Repository: 500ft/engineering-audit
+  File: docs/cad_agent_briefing.md
+  URL: https://github.com/500ft/engineering-audit/blob/main/docs/cad_agent_briefing.md
+  Reviewed commit: cf56cdff50b09c9a266292006cbf5b2a0f2e8ac6
+  Reviewed file blob: 530550e230f7b9de8dc350a60e6dd19eb1d94c31
+  Local copy: /Users/redhose/Developer/engineering-audit/docs/cad_agent_briefing.md
+
+The local file matched the GitHub blob when reviewed. Recheck its current
+version when starting a later CAD task and record the version actually used.
+The capabilities and run outcomes below are reported by that briefing; they
+were not reproduced in this UAV project. This supplement adds planning
+requirements and does not report new CAD, FEA or SITL results.
+
+Immediate application to the SITL/model-validation work
+
+1. Define the expected outcome before accepting the produced artifact.
+   For a small single-event fixture, derive the expected action and timing
+   bounds from the pinned parameter values, source semantics and an explicit
+   hand-worked event timeline. Keep this calculation separate from the model
+   translator and trace normalizer. The docs simulator shares PX4 code: it is
+   useful for extraction consistency, but is not an independent validation
+   of the underlying control logic or physical behavior.
+
+2. Separate successful execution from verified behavior.
+   A process exit, checker completion, command acknowledgment, screenshot or
+   populated log is insufficient. Accept a run only when its required files
+   parse, hashes and case identity agree, and the required event observations
+   exist. If the comparison oracle or a required observation is missing,
+   record verification as unverified; never infer a pass from execution status.
+   This is a requirement for the later implementation, not a new status schema
+   introduced by this planning supplement.
+
+3. Prove that the input change reached the system.
+   Log requested injection, observed input cessation, surviving publishers,
+   monitor activation, selected action and observed mode separately. A line
+   written by the injector saying "fault sent" is not independent observation
+   that the fault occurred. Confirm whether the pinned transport actually
+   permits separate liveness and setpoint interruption before treating those
+   as distinct executable cases.
+
+4. Add a controlled parameter-change check during harness development.
+   Read back one relevant failsafe parameter, change it within its supported
+   range, and repeat the same development case. Predict the affected timing
+   or action from the pinned code before running it. Verify both effective
+   parameter readback and the expected behavioral change; account for clamps,
+   exceptions and other active timers. Restore and verify the baseline value.
+   This catches a parameter file that was written but never applied. These
+   development runs do not count as held-out model-validation cases.
+
+5. Probe coordinates and clocks before interpreting traces.
+   Use known input values to verify axis signs, frame transforms, units and
+   time alignment. Check the raw and normalized values numerically. Do not
+   infer orientation from a plot, API name or remembered convention. Freeze
+   tolerances justified by the channel resolution and logging rate; CAD's
+   reported floating-point agreement is not a UAV timing tolerance.
+
+6. Validate trace export and re-import.
+   For a tiny known fixture, save the normalized trace, reload it through the
+   consumer, and compare case identity, units, timestamps, event ordering,
+   mode labels, row count and invalid-run flags with the declared conversion
+   contract. Explicitly account for any intentional resampling. Retain the
+   original raw log so a plausible derived file cannot conceal missing data.
+
+7. Instrument each stage and test silent failure.
+   Retain stage-level results for launch, configuration application, normal
+   tracking, injection, capture, normalization and comparison. Include focused
+   negative fixtures for unapplied parameters, ineffective injection and a
+   stale result from another case. Associate asynchronous outputs with the
+   launched job/case and its hashes; a returning launch call does not establish
+   completion. Bound waits and preserve timed-out attempts as such.
+
+8. Preserve the acquisition route of every physical input.
+   Distinguish designer-selected provisional dimensions, vendor-drawing values
+   and physical measurements if later hardware enters the project. A drawing
+   does not satisfy a requirement for a physical measurement. Amend the route
+   explicitly before relying on a different kind of evidence. Missing required
+   values stay unresolved; they do not receive plausible invented numbers.
+
+Apply items 1-7 to the existing trace-contract, runner, reproducibility and
+model-review tasks. They are acceptance checks within those tasks, not a
+separate CAD workstream or an expansion into physical testing.
+
+Conditional application when CAD or structural analysis becomes relevant
+
+- Reuse engineering-audit/cadloop/ for CAD/FEA machinery. Its briefing reports
+  native SOLIDWORKS part authoring, parameter re-driving, independent CadQuery
+  geometry comparisons and STEP round-trip checks on specific fixtures.
+  RoboRacer's mast geometry in autonomous-racing-systems is an example
+  deliverable, not the UAV's dimensional contract.
+- Begin any future UAV fixture, controller mount or enclosure with a
+  project-specific dimension contract, units, acquisition routes and expected
+  numerical checks. Read docs/host_setup.md before host setup and
+  docs/solidworks_api_findings.md before COM authoring. Verify actual API
+  signatures and orientation with a small probe.
+- Check feature results, independently computed volume/dimensions, a meaningful
+  parameter perturbation, and an exported/re-imported STEP before accepting the
+  geometry. Numerical agreement on volume alone does not establish fit,
+  topology, manufacturability or structural adequacy; add checks appropriate
+  to the intended part.
+- Keep the briefing's current limits visible: native assembly documents/mates
+  and dimensioned drawing automation are untested; some feature positions are
+  not fully driven by parameters; host completion times vary substantially.
+  Plan these as separate capability checks when actually needed.
+- The briefing reports a completed linear-static FEA example but explicitly
+  lacks an independent FEA acceptance oracle. Before relying on a future UAV
+  stress/displacement result, plan a reference calculation, unit/load/support
+  checks and mesh-convergence evidence. A completed solve does not validate a
+  mount, material model, modal result or hardware operating limit.
+
+END OF HANDOFF

@@ -41,17 +41,22 @@ behaviour was not yet explained ([critique](docs/specs/formal-composition/critiq
   "none". With the encoding fixed, a datalink loss in Auto Loiter gives Hold,
   then RTL, including on the unmodified PX4 binary
   ([evidence](evidence/task-runtime-2026-09-29/README.md)).
-- The RTL arrives 16.4–16.7 s after the link is cut. The configured timers
-  account for 15 s (10 s detection, 5 s hold). The extra time is open item NP-3.
+- NP-3 identified an omitted detector stage: MAVLink keeps the heartbeat-present
+  flag alive, and Commander refreshes its loss timer from status publications.
+  Retained runs support this mechanism; their logs leave the exact pre-detection
+  interval unresolved ([analysis and limits](evidence/task-detector-2026-10-01/README.md)).
 - RC loss can't be injected in this simulator setup (decision D13), so Study A
   covers the other event classes.
+- NP-4 is complete for the local SITL runner. A development run captured the
+  full parameter table before arming and after observation, with both snapshots
+  included in the execution identity ([evidence](evidence/task-parameters-2026-09-30/README.md)).
 
 ## What's left
 
 | # | Step | Who | Done when |
 |---|---|---|---|
 | 1 | Sign off decisions D1–D13 | Owner | Done 2026-09-30 ([addendum](docs/specs/formal-composition/decisions-2026-09-19.md)) |
-| 2 | Close the open measurement items that affect Study A timing: NP-3 (the extra 1.4–1.7 s), NP-4 (full parameter snapshot per run), NP-6 (timing tolerance calibrated before any held-out run) | Agent | Each recorded as resolved, or as a stated limit of the rig. **Current step.** |
+| 2 | Close NP-6 (timing tolerance calibrated before any held-out run), including its injection-bound prerequisite. NP-3 is explained with a stated measurement limit; NP-4 parameter capture is complete. | Agent | Resolved, or recorded as a stated limit of the rig under protocol §7b. **Current step.** |
 | 3 | Commit the required cell list as scenario identities (D25), then run every cell and compare each with the model | Agent | Traces committed; every cell classified |
 | 4 | Apply the D7 gate. If the model holds, run the first supported hazard pair (D9) | Agent | Gate result and any blocked subdomains recorded |
 | 5 | Release the benchmark: configurations, harness, traces, model, comparison report | Agent | Tagged release with a README that states the verdict |

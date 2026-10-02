@@ -342,7 +342,7 @@
    "what_it_is_not": "not the deadline for a response; it is spent BEFORE the flag rises and must not be counted twice",
    "depends_on": [],
    "sensitivity": "the predicted hazard time moves with it",
-   "validation": "observed at 11.4 to 12.0 s against a predicted 10.0 s; the discrepancy is real and its cause is unresolved, and the timing verdict is now inconclusive rather than refuted"
+   "validation": "NP-3 source and retained-run analysis in evidence/task-detector-2026-10-01/README.md: Commander times from positive telemetry-status publications, which can continue after the final heartbeat reception. The exact final refresh remains unobserved. Injection-relative timing stays inconclusive under D24; historical predictions are preserved."
   },
   {
    "id": "Q-RECHARGE",

@@ -1,0 +1,106 @@
+{
+ "purpose": "NP-4 development run, excluded from confirmation",
+ "validity": {
+  "valid": true,
+  "reasons": []
+ },
+ "binary_sha256": "89e5ff695c5e6fcf973be8ae04ab85e7cf6afcc0a3c5ec9215865927ffec60ff",
+ "snapshots": {
+  "before": {
+   "expected_count": 1794,
+   "captured_count": 1794,
+   "used_count": 901,
+   "complete": true,
+   "atomic": false,
+   "elapsed_host_s": 0.1154464166611433
+  },
+  "after": {
+   "expected_count": 1794,
+   "captured_count": 1794,
+   "used_count": 901,
+   "complete": true,
+   "atomic": false,
+   "elapsed_host_s": 0.12852191692218184
+  }
+ },
+ "parameter_changes": {
+  "COM_FLIGHT_UUID": {
+   "before": {
+    "type": 6,
+    "value": 0
+   },
+   "after": {
+    "type": 6,
+    "value": 1
+   }
+  },
+  "LND_FLIGHT_T_LO": {
+   "before": {
+    "type": 6,
+    "value": 0
+   },
+   "after": {
+    "type": 6,
+    "value": 88208000
+   }
+  }
+ },
+ "override_mismatches": {
+  "before": {},
+  "after": {}
+ },
+ "snapshot_identities": {
+  "before": {
+   "file": "parameters-before.json",
+   "sha256": "458640b4f9d0c83a805a4ac5662fd33161b096fe0b7a10a2996565025eee2b1c",
+   "complete": true,
+   "count": 1794,
+   "scope": "all entries in the running firmware's native parameter table, including unused entries",
+   "atomic": false
+  },
+  "after": {
+   "file": "parameters-after.json",
+   "sha256": "7ffddc761a3e3e7cd6dd3f1a8514122c8b4ff57f173b1a5bfe41cd4d26e0d0bf",
+   "complete": true,
+   "count": 1794,
+   "scope": "all entries in the running firmware's native parameter table, including unused entries",
+   "atomic": false
+  }
+ },
+ "mode_transitions": [
+  {
+   "from": "AUTO_LOITER",
+   "to": "AUTO_TAKEOFF",
+   "vehicle_status_failsafe": false
+  },
+  {
+   "from": "AUTO_TAKEOFF",
+   "to": "AUTO_LOITER",
+   "vehicle_status_failsafe": false
+  },
+  {
+   "from": "AUTO_LOITER",
+   "to": "AUTO_RTL",
+   "vehicle_status_failsafe": true
+  },
+  {
+   "from": "AUTO_RTL",
+   "to": "AUTO_LOITER",
+   "vehicle_status_failsafe": false
+  }
+ ],
+ "artifact_sha256": {
+  "environment.json": "45b00e8febb8fd9095738b81a48302b3ba996d340f5fdf278bca79d7376bb935",
+  "run/case.json": "8656aed857cd34ce87e590647ba3ac6fb7c511b381e931e3cfdba39acad15fe4",
+  "run/flight.ulg.gz": "9f5dd7bf973010f36989bfcaf246861d666bde7f3cf8128a84222972cc84beaa",
+  "run/parameter-inventory-after.txt": "6a39f30f6793dc4fb7132ae4bf9126becf2e725a46eaf86d9aef5556d85c7de9",
+  "run/parameter-inventory-before.txt": "7f6d8c9eaf941b04a685796e65633607ababde58b5e09df6ac636e0c4cff5a26",
+  "run/parameters-after.json": "7ffddc761a3e3e7cd6dd3f1a8514122c8b4ff57f173b1a5bfe41cd4d26e0d0bf",
+  "run/parameters-before.json": "458640b4f9d0c83a805a4ac5662fd33161b096fe0b7a10a2996565025eee2b1c",
+  "run/px4.log.gz": "75734fa75cb7db4b9930279d531218b1b492d8127b92d5a557df2f4a52bbd491",
+  "run/raw.jsonl.gz": "d70b7cd367c091a63b6b21cf8eb881cd58ca4898c3733582fb1cf23b5c0c93d2",
+  "run/summary.json": "77f991bff8127265d4835fe1a8e6eb305238f0b2754fc7a4343c0e3729b57e6b",
+  "run/trace.json.gz": "8251a79e8af0a15f8b3dde51bbfadc40cd75a2271fab7ae728ad85e4d964d60a",
+  "summarize.py": "800b559f9ebf7609a9375945356b42572dd6af20d140de4fa121d713e2df482d"
+ }
+}

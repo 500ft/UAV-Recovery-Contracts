@@ -1,0 +1,2 @@
+# Validates the declared JSON Schema dialect; tested locally with this version.
+jsonschema==4.26.0

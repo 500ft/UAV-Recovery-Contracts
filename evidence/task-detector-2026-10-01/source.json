@@ -1,0 +1,91 @@
+{
+ "commit": "d6f12ad1c4f70ad3230afd7d86e971421e02fef4",
+ "sources": [
+  {
+   "path": "msg/TelemetryStatus.msg",
+   "sha256": "2075bd7cf484dba5375464e6ca5c820bc982d34e30d2ff8fa382e748726ecda4",
+   "excerpts": [
+    {
+     "first_line": 38,
+     "last_line": 44,
+     "text": "uint64 HEARTBEAT_TIMEOUT_US = 2500000       # Heartbeat timeout (tolerate missing 1 + jitter)\n\n# Heartbeats per type\nbool heartbeat_type_antenna_tracker         # MAV_TYPE_ANTENNA_TRACKER\nbool heartbeat_type_gcs                     # MAV_TYPE_GCS\nbool heartbeat_type_onboard_controller      # MAV_TYPE_ONBOARD_CONTROLLER\nbool heartbeat_type_gimbal                  # MAV_TYPE_GIMBAL"
+    }
+   ]
+  },
+  {
+   "path": "src/modules/mavlink/mavlink_receiver.cpp",
+   "sha256": "2743c0bd177dde97c78a1c23362a5a93d48d228e5d362e64f0eb7b575568a26b",
+   "excerpts": [
+    {
+     "first_line": 2141,
+     "last_line": 2167,
+     "text": "void\nMavlinkReceiver::handle_message_heartbeat(mavlink_message_t *msg)\n{\n\t/* telemetry status supported only on first TELEMETRY_STATUS_ORB_ID_NUM mavlink channels */\n\tif (_mavlink.get_channel() < (mavlink_channel_t)ORB_MULTI_MAX_INSTANCES) {\n\n\t\tconst hrt_abstime now = hrt_absolute_time();\n\n\t\tmavlink_heartbeat_t hb;\n\t\tmavlink_msg_heartbeat_decode(msg, &hb);\n\n\t\tconst bool same_system = (msg->sysid == mavlink_system.sysid);\n\n\t\tif (same_system || hb.type == MAV_TYPE_GCS) {\n\n\t\t\tcamera_status_s camera_status{};\n\n\t\t\tswitch (hb.type) {\n\t\t\tcase MAV_TYPE_ANTENNA_TRACKER:\n\t\t\t\t_heartbeat_type_antenna_tracker = now;\n\t\t\t\tbreak;\n\n\t\t\tcase MAV_TYPE_GCS:\n\t\t\t\t_heartbeat_type_gcs = now;\n\t\t\t\tbreak;\n\n\t\t\tcase MAV_TYPE_ONBOARD_CONTROLLER:"
+    },
+    {
+     "first_line": 2910,
+     "last_line": 2943,
+     "text": "void MavlinkReceiver::CheckHeartbeats(const hrt_abstime &t, bool force)\n{\n\t// check HEARTBEATs for timeout\n\tstatic constexpr uint64_t TIMEOUT = telemetry_status_s::HEARTBEAT_TIMEOUT_US;\n\n\tif (t <= TIMEOUT) {\n\t\treturn;\n\t}\n\n\tif ((t >= _last_heartbeat_check + (TIMEOUT / 2)) || force) {\n\t\ttelemetry_status_s &tstatus = _mavlink.telemetry_status();\n\n\t\ttstatus.heartbeat_type_antenna_tracker         = (t <= TIMEOUT + _heartbeat_type_antenna_tracker);\n\t\ttstatus.heartbeat_type_gcs                     = (t <= TIMEOUT + _heartbeat_type_gcs);\n\t\ttstatus.heartbeat_type_onboard_controller      = (t <= TIMEOUT + _heartbeat_type_onboard_controller);\n\t\ttstatus.heartbeat_type_gimbal                  = (t <= TIMEOUT + _heartbeat_type_gimbal);\n\t\ttstatus.heartbeat_type_adsb                    = (t <= TIMEOUT + _heartbeat_type_adsb);\n\t\ttstatus.heartbeat_type_camera                  = (t <= TIMEOUT + _heartbeat_type_camera);\n\t\ttstatus.heartbeat_type_parachute               = (t <= TIMEOUT + _heartbeat_type_parachute);\n\t\ttstatus.heartbeat_type_open_drone_id           = (t <= TIMEOUT + _heartbeat_type_open_drone_id);\n\n\t\ttstatus.heartbeat_component_telemetry_radio    = (t <= TIMEOUT + _heartbeat_component_telemetry_radio);\n\t\ttstatus.heartbeat_component_log                = (t <= TIMEOUT + _heartbeat_component_log);\n\t\ttstatus.heartbeat_component_osd                = (t <= TIMEOUT + _heartbeat_component_osd);\n\t\ttstatus.heartbeat_component_vio                = (t <= TIMEOUT + _heartbeat_component_visual_inertial_odometry);\n\t\ttstatus.heartbeat_component_pairing_manager    = (t <= TIMEOUT + _heartbeat_component_pairing_manager);\n\t\ttstatus.heartbeat_component_udp_bridge         = (t <= TIMEOUT + _heartbeat_component_udp_bridge);\n\t\ttstatus.heartbeat_component_uart_bridge        = (t <= TIMEOUT + _heartbeat_component_uart_bridge);\n\n\t\t_mavlink.telemetry_status_updated();\n\t\t_last_heartbeat_check = t;\n\t}\n}\n"
+    }
+   ]
+  },
+  {
+   "path": "src/modules/mavlink/mavlink_main.cpp",
+   "sha256": "3d66bd253868be2234ba36e0de9631f220e5cfcb7baed51c84b40a2674bd09a7",
+   "excerpts": [
+    {
+     "first_line": 2494,
+     "last_line": 2497,
+     "text": "\t\t// publish status at 1 Hz, or sooner if HEARTBEAT has updated\n\t\tif ((hrt_elapsed_time(&_tstatus.timestamp) >= 1_s) || _tstatus_updated) {\n\t\t\tpublish_telemetry_status();\n\t\t}"
+    },
+    {
+     "first_line": 2810,
+     "last_line": 2828,
+     "text": "void Mavlink::publish_telemetry_status()\n{\n\t// many fields are populated in place\n\n\t_tstatus.mode = _mode;\n\t_tstatus.data_rate = _datarate;\n\t_tstatus.rate_multiplier = _rate_mult;\n\t_tstatus.flow_control = get_flow_control_enabled();\n\t_tstatus.ftp = ftp_enabled();\n\t_tstatus.forwarding = get_forwarding_on();\n\t_tstatus.mavlink_v2 = (_protocol_version == 2);\n\n\t_tstatus.streams = _streams.size();\n\n\t// telemetry_status is also updated from the receiver thread, but never the same fields\n\t_tstatus.timestamp = hrt_absolute_time();\n\t_telemetry_status_pub.publish(_tstatus);\n\t_tstatus_updated = false;\n}"
+    }
+   ]
+  },
+  {
+   "path": "src/modules/commander/Commander.cpp",
+   "sha256": "ab21f8b26e7c44d8569b5c34bdd5f629d72bf8c969723f4927bc46ac5a5fffff",
+   "excerpts": [
+    {
+     "first_line": 1850,
+     "last_line": 1874,
+     "text": "\n\t\toffboardControlCheck();\n\n\t\t// data link checks which update the status\n\t\tdataLinkCheck();\n\n\t\t// Check for failure detector status\n\t\tif (_failure_detector.update(_vehicle_status, _vehicle_control_mode)) {\n\t\t\t_vehicle_status.failure_detector_status = _failure_detector.getStatus().value;\n\t\t\t_status_changed = true;\n\t\t}\n\n\t\tmodeManagementUpdate();\n\n\t\tconst hrt_abstime now = hrt_absolute_time();\n\n\t\tconst bool nav_state_or_failsafe_changed = handleModeIntentionAndFailsafe();\n\n\t\t// Run arming checks @ 10Hz\n\t\tif ((now >= _last_health_and_arming_check + 100_ms) || _status_changed || nav_state_or_failsafe_changed) {\n\t\t\t_last_health_and_arming_check = now;\n\n\t\t\tperf_begin(_preflight_check_perf);\n\t\t\t_health_and_arming_checks.update();\n\t\t\tbool pre_flight_checks_pass = _health_and_arming_checks.canArm(_vehicle_status.nav_state);"
+    },
+    {
+     "first_line": 2780,
+     "last_line": 2794,
+     "text": "\t\t\tif (telemetry.heartbeat_type_gcs) {\n\t\t\t\t// Initial connection or recovery from data link lost\n\t\t\t\tif (_vehicle_status.gcs_connection_lost) {\n\t\t\t\t\t_vehicle_status.gcs_connection_lost = false;\n\t\t\t\t\t_status_changed = true;\n\n\t\t\t\t\tif (_datalink_last_heartbeat_gcs != 0) {\n\t\t\t\t\t\tmavlink_log_info(&_mavlink_log_pub, \"GCS connection regained\\t\");\n\t\t\t\t\t\tevents::send(events::ID(\"commander_dl_regained\"), events::Log::Info, \"GCS connection regained\");\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\t_datalink_last_heartbeat_gcs = telemetry.timestamp;\n\t\t\t}\n"
+    },
+    {
+     "first_line": 2846,
+     "last_line": 2860,
+     "text": "\t// GCS data link loss failsafe\n\tif (!_vehicle_status.gcs_connection_lost) {\n\t\tif ((_datalink_last_heartbeat_gcs != 0)\n\t\t    && hrt_elapsed_time(&_datalink_last_heartbeat_gcs) > (_param_com_dl_loss_t.get() * 1_s)) {\n\n\t\t\t_vehicle_status.gcs_connection_lost = true;\n\t\t\t_vehicle_status.gcs_connection_lost_counter++;\n\n\t\t\tmavlink_log_info(&_mavlink_log_pub, \"Connection to ground station lost\\t\");\n\t\t\tevents::send(events::ID(\"commander_gcs_lost\"), {events::Log::Warning, events::LogInternal::Info},\n\t\t\t\t     \"Connection to ground control station lost\");\n\n\t\t\t_status_changed = true;\n\t\t}\n\t}"
+    }
+   ]
+  },
+  {
+   "path": "src/modules/commander/HealthAndArmingChecks/checks/rcAndDataLinkCheck.cpp",
+   "sha256": "e373268653726418911c5cf465155127a42b00b42b883fbd304643cd58730014",
+   "excerpts": [
+    {
+     "first_line": 70,
+     "last_line": 79,
+     "text": "\t}\n\n\t// Manual control check is in modeCheck as mode requirement\n\n\t// GCS connection\n\treporter.failsafeFlags().gcs_connection_lost = context.status().gcs_connection_lost;\n\n\tif (reporter.failsafeFlags().gcs_connection_lost) {\n\n\t\t// Prevent arming if we neither have manual control nor a GCS connection. TODO: disabled for now due to MAVROS tests"
+    }
+   ]
+  },
+  {
+   "path": "src/modules/logger/logged_topics.cpp",
+   "sha256": "33c1cd7c55dc81d4fa53153b7f269401b67c7f6edc929707ec536203096bcfe5",
+   "excerpts": [
+    {
+     "first_line": 167,
+     "last_line": 170,
+     "text": "\tadd_optional_topic_multi(\"rpm\", 200);\n\tadd_topic_multi(\"timesync_status\", 1000, 3);\n\tadd_optional_topic_multi(\"telemetry_status\", 1000, 4);\n"
+    }
+   ]
+  }
+ ]
+}

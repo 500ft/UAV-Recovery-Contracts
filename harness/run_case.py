@@ -21,7 +21,7 @@ Baselines: GCS heartbeat 1 Hz [B5]; offboard setpoints 10 Hz, above the 2 Hz pro
 failure injection needs SYS_FAILURE_EN [B3]; parameter defaults and timers [B10].
 """
 from __future__ import annotations
-import argparse, json, os, shutil, signal, struct, subprocess, sys, threading, time
+import argparse, json, os, re, shutil, signal, struct, subprocess, sys, threading, time
 from pathlib import Path
 
 from harness.cases import resolve, MATRIX, PER_EVENT_PARAMS, PER_MODE_PARAMS
@@ -184,6 +184,48 @@ class Vehicle:
         return False
 
 
+def capture_parameters(vehicle, build: Path, out: Path, phase: str, log) -> dict:
+    """Read every compiled parameter, including those absent from PARAM_REQUEST_LIST.
+
+    PX4's native table supplies names and indices. Its printed floats are rounded,
+    so values come from typed MAVLink reads. Completeness means one successful
+    read per table entry; the sequential snapshot is explicitly non-atomic.
+    """
+    snapshot = dict(phase=phase, complete=False, atomic=False, parameters={},
+                    scope="all entries in the running firmware's native parameter table, including unused entries",
+                    start_host_monotonic_s=time.monotonic())
+    try:
+        result = subprocess.run([str(build / 'bin/px4-param'), '--instance', str(INSTANCE), 'show', '-a'],
+                                cwd=build, capture_output=True, text=True, timeout=30)
+        inventory_file = out / f'parameter-inventory-{phase}.txt'
+        inventory_file.write_text(result.stdout + result.stderr)
+        snapshot['inventory_sha256'] = file_sha256(inventory_file)
+        entries = re.findall(r'\b([A-Z][A-Z0-9_]*) \[(-?\d+),(\d+)\] :', result.stdout)
+        total = re.search(r'(\d+) parameters total, (\d+) used\.', result.stdout)
+        if result.returncode or total is None:
+            raise RuntimeError('native parameter inventory failed')
+        count = int(total[1])
+        snapshot['expected_count'] = count
+        snapshot['used_count'] = int(total[2])
+        if (not count or len(entries) != count or len({name for name, _, _ in entries}) != count
+                or {int(index) for _, _, index in entries} != set(range(count))):
+            raise RuntimeError('native parameter inventory is incomplete or duplicated')
+        for name, _used_index, _index in entries:
+            value = vehicle.read_param(name)
+            snapshot['parameters'][name] = dict(type=vehicle.param_types[name], value=value)
+        snapshot['complete'] = True
+    except Exception as exc:
+        snapshot['error'] = f'{type(exc).__name__}: {exc}'
+        raise
+    finally:
+        snapshot['end_host_monotonic_s'] = time.monotonic()
+        path = out / f'parameters-{phase}.json'
+        path.write_text(json.dumps(snapshot, sort_keys=True, indent=1, allow_nan=False) + '\n')
+        log(dict(kind='parameter_snapshot', phase=phase, file=path.name, sha256=file_sha256(path),
+                 complete=snapshot['complete'], count=len(snapshot['parameters'])))
+    return snapshot
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--config", required=True)
@@ -325,6 +367,7 @@ def main(argv=None) -> int:
         time.sleep(2)
         if not v.wait_prearm(180):
             raise RuntimeError(f"pre-arm gate never opened; last health word {v.health}")
+        capture_parameters(v, build, out, 'before', log)
         armed = False
         if streams.errors:
             raise RuntimeError(f"input stream errors before arming: {streams.errors[:3]}")
@@ -414,6 +457,7 @@ def main(argv=None) -> int:
             if a.event == "none" and v.boot_s >= inject_at + case["horizon_s"]:
                 log(dict(kind="event", name="horizon_reached", t_vehicle_s=round(v.boot_s, 3)))
                 break
+        capture_parameters(v, build, out, 'after', log)
     except Exception as exc:  # setup or capture failure: preserved, never retried with a different seed
         log(dict(kind="failure", error=type(exc).__name__, detail=str(exc)[:400]))
         stage("capture", "failed", evidence="failure record in raw.jsonl", error=type(exc).__name__)

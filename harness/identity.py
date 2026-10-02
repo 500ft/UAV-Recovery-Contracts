@@ -7,8 +7,9 @@
 
 The earlier `parameters_sha256` tried to be the first and the second at once, which cannot work: a case cannot
 be selected by the hash of a readback that does not exist until the vehicle is up. Splitting them also fixes a
-quieter problem. The runner reads back only the parameters it explicitly set, so that hash covers the overrides
-and not the vehicle's configuration; it is named `overrides_readback_sha256` here and nothing calls it complete.
+quieter problem. The override hash covers only explicitly set parameters. It is named
+`overrides_readback_sha256` and remains incomplete. Full parameter captures, when available,
+have separate file hashes and completeness records in `parameter_snapshots`.
 """
 from __future__ import annotations
 import hashlib, json
@@ -55,7 +56,8 @@ def scenario(case: dict, *, intended_mode: str, restore_after_s: float = 0.0,
 
 def execution(scenario_id: str, *, repeat: str, executable_sha256: str | None,
               build: dict | None, overrides_readback: dict | None,
-              realized_events: dict | None, raw_artifacts: dict | None) -> dict:
+              realized_events: dict | None, raw_artifacts: dict | None,
+              parameter_snapshots: dict | None = None) -> dict:
     """What one attempt did. Every component that was not captured is `unknown`, never defaulted or invented."""
     readback = None if overrides_readback is None else {k: float(v) for k, v in sorted(overrides_readback.items())}
     body = dict(
@@ -71,6 +73,9 @@ def execution(scenario_id: str, *, repeat: str, executable_sha256: str | None,
         overrides_readback_scope="parameters explicitly set by this run; the rest of the vehicle is unrecorded",
         realized_events_ms={k: _ms(v) for k, v in sorted((realized_events or {}).items())} or UNKNOWN,
         raw_artifacts=raw_artifacts or UNKNOWN)
+    if parameter_snapshots:
+        body['parameter_snapshots'] = parameter_snapshots
+        body['overrides_readback_scope'] = 'parameters explicitly set by this run; full table reads are in parameter_snapshots'
     return dict(body, execution_id=digest(body))
 
 

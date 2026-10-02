@@ -1,0 +1,766 @@
+UAV FAILSAFE COMPOSITION
+LITERATURE CRITIQUE AND REVISED PLANNING HANDOFF FOR CLAUDE
+Date: 2026-09-24
+Status: planning and review only; no implementation or simulator execution
+
+0. REVIEW BASIS AND HOW TO USE THIS FILE
+======================================
+
+Repository: 500ft/uav-failsafe-composition
+Reviewed main: 9db5112fd3f285219b96b8aab3ff02f8c880e07d (PR #27 merged)
+Firmware identity recorded by the repository:
+  PX4 v1.17.0, d6f12ad1c4f70ad3230afd7d86e971421e02fef4
+
+The local main checkout remains older than origin/main. Repository findings in
+this review come from git show at the fetched origin/main, not that old working
+tree. Fetch again before implementing; reassess findings against newer changes.
+
+This file supersedes conflicting recommendations in the September 19 TXT
+handoff. It does not amend the merged protocol, change a frozen campaign, mark
+literature records read, or constitute a new experimental result. Claude should
+turn the accepted recommendations into a coherent protocol amendment before
+confirmation runs. Preserve the original handoff and historical evidence.
+
+Question reviewed:
+Can a source-traceable timed model of the configured PX4 failsafe framework
+support credible claims about recovery interactions, through explicit
+abstraction assumptions, observable conformance tests, and executable witnesses?
+
+This is a targeted methodological review of the existing plan, recent evidence,
+and selected primary literature. It is not an exhaustive novelty search or a
+replacement for URC-01. Repository acquisition denominators remain unchanged.
+Sources [S1]-[S12] are identified in section 6. Proposed designs below are this
+review's recommendations, not claims that those papers prescribe this protocol.
+
+1. VERDICT AND CURRENT STATE
+===========================
+
+Keep the PX4-first programme, but change the immediate milestone from campaign
+execution to a trustworthy measurement and oracle chain. The strongest candidate
+contribution is a reproducible analysis of WHEN recovery obligations activate,
+persist, change, and become infeasible under interacting conditions. Merely
+checking a maximum-priority selector is a weak contribution and may be true by
+construction in the model.
+
+The repository has already corrected several weaknesses in our earlier plan:
+- MAVLink setpoints and offboard liveness are no longer treated as separable.
+- A real SIH/SITL harness and development traces now exist.
+- Property exclusions and shared-delay semantics have been introduced.
+- A paired-event tier and Wilson intervals are proposed.
+- Diagnostic runs are distinguished from held-out validation.
+- The full campaign is appropriately held while recovery behavior is unexplained.
+
+Do not rebuild these artifacts or report these corrections as new work.
+
+Latest evidence: the September 23 Auto Loiter development run records datalink
+loss, no subsequent recovery-mode change, and no announced failsafe action.
+Earlier development runs also cover a geofence monitor and diagnostic Terminate
+configuration. This deserves investigation. It is NOT yet a demonstrated
+composition defect or an independently localized PX4 implementation defect.
+
+The September 22 literature expansion has 55 entries: 9 marked read, 45
+metadata-only, 1 unresolved. Searching an axis is not the same as reading it.
+The old protocol's statement that the formal axis is entirely unsearched is
+now stale, but a novelty claim remains unjustified.
+
+2. FINDINGS, IN ORDER OF IMPORTANCE
+=================================
+
+F1. CRITICAL: REPAIR THE OBSERVATION CHAIN BEFORE INTERPRETING TIMING
+
+Evidence in harness/trace.py, lines 41-49 and 76-104:
+- A single median host-to-vehicle offset is estimated over the entire run.
+- Explicit vehicle timestamps carried by injector events are retained only in
+  detail; the primary event timestamp is reconstructed from host time.
+- uLog mode transitions and hazard flags use native vehicle timestamps.
+Consequently, subtracting injection time from transition time mixes two clock
+routes. The protocol's claim that the common offset cancels does not generally
+hold for this conversion.
+
+The committed September 23 summary makes the discrepancy inspectable:
+  injection.t_vehicle_s = 57.780
+  injection.detail.t_vehicle_s = 58.128
+  horizon.t_vehicle_s = 108.852
+  horizon.detail.t_vehicle_s = 103.144
+  host-to-vehicle offset spread = 11.4193 s
+
+Neither field should simply be declared ground truth. The runner's recorded
+vehicle time is a telemetry observation near injection, not necessarily the
+instant the autopilot receives the last heartbeat or consumes a command. An
+offset spread is also not a calibrated uncertainty interval.
+
+Revision:
+1. Preserve native uLog timestamps and explicit vehicle observations unchanged.
+2. Distinguish requested schedule, host send/stop, last received valid input,
+   monitor activation, selector update, and observed mode transition.
+3. Represent uncertain event instants as intervals with provenance. Bracket
+   host-only events using nearby synchronized observations; if no defensible
+   bound exists, timing is unverified. Do not silently assume zero offset.
+4. Report detector latency, selector latency and mode-entry latency separately.
+5. Re-normalize available raw development captures to new versioned outputs.
+   Do not overwrite the historical derivation or silently amend its conclusions.
+
+Acceptance: a fixture with varying host/vehicle offset preserves native time;
+mixed-clock comparisons cannot produce an unqualified timing pass. A boundary
+whose uncertainty straddles the deadline is inconclusive. [S6 supports treating
+finite clock precision and the tester interface explicitly.]
+
+F2. CRITICAL: VERIFY THE REGISTERED SEGMENT, WITH CORRECT VERDICT PRECEDENCE
+
+harness/verify.py lines 44-47 collects every native transition in the trace.
+The latest summary compares pre-injection AUTO_TAKEOFF -> AUTO_LOITER against
+the post-injection expectation AUTO_RTL. This guarantees an extra mismatch even
+in a future run that performs the correct recovery after normal takeoff.
+
+The function also accumulates identity/validity errors in reasons, then can
+return refuted rather than unverified. Inability to compare a valid experiment
+is different from a valid observation contradicting a prediction.
+
+Revision:
+- Define setup, precondition, stimulus and response windows explicitly.
+- Establish the state immediately before the response window; compare only
+  the specified response suffix. Preserve the full trace separately.
+- Define handling of transitions exactly at an uncertain boundary.
+- Check identity, recording completeness and required observations before
+  assigning a behavioral verdict.
+- Separate run validity, injection success, model conformance and requirement
+  satisfaction. A missing hazard after proven stimulus can refute a detector
+  prediction; it cannot by itself refute a downstream selector prediction.
+- Distinguish the 1.5 s development-timeline tolerance from Study A's median
+  0.2 s / p95 1.0 s criteria. Neither substitutes for the other.
+
+Acceptance fixtures: normal takeoff plus correct recovery passes the response
+comparison; wrong recovery fails; missing log, wrong identity or unknown
+stimulus yields unverified; a normal control can take off without being labelled
+refuted solely for that expected setup transition.
+
+These corrections do not erase the observed absence of AUTO_RTL in the latest
+run. They repair the reasons and timing attached to that observation.
+
+F3. CRITICAL: AN UNOBSERVED SELECTOR VALUE IS NOT THE VALUE 'NONE'
+
+harness/trace.py puts selected_action=None in normalized samples, emits rising
+hazard events without the corresponding falling history, and reads the uLog
+failsafe flag without retaining it in the normalized mode-event payload.
+STATUSTEXT announcements are supplementary evidence, not a complete selector
+state trace. U2/U3 cannot be established from this representation alone.
+
+Revision:
+- Add explicit observation status: known(value), unknown, missing, and stale.
+  PX4 Action::None is a known enum value, distinct from JSON null.
+- Preserve flag transitions in both directions and state at window entry.
+- Preserve vehicle_status.failsafe and intended versus actual mode.
+- Instrument the real update boundary, if required, to capture input flags,
+  armed state, intended mode, parameter snapshot, action before/after selection,
+  delayed action, takeover/deferral state and update timestamp together.
+- Keep framework selection separate from mode commitment: a selected recovery
+  can be rejected or changed by downstream prerequisites.
+
+Acceptance: each property declares its required channels and refuses a pass
+when they are absent. A trace containing no action observations cannot prove
+the selector chose None. Log instrumentation changes get their own build hash.
+
+Use the narrower current claim: 'No recovery transition or announcement was
+observed in these development runs; the selector's internal cause is unresolved.'
+The external armed flag and logged monitor flag do not prove that the framework
+consumed the same values in the same update. [S2, S6; repository inspection.]
+
+F4. HIGH: MAKE THE OFFLINE ORACLE A DIFFERENTIAL DIAGNOSTIC, NOT A NEW SPEC
+
+Running PX4's real Failsafe class is a good next diagnostic. It cannot alone
+establish why the integrated runtime behaves differently, and it is not an
+independent safety oracle because it uses the implementation under study.
+
+Compare three layers on the SAME input sequence:
+A. the hand-written/source-derived model;
+B. the pinned real C++ Failsafe class through the existing upstream test target;
+C. the integrated runtime, with the values actually consumed at its boundary.
+
+Use one enabled, no-exception single hazard first, plus no-fault and deliberately
+disabled-action controls. Pin compiler, build flags, sanitizer configuration,
+submodules, executable hash and instrumentation patch as well as source commit.
+
+Decision table:
+- A differs from B on identical inputs: inspect transcription, omitted state,
+  oracle setup and build effects before blaming integration.
+- A equals B, C receives different inputs: investigate input production,
+  configuration delivery, scheduling or the assumed call boundary.
+- A equals B, C receives the same inputs but behaves differently: inspect
+  build identity, initialization, hidden state and integration side effects.
+- All agree but violate a separately stated requirement: a candidate
+  requirement/implementation discrepancy, not an extraction failure.
+- Oracle fails to build or run: tooling result; behavioral cause remains open.
+
+The reported sanitizer problem establishes a blocker on the attempted macOS
+setup, not that Linux is mathematically required. Prefer an available supported
+Linux environment or appropriately configured CI if authorized for execution;
+do not make installing WSL on the headless GPU host a scientific dependency.
+This handoff authorizes no installation or execution. [S2; inference and design.]
+
+F5. CRITICAL: REWRITE THE PROPERTIES AS CONDITIONAL RECOVERY OBLIGATIONS
+
+The code-derived exclusions were necessary but do not yet settle the semantics.
+Keep two questions separate:
+  Conformance: does the abstraction reproduce the pinned implementation?
+  Adequacy: does that implementation meet a stated recovery requirement?
+A rule copied from the implementation can answer the first and still miss a
+shared design error in the second. Requirement sources and study-defined
+requirements must be labelled separately. [S1, S3, S4.]
+
+U1, activation:
+- Choose the clock origin. If measuring from the detected flag, do not add its
+  detection timeout again. If measuring from input loss, include it once.
+- Specify the obligation for None/Warn configurations; warning-only battery
+  behavior must not be treated as a missing maneuver automatically.
+- Measure registration, selected action and mode entry as separate steps.
+- Replace a universal heartbeat-period margin with an uncertainty budget for
+  the actual observation path. A 1 Hz GCS heartbeat does not define the time
+  resolution of every battery, estimator or selector event.
+
+U2, arbitration:
+- Distinguish configured action, eligible action, pending delayed action,
+  selected action and committed mode.
+- The present property compares against the highest configured action while
+  listing no explicit exclusion for legitimate temporary Hold-first delay.
+  An RTL+Land pair in a legal Hold delay must not become a false violation.
+- Evaluate after a completed framework update, not during an invented
+  interleaving of otherwise atomic calculations.
+- Test the timing, fallback, latch and takeover rules around arbitration.
+  'The maximum of this set is its maximum' is only a consistency check.
+
+U3, persistence/re-entry:
+- Specify which transitions are forbidden. Hold -> RTL and a justified
+  escalation are not automatically harmful oscillation.
+- Record clear conditions, flag history, clear/re-raise order and mode changes.
+- Add a bounded interrupted-recovery obligation: repeated clears/re-raises
+  must follow the source's delay-recharge semantics. Calling every input flap
+  an exclusion would remove a promising interaction mechanism from the study.
+- Treat the 10 s window as a chosen study parameter unless a requirement
+  justifies it. A paper using another window does not validate this number.
+
+U4, response versus completion:
+- Split 'entry into the intended response mode' from 'recovery completed'.
+- AUTO_LOITER may be the mode before injection; it must not satisfy an RTL
+  response obligation simply because it appears in a generic terminal list.
+- Entering AUTO_RTL is not landing, containment, or demonstrated recovery.
+- Hold is normally a continuing behavior, and Termination is an action outcome,
+  not a successful physical recovery by definition.
+- A completion bound involving climb, travel or descent requires corresponding
+  dynamics and preconditions. The present discrete model does not supply them.
+- A speed limit is an upper speed bound; dividing distance by that maximum
+  is not a conservative upper bound on completion time.
+
+Recommended v1: formally check response obligations; record physical outcome
+separately in SITL. Defer a formal completion guarantee until its dynamics are
+represented. This narrows the claim while improving its falsifiability.
+
+Every property should have: antecedent, allowed outputs, deadline origin,
+deadline, persistence/clear rule, exceptions, observables, inconclusive rule,
+one satisfying example, one violating example, and an antecedent-reachability
+query. Include one example where the action is intentionally disabled. [S5,
+S6, S8; these property revisions are proposed here.]
+
+Reconcile the property-to-query mapping too. The current protocol names P1 for
+U1/U2, P2 for deadlock, P3 for priority and P4 for U4, leaving U3 without an
+explicit corresponding query. Keep requirement IDs separate from diagnostic
+queries; every in-scope requirement needs a monitor/query or a declared gap.
+
+F6. HIGH: THE MODEL OMITS HISTORY THAT MATTERS TO THE PROPOSED THESIS
+
+model/px4_failsafe.py is a manually transcribed restricted executable model;
+it is not yet a checked timed-automaton network. Keep that status explicit.
+
+The pinned framework maintains _current_start_delay with gradual recharge
+between delayed episodes. The Python model starts new delays directly from
+COM_FAIL_ACT_T and has no equivalent recharge state. It also intentionally
+restricts mode-requirement fallback and takeover behavior. The first omission
+directly matters to repeated hazards and flapping; single-event agreement
+cannot validate it. [S8; compare updateStartDelay with Selector.raise_hazard.]
+
+Revision: enumerate state needed by each property, not one automaton per hazard
+by default. Represent shared timer memory, clear/latch rules and update order.
+Record every omission as exact, over-approximated, under-approximated or assumed,
+with its consequence for each property. An optimistic assumption is not a
+soundness argument. Boolean guard abstraction can be adequate without modelling
+all physics, but independent flags may permit physically infeasible combinations.
+
+Use existing upstream unit tests and hand-worked transition tables before
+writing any generalized extractor. Add discriminating sequences for timer
+recharge, mode changes and re-raising a cleared hazard. Hash the model separately
+from the source and the requirement set. [S2, S8.]
+
+F7. HIGH: RETIRE THE RULE 'EVERY REFUTED WITNESS IS A MODEL DEFECT'
+
+Over-approximations intentionally admit behaviors absent from the concrete
+system. Such a counterexample may be spurious; it is not necessarily a faulty
+model. A failed replay can also reflect an infeasible injection schedule or an
+unobserved prerequisite. Counterexample-guided abstraction refinement is an
+established method for handling this distinction. [S7.]
+
+Revision: classify witnesses as concretely confirmed, abstraction-spurious,
+not realizable by the current injector, invalid capture, or unresolved. Diagnose
+which input prefix first diverges. A non-confirming run is not by itself proof
+that no realization exists.
+
+Permit development-phase model refinement. Freeze each candidate version
+before held-out validation; retire a confirmation set used to tune that version.
+New seed labels alone do not make the same deterministic cases held out. Use
+previously untouched event schedules or configuration strata within the claim's
+domain. Repairing omitted source behavior is legitimate model development.
+
+Do not promise to replay 'every witness' in an infinite timed trace space.
+Replay each reported witness, and define a finite representative policy by
+property, root cause and event-order region. Retain duplicate counts and
+realizability constraints rather than silently dropping difficult witnesses.
+
+F8. HIGH: REPLACE 'VERIFIED NULL' WITH A PRECISE RESULT TAXONOMY
+
+Separate four outcomes:
+1. No violation observed in the registered test suite.
+2. No counterexample within explicit bounds of a completed bounded check.
+3. Property established over the specified abstract model by completed symbolic
+   checking, with initial states, assumptions and property encoding reported.
+4. Unknown: timeout, memory limit, unsupported semantics, unreachable antecedent,
+   inadequate observation, or unjustified abstraction.
+
+To transfer an abstract universal safety result to the implementation, justify
+that the abstraction includes the relevant concrete behaviors and preserves
+the property. Ninety-five percent trace agreement does not establish that.
+Liveness/response claims additionally need time-progress and environmental
+assumptions; an environment allowed to interrupt forever may prevent recovery.
+
+Record checker mode and version, options, limits, model/query hashes and full
+completion result. Statistical model checking has a different claim from
+symbolic verification. Ordinary symbolic timed automata do not automatically
+support arbitrary continuous dynamics just because they are interval bounded.
+Audit the supported fragment before selecting an encoding. [S7, S9.]
+
+Acceptance: deliberate timeout and never-triggered-hazard cases cannot receive
+the same label as a completed non-vacuous proof. 'No counterexample found' alone
+is not an acceptance criterion.
+
+F9. HIGH: VALIDATE INTERACTIONS BY EVENT ORDER AND BOUNDARIES, NOT SEED COUNT
+
+The paired tier is an improvement already proposed in D9. However, four ordered
+pairs with three time offsets are an initial pilot, not evidence of coverage of
+the complete composition space. Current seeds select fixed injection offsets;
+they are not independent random worlds. RC loss remains uninjectable in the
+current apparatus, so both the nominal 60-case and proposed 50-case scope need
+one authoritative amendment before confirmation.
+
+Proposed factors:
+- hazard pair and action relationship (same action, escalation, conflicting
+  prerequisites, disabled/exception control);
+- A then B, B then A, same completed update, and different orders inside an
+  unresolved update window;
+- just before/at/after detection and action-delay boundaries;
+- steady mode versus a transition boundary;
+- hazard clear, clear-and-re-raise, and takeover where included in scope.
+
+Choose delta from update/scheduling resolution plus observation uncertainty,
+not an arbitrary tiny epsilon. If the apparatus cannot realize two events in
+one update, mark that experimental cell unavailable while retaining it in the
+formal domain if relevant. [S1 motivates mode-relative schedules; S10 supports
+ordered interaction coverage. Neither proves pairwise testing is exhaustive.]
+
+For a selected interaction, use matched runs: neither hazard, A alone, B alone,
+A+B in the nominated order; then reverse the order and probe the timer boundary.
+Preserve initial conditions and actual parameter readback. If A alone violates
+the requirement, report a single-hazard finding rather than inventing a
+composition-only defect. A combined violation despite passing single controls
+is stronger evidence for an interaction, subject to observation and replay.
+
+Begin with one pair involving shared timer/clear state and one involving
+recovery prerequisites, chosen only after both single stimuli work. Do not run
+a full factorial campaign until this smallest discriminating pilot is useful.
+
+F10. HIGH: REPORT COVERAGE AND UNCERTAINTY WITHOUT OVERCLAIMING CONFIDENCE
+
+The proposed Wilson interval is good, but needs a sampling interpretation.
+Hand-picked deterministic scenarios do not become an independent identically
+distributed Bernoulli sample just because a percentage is calculated.
+
+Own calculation, under the explicit binomial assumption only:
+  57/60 observed matches -> two-sided Wilson 95% interval about 86.3%-98.3%.
+  50/50 matches -> one-sided exact 95% lower bound about 94.18%.
+  60/60 matches -> one-sided exact 95% lower bound about 95.13%.
+These examples expose the distinction between an observed 95% match rate and a
+claim of at least 95% population agreement at 95% confidence. They do not supply
+a statistical justification for the current deterministic matrix.
+
+Revision:
+- Treat current offsets as designed coverage cases; report repeats separately.
+- Report by hazard, configuration, order and boundary region before pooling.
+- Report matched/mismatched/missing/extra transitions, and timing only for
+  explicitly matched transitions. Missing recovery must not vanish from the
+  timing denominator.
+- Count planned, attempted, invalid, inconclusive and valid cases separately.
+- Predefine quantile calculation and show the tail values in a small pilot.
+- Do not let three unexplained systematic failures be excused by a 57/60 gate.
+- Limit conclusions to the supported subdomain if a class remains unobservable
+  or uninjectable; do not quietly remove it from a claimed full-coverage result.
+
+A simulator process crash after a valid injection is also an observed outcome.
+Separate it from apparatus failure and from missing data. It may be outside a
+mode-conformance analysis without disappearing from the failure accounting.
+
+F11. CRITICAL FOR LITERATURE QUALITY: A RESOLVED IDENTIFIER CAN BE THE WRONG WORK
+
+L32 in literature/register.json has the title 'Simplicity and complexity in cell
+cycle control' but a rationale about Simplex runtime assurance. The university
+record identifies a biology thesis on cell-cycle control in fission yeast.
+This is an off-topic match, not an unread Simplex source. [S11.]
+
+Revision:
+- Preserve the erroneous acquisition record and mark the semantic mismatch.
+- Separate identifier_resolved, intended_work_matched, topical_eligibility,
+  access_scope and claim_supported; one boolean cannot mean all five.
+- Audit the 45 metadata-only entries for title, authors, year and intended work
+  before using them in the narrative. Do not infer all are wrong from L32.
+- Resolve the intended Simplex reference by exact bibliographic identity or
+  mark it unresolved. L33 is already a plausible separate reading candidate;
+  do not silently replace L32 with L33 or give one paper two identities.
+- Add a regression fixture for the L32 mismatch and unresolved cases. Automated
+  fuzzy matching may flag candidates; it cannot establish claim support.
+
+Keep the formal-composition screen unresolved until the relevant methods are
+read. Newly searched is not newly established. This planning review does not
+promote any repository reading status.
+
+F12. HIGH: NARROW THE DISTINCTIVENESS CLAIM AND ADD AN HONEST COMPARATOR
+
+Avis already schedules faults around mode transitions, explores combinations,
+and replays failures relative to those transitions. PGFuzz uses temporal
+policies and input-sequence minimization. Feature-interaction checking and
+aviation mode-confusion checking have older precedents. Therefore 'multiple
+faults + temporal logic + replay' is not a defensible novelty claim. [S1, S3-S5.]
+
+Proposed contribution, explicitly still a candidate:
+  A versioned PX4 recovery-interaction benchmark linking source-level timed
+  obligations, explicit abstraction limits, independently specified requirements,
+  and executable counterexamples or completed scoped model-checking results.
+
+Make the scientific question concrete: which failures involve shared delay
+memory, clear conditions, authority return, or loss of a recovery prerequisite,
+and which are merely legal arbitration between already-active actions?
+
+After apparatus repair, compare one small common domain using the same inputs,
+properties, reset policy and observation pipeline:
+  (a) an action-table-only baseline;
+  (b) a budget-matched random or enumerated event-schedule baseline;
+  (c) the stateful timed-model method.
+Include a mode-boundary-guided baseline if the claim specifically competes with
+Avis. An inspired baseline is not a reproduction of the original tool.
+
+Measure unique confirmed violation classes, covered order/boundary cells,
+spurious/unreplayable witness counts, runtime, and model-authoring effort.
+If the timed model adds no useful finding or guarantee, report that limitation.
+The benchmark can still be valuable; publication suitability is not guaranteed.
+
+3. THREE PROJECT DEVELOPMENTS WORTH PURSUING
+==========================================
+
+A. RECOVERY-PREREQUISITE INTERACTIONS
+
+Proposed experiment: trigger a recovery request and then remove a prerequisite
+for executing that recovery, e.g. position validity during a return request.
+Model the documented fallback chain and record the actual committed mode.
+Test both orders and the boundary around the initial response.
+
+Question: does the system maintain an eligible response while the capability
+needed by its preferred response changes? This is more informative than asking
+whether Land outranks RTL. The experiment remains conditional on real stimulus
+support; it is not a claim that PX4 has such a defect. [Motivation: S1, S4.]
+
+B. SHARED-DELAY MEMORY UNDER INTERRUPTED HAZARDS
+
+Proposed experiment: raise A, enter its delay, clear A, then re-raise A or raise
+B after several explicitly chosen quiet intervals. Compare the real class,
+the extracted model and integrated runtime. Predict from the pinned
+updateStartDelay semantics before running.
+
+Question: can reset/recharge/latch behavior produce an unexpected recovery
+delay or loss of an obligation? This directly targets a state variable missing
+from the current simplified model. It is a bounded extension of the existing
+scope, not a new fuzzer. [Motivation: pinned source S8; inference here.]
+
+C. REQUIREMENT-PRESERVING SCENARIO MINIMIZATION
+
+For each confirmed combined violation, remove one event, shorten a pause, or
+restore one prerequisite while retaining the same obligation. Recheck after
+each simplification. Preserve the shortest confirmed scenario found, without
+claiming global minimality. Record why each remaining event is needed.
+
+Question: is this actually an interaction, and what conditions cause it?
+Minimization is established in prior testing work, so the value here is the
+traceable PX4 artifact and explanation, not novelty of minimization. [S3, S12.]
+
+4. ORDERED IMPLEMENTATION HANDOFF: WHAT CLAUDE SHOULD DO NEXT
+==========================================================
+
+All steps below are proposed future implementation. This review has executed
+none of them. Reuse existing paths and helpers; no new framework is needed.
+
+TASK 1 — Correct literature identity and current project pointers.
+Files: literature/register.json, generated literature/axes.md,
+tests/test_literature_register.py, docs/START_HERE.md, results/README.md,
+docs/specs/formal-composition/README.md, docs/claim-ledger.md as applicable.
+Do: quarantine L32's mismatch, audit metadata matches, mark inspected sections
+precisely, and describe the existing development traces and held campaign.
+Done: no biology reference is presented as Simplex; current entry points no
+longer say no autopilot has run; metadata access is never equated to findings.
+Dependency: independent of the simulator/oracle blocker.
+
+TASK 2 — Repair and audit normalization and comparison, using stored data.
+Files: harness/trace.py, harness/verify.py, harness/normalize.py,
+protocols/trace-schema.json, protocols/event-semantics.md,
+tests/test_conversion_and_silent_failure.py, tests/test_expected_timelines.py.
+Do: F1-F3; retain native clock observations, filter comparison windows, preserve
+clear events and unknown state, and separate verdicts.
+Also: make scenario identity include intended mode, event schedule, complete
+applied-parameter hash and build identity. Preserve compatibility mappings for
+historical IDs. normalize.py should not silently reconstruct an Auto Loiter run
+as the default Offboard case when metadata is reloaded.
+Done: discriminating fixtures pass; all available diagnostic raw captures have
+a new immutable derivation with old/new verdict differences explained. Missing
+raw data is reported as unavailable, not reconstructed from summaries.
+
+TASK 3 — Make the differential oracle concrete and localize one discrepancy.
+Files: existing PX4 test target in an isolated checkout, minimal adapter only
+if necessary; new dated evidence README and input/output records in this repo.
+Do: F4's three-layer comparison on one enabled action and its controls.
+Confirm module update execution and consumed state rather than infer it from
+another published topic. Record any instrumentation-induced timing limitation.
+Done: either a localized discrepancy with a reproducer, or an explicit narrower
+blocker. No new large campaign and no model repair merely to force agreement.
+Dependency: usable environment plus TASK 2 for integrated timing interpretation.
+
+TASK 4 — Amend protocol and property contract together.
+Files: protocols/unsafe-composition-properties.json,
+protocols/expected-timelines.json, docs/specs/formal-composition/
+{study-a-protocol.md,decisions-2026-09-19.md,scope.md}, relevant baseline records.
+Do: F5, F7, F8, F10; distinguish response entry from completion, avoid double
+counting detector time, define verdicts, freeze supported cases and assumptions.
+Fix stale references to a model source-manifest path that is not present.
+Done: every property has hand-worked pass/fail/inconclusive/vacuity examples;
+the protocol, machine-readable definitions and decision table tell one story.
+Dependency: can draft in parallel with oracle diagnostics; freeze only after
+observation capability is known. The Python selector is still labelled partial.
+
+TASK 5 — Validate only the model state needed for the selected properties.
+Files: model/px4_failsafe.py, source mapping documentation beside it, focused
+tests or upstream differential fixtures; checker model only after encoding is
+chosen and the licensed tool is available.
+Do: F6; shared delay/recharge, clear conditions, mode eligibility, update order.
+Done: each included rule has an upstream source locator and a discriminating
+input sequence; each omitted dependency has a property-specific claim limit.
+Dependency: TASK 3 for code correspondence; TASK 4 for the actual obligations.
+
+TASK 6 — Run the smallest interaction pilot, then freeze confirmation.
+Files: protocols/configuration-matrix.json, harness/cases.py, scenario records,
+docs/specs/formal-composition/study-a-protocol.md.
+Do: one supported timer/clear pair and one prerequisite pair, using matched
+single-event controls and both event orders. Probe meaningful boundaries.
+Done: report coverage cells, actual stimulus timing, repeatability and validity.
+If the pilot changes the model, all pilot cases remain development cases.
+Dependency: TASKS 2-5. A large sample count is not the acceptance test here.
+
+TASK 7 — Check properties and concretize witnesses with explicit limits.
+Files: existing model directory, checker queries, replay contract, evidence.
+Do: F7-F8; preserve witness intervals and prerequisites, not just rounded times.
+Resolve a feasible stimulus schedule and measure the realized schedule on replay.
+Done: every reported witness is classified, every proof has non-vacuity and
+completion evidence, and unsupported physical guarantees are absent.
+Dependency: checker availability, usable abstraction, accepted conformance scope.
+
+TASK 8 — Publishable artifact design, without claiming publishability.
+Files: docs/prior-art.md, docs/claim-ledger.md, results documentation and a
+versioned artifact manifest.
+Do: F12's narrow contribution/comparator; expose one useful minimal interaction
+or one completed scoped model result, with requirements, assumptions and inputs.
+Done: a new reader can reproduce the supported result from pinned inputs and
+inspect counterevidence. Store logs durably with checksums; temporary absolute
+paths alone are not a distributable research artifact. Do not require large
+binary logs in git if a stable artifact store is available.
+
+Suggested change grouping: (1) evidence/conversion repair, (2) oracle and model
+correspondence, (3) protocol/property amendment, (4) bounded interaction pilot.
+Do not create multiple parallel implementations for the same measurement.
+
+5. CLAIM LEDGER FOR THIS REVIEW
+==============================
+
+C1. Fault timing, multiple faults and replay already have UAV precedents.
+Support: S1 (B for reported experiments), S3 (B).
+Gap: not proof that prior work implements this exact PX4 timed abstraction.
+Confidence: high for precedent; novelty of this project remains unresolved.
+
+C2. Manual model fidelity needs explicit extraction/abstraction justification.
+Support: S2 (method and case study); code inspection in F6.
+Gap: this review has not proved the proposed abstraction sound.
+Confidence: high that the obligation exists; open whether this model meets it.
+
+C3. Priority selection alone does not establish successful physical recovery.
+Support: S1's context-dependent failure examples, S4's distinction between
+expected and implemented behavior; repository U4/model boundary inspection.
+Gap: no physical-recovery or hardware result was produced here.
+Confidence: high for the separation; proposed replacement requirements need review.
+
+C4. Counterexample refinement and ordered interaction coverage are established.
+Support: S7 (formal method), S10 (methodological result).
+Gap: neither establishes coverage or correctness of our proposed scenario set.
+Confidence: high for the methods, conditional for transfer to this project.
+
+C5. The latest comparison and clock conversion need correction.
+Support: pinned repository source and committed September 23 summary, F1-F3.
+Gap: raw logs were not replayed or independently re-normalized in this review.
+Confidence: high for the identified code paths and recorded inconsistencies;
+unresolved effect on the ultimate cause of missing recovery.
+
+C6. The L32 entry is a wrong-topic literature match.
+Support: repository register plus S11 university record.
+Gap: does not imply every other acquisition is wrong.
+Confidence: high.
+
+C7. A stateful, source-traceable interaction benchmark is the strongest next bet.
+Support: synthesis of C1-C5, not a finding directly asserted by a paper.
+Gap: no demonstrated new interaction, formal guarantee or comparative advantage.
+Confidence: moderate as a planning recommendation; test it with the small pilot.
+
+6. SOURCES AND EVIDENCE GRADING
+==============================
+
+Eligibility: 3 = directly addresses this research question/method; 2 = relevant
+transferable method; 1 = background; 0 = off-topic. No citation-count ranking.
+Evidence B = reported empirical evaluation, not independent replication here;
+C = illustrative model/case evidence; D = conceptual discussion. Formal-method
+results and tool semantics are marked T rather than forced into an empirical
+grade. Code/documentation are primary artifacts, not experiments. Access scope
+below is this review's scope; it does not update the repository reading ledger.
+
+[S1] Taylor et al., Avis: In-Situ Model Checking for Unmanned Aerial Vehicles
+     (arXiv:2106.14959v1, 2021; repository U1/L16).
+     Eligibility 3; B for reported simulator evaluation.
+     Inspected introduction, design IV-B, replay IV-D and evaluation discussion.
+     Takeaway: mode-relative fault scheduling and replay already exist; timing
+     and context matter. The paper does not establish this project's novelty.
+     https://arxiv.org/html/2106.14959
+
+[S2] Holzmann and Smith, Software Model Checking: Extracting Verification
+     Models from Source Code (FORTE/PSTV 1999 author PDF; related journal version
+     2001, doi:10.1002/stvr.228, repository L15).
+     Eligibility 3; T for method, C for case discussion used here.
+     Inspected abstract, sections 2.2-2.5 and application discussion. The author
+     bibliography links the conference and journal versions; the 1999 text is
+     not silently labelled the 2001 full text.
+     Takeaway: explicit abstraction mappings and preserved dependencies matter.
+     https://spinroot.com/gerard/pdf/fortepstv99.pdf
+     https://spinroot.com/gerard/pubs.html
+
+[S3] Kim et al., PGFuzz: Policy-Guided Fuzzing for Robotic Vehicles
+     (NDSS 2021; U2/L01).
+     Eligibility 3; B for reported experiments. Inspected paper's introduction
+     and method overview plus official publication page.
+     Takeaway: temporal policies, policy-distance guidance and minimized
+     triggering sequences are established testing mechanisms.
+     https://www.ndss-symposium.org/wp-content/uploads/ndss2021_6A-1_24096_paper.pdf
+
+[S4] Rushby, Using model checking to help discover mode confusions and other
+     automation surprises (Reliability Engineering & System Safety, 2002; L46).
+     Eligibility 2; T/C for method and worked example.
+     Inspected publisher abstract and exposed example/discussion sections,
+     plus author page; not a full-text re-screen of all results.
+     Takeaway: comparing expected and actual mode behavior has an aviation
+     precedent; model checking is not itself a new contribution here.
+     https://www.sciencedirect.com/science/article/pii/S0951832001000928
+     https://www.csl.sri.com/papers/ress01/
+
+[S5] Griffeth et al., A feature interaction benchmark for the first feature
+     interaction detection contest (Computer Networks, 2000; L45).
+     Eligibility 2; C for the benchmark discussion inspected.
+     Inspected publisher abstract, introduction and exposed conclusion, not
+     the complete interaction catalog. Takeaway: a shared precise benchmark
+     distinguishes interactions from undesired interactions and enables comparison.
+     https://www.sciencedirect.com/science/article/abs/pii/S1389128600000074
+
+[S6] Krichen and Tripakis, An Expressive and Implementable Formal Framework
+     for Testing Real-Time Systems (Verimag TR-2004-13).
+     Eligibility 3; T. Inspected abstract and timed input/output conformance
+     definition, environment assumptions and digital-clock discussion.
+     Takeaway: partial observation, delays and finite timing precision belong
+     in the conformance contract. No claim that this project implements tioco.
+     https://www-verimag.imag.fr/TR/TR-2004-13.pdf
+
+[S7] Clarke et al., Counterexample-guided Abstraction Refinement (CAV 2000).
+     Eligibility 3; T. Inspected introduction, abstraction direction and
+     spurious-counterexample/refinement discussion.
+     Takeaway: over-approximation can admit spurious witnesses; refinement is
+     compatible with rigorous verification. A failed SITL replay alone does
+     not establish the paper's concrete-counterexample decision.
+     https://web.stanford.edu/class/cs357/cegar.pdf
+
+[S8] PX4 failsafe framework, pinned source, framework.cpp.
+     Eligibility 3; primary code. Inspected update order, notification logic
+     and updateStartDelay. Source behavior is not a physical safety requirement.
+     https://github.com/PX4/PX4-Autopilot/blob/d6f12ad1c4f70ad3230afd7d86e971421e02fef4/src/modules/commander/failsafe/framework.cpp
+
+[S9] UPPAAL official system and symbolic-query semantics (live documentation
+     accessed 2026-09-24; freeze actual checker documentation at execution).
+     Eligibility 3; T/tool semantics. Inspected symbolic operators, transition
+     evaluation, deadlock semantics, and symbolic versus statistical features.
+     https://docs.uppaal.org/language-reference/system-description/semantics/
+     https://docs.uppaal.org/language-reference/query-semantics/symb_queries/
+     https://docs.uppaal.org/language-reference/query-syntax/symbolic_queries/
+
+[S10] Kuhn, Raunak and Kacker, Ordered t-way Combinations for Testing
+      State-based Systems (NIST CSWP 26, 2022), and NIST event-sequence guidance.
+      Eligibility 2; T/method. Inspected official abstract and sequence-coverage
+      explanation. Takeaway: order coverage is different from static value
+      coverage. Pair coverage does not exclude higher-order interaction bugs.
+      https://csrc.nist.gov/pubs/cswp/26/ordered-t-way-combinations-for-testing-state-based/final
+      https://csrc.nist.gov/projects/automated-combinatorial-testing-for-software/combinatorial-methods-in-testing/event-sequence-testing
+
+[S11] Universite de Rennes institutional thesis record: Feriel Baidi,
+      Simplicity and complexity in cell cycle control (2016).
+      Eligibility 0 for UAV/RTA claims. Metadata and abstract inspected solely
+      to diagnose L32. It concerns cell biology; exclude it from technical support.
+      https://syntheses.univ-rennes1.fr/search-theses/notice/view/rennes1-ori-wf-1-8967?height=500&width=900
+
+[S12] ADGFuzz: Assignment Dependency-Guided Fuzzing for Robotic Vehicles
+      (NDSS 2026; S2/L13 in repository).
+      Eligibility 3; B for reported simulation study. Inspected method IV and
+      evaluation framing. Dependency-guided input grouping and input minimization
+      already exist; this review does not reproduce its results.
+      https://www.ndss-symposium.org/wp-content/uploads/2026-s1014-paper.pdf
+
+Not promoted to supporting findings in this review: L36 multi-layered RTA,
+L31 BMC+fuzzing, L20 thesis and L23 continuous-control architecture. They remain
+useful targeted reading tasks. A title/abstract or inaccessible full text does
+not settle the novelty axis. No retraction-free certification is implied by
+accessing an official or author-hosted source.
+
+7. EVIDENCE STRENGTH AND STOP CONDITIONS
+======================================
+
+The literature strongly supports the methodological changes: explicit model
+correspondence, requirements distinct from implementation, order-sensitive
+tests, and careful treatment of abstract counterexamples. It does not establish
+that PX4 contains an undiscovered composition defect or that this project is
+novel. The most immediate findings are directly inspectable problems in the
+current measurement/comparison pipeline and one literature identity mismatch.
+Their ultimate experimental consequences require repaired analysis and the
+differential diagnostic. No simulator, checker, hardware or flight experiment
+was performed for this review.
+
+Continue when a known configured action is observed through a trustworthy
+chain, or a discrepancy is sufficiently localized to become the research case.
+Do not require artificially high agreement to erase a real implementation
+discrepancy. If observability remains insufficient, narrow the claim to the
+observable boundary and release that limitation with the benchmark.
+
+Do not expand to ArduPilot, physical testing, CAD, fleet geometry or a new
+checker as a response to the current blocker. The engineering-audit CAD
+briefing remains useful for independent checks and traceability; physical CAD
+tasks remain conditional on an actual fixture or mount requirement.
+
+END OF PLANNING HANDOFF

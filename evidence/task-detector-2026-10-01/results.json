@@ -1,0 +1,95 @@
+{
+ "classification": "guard-input timing assumption omitted MAVLink heartbeat qualification and status publication",
+ "runs": {
+  "corrected-instrumented": {
+   "parameters": {
+    "COM_DL_LOSS_T": 10,
+    "COM_FAIL_ACT_T": 5.0
+   },
+   "timing_parameter_changes": [],
+   "injection_cached_lower_bound_us": 58900000,
+   "first_status_loss_us": 70540000,
+   "first_logged_loss_flag_us": 70540000,
+   "first_rtl_us": 75556000,
+   "rtl_minus_cached_injection_us": 16656000,
+   "status_loss_to_rtl_us": 5016000,
+   "links": [
+    {
+     "instance": 0,
+     "last_logged_gcs_present_us": 59536000,
+     "first_logged_gcs_absent_us": 60796000,
+     "status_loss_after_last_logged_present_us": 11004000,
+     "loss_between_logged_endpoints_plus_timeout": true
+    }
+   ],
+   "exact_last_received_heartbeat_us": null,
+   "exact_last_commander_timer_refresh_us": null,
+   "timing_verdict": "inconclusive: injection upper bound and prospective tolerance absent",
+   "native_consumed_flag_to_selected_rtl_us": 5004000
+  },
+  "corrected-original-binary": {
+   "parameters": {
+    "COM_DL_LOSS_T": 10,
+    "COM_FAIL_ACT_T": 5.0
+   },
+   "timing_parameter_changes": [],
+   "injection_cached_lower_bound_us": 58140000,
+   "first_status_loss_us": 69508000,
+   "first_logged_loss_flag_us": 69508000,
+   "first_rtl_us": 74524000,
+   "rtl_minus_cached_injection_us": 16384000,
+   "status_loss_to_rtl_us": 5016000,
+   "links": [
+    {
+     "instance": 0,
+     "last_logged_gcs_present_us": 58496000,
+     "first_logged_gcs_absent_us": 59748000,
+     "status_loss_after_last_logged_present_us": 11012000,
+     "loss_between_logged_endpoints_plus_timeout": true
+    }
+   ],
+   "exact_last_received_heartbeat_us": null,
+   "exact_last_commander_timer_refresh_us": null,
+   "timing_verdict": "inconclusive: injection upper bound and prospective tolerance absent"
+  },
+  "full-parameters": {
+   "parameters": {
+    "COM_DL_LOSS_T": 10,
+    "COM_FAIL_ACT_T": 5.0
+   },
+   "timing_parameter_changes": [],
+   "injection_cached_lower_bound_us": 58896000,
+   "first_status_loss_us": 70680000,
+   "first_logged_loss_flag_us": 70680000,
+   "first_rtl_us": 75696000,
+   "rtl_minus_cached_injection_us": 16800000,
+   "status_loss_to_rtl_us": 5016000,
+   "links": [
+    {
+     "instance": 0,
+     "last_logged_gcs_present_us": 59668000,
+     "first_logged_gcs_absent_us": 60920000,
+     "status_loss_after_last_logged_present_us": 11012000,
+     "loss_between_logged_endpoints_plus_timeout": true
+    }
+   ],
+   "exact_last_received_heartbeat_us": null,
+   "exact_last_commander_timer_refresh_us": null,
+   "timing_verdict": "inconclusive: injection upper bound and prospective tolerance absent"
+  }
+ },
+ "input_sha256": {
+  "evidence/task-runtime-2026-09-29/runs/corrected-instrumented/flight.ulg.gz": "27bf5e537dca2d4b9d0fd05aff113627fa6740b6c09a83664acc682de1c8df13",
+  "evidence/task-runtime-2026-09-29/runs/corrected-instrumented/raw.jsonl.gz": "bb233a5bb914d21f1220e6adc1e392e774700a86a58b2d54c144ccba8da1980a",
+  "evidence/task-runtime-2026-09-29/runs/corrected-original-binary/flight.ulg.gz": "ae92512574e967874e3862a28a67848e74f286e6cadc27ad6ecd8f9892673a96",
+  "evidence/task-runtime-2026-09-29/runs/corrected-original-binary/raw.jsonl.gz": "8af278d4a5c5bc6a125c8eb80c3f29f47d87d539e492e14ca58bd6399c4a7338",
+  "evidence/task-parameters-2026-09-30/run/flight.ulg.gz": "9f5dd7bf973010f36989bfcaf246861d666bde7f3cf8128a84222972cc84beaa",
+  "evidence/task-parameters-2026-09-30/run/raw.jsonl.gz": "d70b7cd367c091a63b6b21cf8eb881cd58ca4898c3733582fb1cf23b5c0c93d2",
+  "evidence/task-runtime-2026-09-29/results.json": "f205c8052caf75db0de12268896daafaa444080ee7d7c6baa0a4511dc508be5b"
+ },
+ "analysis_sha256": {
+  "analyze.py": "b5bf0f6d6437291c2389204e8765cd4bc9ade3d2e2c5f201f666948cef7d7779",
+  "observations.json": "b0587854e5e149a2da31ffec74cda93d314a25e5d82f32862f059dbb36fdf23e",
+  "source.json": "968f5ed391e045fb99905da40579577eb1654de2d7c277c134bc0e1f2948e2b7"
+ }
+}

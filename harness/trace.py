@@ -242,14 +242,24 @@ def build_trace(out: Path, case: dict, matrix: dict) -> dict:
                   restore_after_s=case.get("restore_after_s", 0.0),
                   applied_overrides=export or case.get("parameters", {}))
     launch = next((r for r in rows if r.get("kind") == "launch"), None)
+    snapshots = {}
+    snapshot_files = []
+    for phase in ('before', 'after'):
+        path = out / f'parameters-{phase}.json'
+        if path.is_file():
+            data = json.loads(path.read_text())
+            snapshots[phase] = dict(file=path.name, sha256=file_sha256(path), complete=data['complete'],
+                                    count=len(data['parameters']), scope=data['scope'], atomic=data['atomic'])
+            snapshot_files.extend((path.name, f'parameter-inventory-{phase}.txt'))
     ex = execution(sc["scenario_id"], repeat=out.name,
                    executable_sha256=(launch or {}).get("executable_sha256"),
                    build=(launch or {}).get("build_identity"),
                    overrides_readback=export or None,
+                   parameter_snapshots=snapshots,
                    realized_events={e["name"]: e["t_vehicle_s"] for e in events
                                     if e["name"] in ("arm", "takeoff_complete", "injection", "horizon_reached")},
                    raw_artifacts={n: h for n, h in
-                                  ((f, file_sha256(out / f)) for f in ("raw.jsonl", "flight.ulg")) if h})
+                                  ((f, file_sha256(out / f)) for f in ["raw.jsonl", "flight.ulg", *snapshot_files]) if h})
     an = analysis(ex["execution_id"], inputs=ex["raw_artifacts"] if isinstance(ex["raw_artifacts"], dict) else {},
                   protocol_version=SCHEMA.get("title", "trace-schema"),
                   verdict_config=dict(tolerance_source="protocols/expected-timelines.json"))
