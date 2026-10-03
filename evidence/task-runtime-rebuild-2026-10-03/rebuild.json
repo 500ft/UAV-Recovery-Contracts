@@ -1,0 +1,27 @@
+{
+  "completed_utc": "2026-10-03T21:33:47.199949+00:00",
+  "binary_sha256": "02db70f2001b706badbd54ffd2b90ec6afec84bf55580ea3cdf82d8c6e3ea3a3",
+  "sources_recompiled": [
+    "src/modules/commander/Commander.cpp",
+    "src/modules/commander/failsafe/failsafe.cpp",
+    "src/modules/commander/failsafe/framework.cpp",
+    "src/modules/navigator/navigator_main.cpp",
+    "src/modules/logger/logger.cpp",
+    "src/modules/mavlink/mavlink_receiver.cpp",
+    "src/modules/mavlink/mavlink_messages.cpp",
+    "src/modules/mavlink/mavlink_main.cpp"
+  ],
+  "ccache_disabled_for_command": true,
+  "build_log_sha256": "3d13bd8087d79b066b068863f9254285bed964382fea352faeec799767291351",
+  "source_clean": true,
+  "objects": {
+    "src/modules/commander/CMakeFiles/modules__commander.dir/Commander.cpp.o": "972e2f112096ad1e496668b0fe0a35d4a5dc4b3fc8bb981c0e785251c67ec888",
+    "src/modules/commander/failsafe/CMakeFiles/failsafe.dir/failsafe.cpp.o": "f56a62c00feb30b2b41991cd5f9d285857284452a0b2f7726908b6832c21f7bc",
+    "src/modules/commander/failsafe/CMakeFiles/failsafe.dir/framework.cpp.o": "d5dfbf7968d9f4e002843054be1c0a832ff707765bc9070cf4fa93155156b8eb",
+    "src/modules/logger/CMakeFiles/modules__logger.dir/logger.cpp.o": "d4e6c0d3ec4b74b017365bdbe23bb294643eb5eb771e88ef1b066d5547ac2189",
+    "src/modules/mavlink/CMakeFiles/modules__mavlink.dir/mavlink_main.cpp.o": "a87f6619a280ea3dbee5889390a1e6757061ed4b8f5af12a4456c07956be5c5c",
+    "src/modules/mavlink/CMakeFiles/modules__mavlink.dir/mavlink_messages.cpp.o": "a27744f3f14d6b853fcd6828377bf0e7d397a2b9bfbcdd00a6b45d98087591db",
+    "src/modules/mavlink/CMakeFiles/modules__mavlink.dir/mavlink_receiver.cpp.o": "0381559768cbfea5d2d48653ff1905f2295ea76a40569b76c98e0daa8a2297e9",
+    "src/modules/navigator/CMakeFiles/modules__navigator.dir/navigator_main.cpp.o": "a46940df38c728d05774761e84b7d14eb24495c8cecf7946309d3352d4794f66"
+  }
+}
