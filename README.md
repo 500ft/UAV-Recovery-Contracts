@@ -44,8 +44,10 @@ so no external physics simulator is involved.
 The driver previously ignored `armed`. It now carries that input through
 construction, disarm, rearm, delay updates and action latches. Terminate stays
 latched across disarm. Agreement covers only the exercised sequences. The
-remaining counterexample is position accuracy in POSCTL: Python selects an
-action where PX4 does not check that flag. The supported-domain review is next,
+remaining counterexample is `position_accuracy_low` in POSCTL with
+`COM_POS_LOW_ACT=3`, including disarm and rearm: Python selects Hold where PX4
+selects None. Claims for this mode-eligibility subdomain are blocked under D7.
+The supported-domain review is next,
 before timing work or Study A ([run details](evidence/task-armed-2026-10-03/README.md)).
 
 The SITL result took a week to get right. Until then every run showed no

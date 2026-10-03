@@ -22,11 +22,15 @@ still take effect on the next update. The native failsafe source is unchanged.
 
 ## Recorded limitation
 
-`position-disarm-rearm` disagrees: its default mode is POSCTL. Pinned
+`position-disarm-rearm` disagrees: its default mode is POSCTL and its
+`COM_POS_LOW_ACT` is 3. Pinned
 `failsafe.cpp` checks `position_accuracy_low` only in Auto Mission or Auto
 Loiter; the Python driver ignores that restriction. Its model and native
-outputs remain in the after report. This mode-eligibility gap belongs to the
-next supported-domain task. All agreement statements here concern selected
+outputs remain in the after report and the full corpus denominator. Under
+[D7](../../docs/specs/formal-composition/decisions-2026-09-19.md), claims for
+`position_accuracy_low` in this mode and configuration, including disarm and
+rearm, remain blocked. This mode-eligibility gap belongs to the next
+supported-domain task. All agreement statements here concern selected
 actions on the exercised corpus. No integrated runtime, Study A or broad
 random campaign was run.
 

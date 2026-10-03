@@ -35,8 +35,10 @@ behaviour was not yet explained ([critique](docs/specs/formal-composition/critiq
   applies `armed` at construction and each update. The model processes delay
   state while disarmed, clears eligible action latches on arming transitions,
   and preserves Terminate. The native run includes the original corpus and
-  focused arming cases. It also records an unresolved position-accuracy mode
-  counterexample ([results](evidence/task-armed-2026-10-03/after/report.json),
+  focused arming cases. Under D7, claims for `position_accuracy_low` in POSCTL
+  with `COM_POS_LOW_ACT=3`, including disarm and rearm, remain blocked:
+  Python selects Hold where PX4 selects None. This counterexample remains in
+  the full corpus denominator ([results](evidence/task-armed-2026-10-03/after/report.json),
   [run details](evidence/task-armed-2026-10-03/README.md)).
 - **SITL runs now produce failsafes.** From 2026-09-21 to 09-29 every SITL run
   showed no failsafe action at all. The cause was the harness: it sent integer

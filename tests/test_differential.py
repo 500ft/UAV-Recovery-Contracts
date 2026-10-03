@@ -71,13 +71,21 @@ class ArmedStateDifferentialTests(unittest.TestCase):
 
     def test_armed_cases_against_executed_native_outputs(self):
         for seq in sorted(self.sequences.glob("*.seq")):
-            # This executed counterexample concerns mode eligibility, the next task.
-            if seq.stem == "position-disarm-rearm":
-                continue
             with self.subTest(sequence=seq.stem):
                 real = driver.read_csv(self.evidence / "after" / f"{seq.stem}.oracle.csv")
                 self.assertGreater(len(real), 1)
-                self.assertEqual(driver.run_model(seq), real)
+                model = driver.run_model(seq)
+                if seq.stem == "position-disarm-rearm":
+                    # D7: position_accuracy_low in POSCTL with COM_POS_LOW_ACT=3
+                    # is unsupported. PX4 checks it only in Auto Mission/Loiter;
+                    # this driver currently activates it in POSCTL as well.
+                    recorded = driver.read_csv(self.evidence / "after" / f"{seq.stem}.model.csv")
+                    self.assertEqual(model, recorded)
+                    self.assertEqual({r["action"] for r in real}, {"None"})
+                    self.assertEqual({r["action"] for r in model}, {"None", "Hold"})
+                    self.assertFalse(driver.compare(model, real, driver.dt_of(seq))["agree_exactly"])
+                else:
+                    self.assertEqual(model, real)
 
     def test_original_sequences_against_fresh_native_outputs(self):
         for seq in sorted(SEQ.glob("*.seq")):
@@ -90,9 +98,10 @@ class ArmedStateDifferentialTests(unittest.TestCase):
         self.assertTrue(before["audit-armed"]["agree_exactly"])
         self.assertFalse(before["audit-disarmed"]["agree_exactly"])
         after = json.loads((self.evidence / "after/report.json").read_text())
-        self.assertFalse(after["position-disarm-rearm"]["agree_exactly"])
-        for seq in self.sequences.glob("*.seq"):
-            self.assertIn(seq.stem, after)
+        corpus = {seq.stem for directory in (SEQ, self.sequences) for seq in directory.glob("*.seq")}
+        self.assertEqual(set(after), corpus)
+        self.assertEqual({name for name, result in after.items() if not result["agree_exactly"]},
+                         {"position-disarm-rearm"})
 
     def test_unknown_command_is_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
