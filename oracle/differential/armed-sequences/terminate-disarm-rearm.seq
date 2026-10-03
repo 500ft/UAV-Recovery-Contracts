@@ -1,0 +1,8 @@
+param NAV_DLL_ACT 5
+flag gcs_connection_lost 1
+run 0.2 100
+armed 0
+flag gcs_connection_lost 0
+run 0.2 100
+armed 1
+run 0.2 100

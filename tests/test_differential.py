@@ -5,6 +5,7 @@ It does not depend on the model, so this is an offline regression against real b
 itself. It does NOT re-run the C++ class: that needs the pinned build, and the recorded binary hash says which.
 """
 import json, sys, unittest
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -62,6 +63,52 @@ class DifferentialAgainstRecordedRealClassTests(unittest.TestCase):
         self.assertEqual(bad, ["s4_short_gap_reraise", "s4b_short_gap_reraise_10ms"])
         for k in bad:
             self.assertTrue(first[k]["agree_within_one_update"], k)
+
+
+class ArmedStateDifferentialTests(unittest.TestCase):
+    sequences = ROOT / "oracle/differential/armed-sequences"
+    evidence = ROOT / "evidence/task-armed-2026-10-03"
+
+    def test_armed_cases_against_executed_native_outputs(self):
+        for seq in sorted(self.sequences.glob("*.seq")):
+            with self.subTest(sequence=seq.stem):
+                real = driver.read_csv(self.evidence / "after" / f"{seq.stem}.oracle.csv")
+                self.assertGreater(len(real), 1)
+                model = driver.run_model(seq)
+                if seq.stem == "position-disarm-rearm":
+                    # D7: position_accuracy_low in POSCTL with COM_POS_LOW_ACT=3
+                    # is unsupported. PX4 checks it only in Auto Mission/Loiter;
+                    # this driver currently activates it in POSCTL as well.
+                    recorded = driver.read_csv(self.evidence / "after" / f"{seq.stem}.model.csv")
+                    self.assertEqual(model, recorded)
+                    self.assertEqual({r["action"] for r in real}, {"None"})
+                    self.assertEqual({r["action"] for r in model}, {"None", "Hold"})
+                    self.assertFalse(driver.compare(model, real, driver.dt_of(seq))["agree_exactly"])
+                else:
+                    self.assertEqual(model, real)
+
+    def test_original_sequences_against_fresh_native_outputs(self):
+        for seq in sorted(SEQ.glob("*.seq")):
+            with self.subTest(sequence=seq.stem):
+                real = driver.read_csv(self.evidence / "after" / f"{seq.stem}.oracle.csv")
+                self.assertEqual(driver.run_model(seq), real)
+
+    def test_pre_fix_audit_and_mode_counterexample_are_preserved(self):
+        before = json.loads((self.evidence / "before/report.json").read_text())
+        self.assertTrue(before["audit-armed"]["agree_exactly"])
+        self.assertFalse(before["audit-disarmed"]["agree_exactly"])
+        after = json.loads((self.evidence / "after/report.json").read_text())
+        corpus = {seq.stem for directory in (SEQ, self.sequences) for seq in directory.glob("*.seq")}
+        self.assertEqual(set(after), corpus)
+        self.assertEqual({name for name, result in after.items() if not result["agree_exactly"]},
+                         {"position-disarm-rearm"})
+
+    def test_unknown_command_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            seq = Path(tmp) / "unknown.seq"
+            seq.write_text("unknown_command\n")
+            with self.assertRaisesRegex(SystemExit, "unknown command unknown_command"):
+                driver.run_model(seq)
 
 
 if __name__ == "__main__":

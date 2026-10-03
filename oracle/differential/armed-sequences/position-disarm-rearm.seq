@@ -1,0 +1,10 @@
+param COM_POS_LOW_ACT 3
+param COM_FAIL_ACT_T 1.0
+flag position_accuracy_low 1
+run 0.4 100
+armed 0
+run 0.3 100
+armed 1
+run 0.2 100
+flag position_accuracy_low 0
+run 0.2 100

@@ -13,10 +13,6 @@ and when.
 [Where it stands](#where-it-stands) · [Roadmap](ROADMAP.md) ·
 [Quick start](#quick-start) · [Reviewer guide](docs/START_HERE.md)
 
-![Project overview: model of PX4 failsafe logic matches the compiled class on 11 of 11 sequences, SITL shows Hold then RTL after link loss, and Study A (every required SITL cell) is next](docs/media/project-overview.svg)
-
-*Project overview diagram. It summarises the status below; it is not a result plot.*
-
 ## The question
 
 A fleet planner can't count on still controlling a drone after its companion
@@ -41,9 +37,18 @@ so no external physics simulator is involved.
 
 | Check | Result | Evidence |
 | --- | --- | --- |
-| Python model against PX4's compiled `Failsafe` class, same input sequences | 11 of 11 agree update for update. The first run agreed on 7 of 9 and exposed an ordering bug in the model, which was fixed | [Differential](evidence/task-differential-2026-09-29/README.md) |
+| Python model against PX4's compiled `Failsafe` class, same input sequences | The model and compiled class agree on the original 11 recorded sequences. With the armed-state fix, 23 of 24 sequences in the expanded run agree update for update | [Armed-state results](evidence/task-armed-2026-10-03/after/report.json), [original evidence](evidence/task-differential-2026-09-29/README.md) |
 | SITL datalink loss in Auto Loiter | Hold, then RTL, also on the unmodified PX4 binary | [Runtime record](evidence/task-runtime-2026-09-29/README.md) |
 | Time from link loss to RTL | 16.4 s and 16.7 s. The timers account for 15 s (10 s detection plus 5 s hold); the extra time is not explained yet | [results.json](evidence/task-runtime-2026-09-29/results.json) |
+
+The driver previously ignored `armed`. It now carries that input through
+construction, disarm, rearm, delay updates and action latches. Terminate stays
+latched across disarm. Agreement covers only the exercised sequences. The
+remaining counterexample is `position_accuracy_low` in POSCTL with
+`COM_POS_LOW_ACT=3`, including disarm and rearm: Python selects Hold where PX4
+selects None. Claims for this mode-eligibility subdomain are blocked under D7.
+The supported-domain review is next,
+before timing work or Study A ([run details](evidence/task-armed-2026-10-03/README.md)).
 
 The SITL result took a week to get right. Until then every run showed no
 failsafe action at all, whatever the hazard. The cause was the test harness:

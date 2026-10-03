@@ -75,6 +75,9 @@ class Selector:
     _delay_us: int = 0                     # _current_delay: what is left of the delay now running
     _start_delay_us: int | None = None     # _current_start_delay: the pot the NEXT delay is filled from
     _newly: list = field(default_factory=list)
+    _failed: set = field(default_factory=set)  # current conditions, distinct from latched actions
+    _last_failed: set = field(default_factory=set)
+    _last_armed: bool = False
 
     def __post_init__(self) -> None:
         # framework.cpp L50 and L146: both the constructor and updateParams seed the pot from COM_FAIL_ACT_T.
@@ -115,14 +118,16 @@ class Selector:
             self._start_delay_us = min(self._configured_us(), self._start_delay_us + dt_us // 4)
 
     def raise_hazard(self, hazard: str, warning: str = "critical") -> None:
+        self._failed.add(hazard)
         act = configured_action(hazard, self.params, warning)
         if hazard not in self.active:
             self._newly.append((hazard, act))
         self.active[hazard] = act
 
     def clear_hazard(self, hazard: str, mode_changed_or_disarmed: bool = False) -> None:
+        self._failed.discard(hazard)
         # ClearCondition: link-loss/geofence/offboard actions clear OnModeChangeOrDisarm (failsafe.cpp L54, L102, L108...), position-low clears WhenConditionClears (L388-404)
-        if hazard == "position_low" or mode_changed_or_disarmed:
+        if self.active.get(hazard) != "Terminate" and (hazard == "position_low" or mode_changed_or_disarmed):
             self.active.pop(hazard, None)
 
     def step(self, dt_s: float, armed: bool = True, takeover: bool = False, hold_can_run: bool = True) -> str:
@@ -136,10 +141,17 @@ class Selector:
         the second episode of a clear and re-raise by exactly one update period (evidence/task-differential-*).
         """
         dt_us = round(dt_s * 1_000_000)
-        if self.terminated:  # framework.cpp L446-450: Terminate never clears
-            self.selected = "Terminate"; return self.selected
-        if not armed:
-            self.selected = "None"; self._newly.clear(); return self.selected
+        # framework.cpp L61-65, L159-170: either arming transition removes latched
+        # actions only when their condition was already clear on the previous update.
+        # New registrations below occur after that removal, as in checkStateAndMode.
+        if armed != self._last_armed:
+            newly = {hazard for hazard, _ in self._newly}
+            for hazard, act in list(self.active.items()):
+                if hazard not in self._last_failed and hazard not in newly and act != "Terminate" and hazard != "position_low":
+                    self.active.pop(hazard)
+            for hazard in self._failed:
+                if hazard not in self.active:
+                    self.raise_hazard(hazard)
         # updateDelay L149-157
         self._delay_us = self._delay_us - dt_us if dt_us < self._delay_us else 0
         # checkStateAndMode -> checkFailsafe L351-356: a new delayable action with no delay running fills
@@ -157,7 +169,11 @@ class Selector:
             if PRECEDENCE[act] > PRECEDENCE[best]:
                 best = act
         self.delayed = "None"
-        if self._delay_us > 0 and not takeover and can_be_delayed(best) and hold_can_run:  # L489-500
+        if self.terminated:  # framework.cpp L446-455: latch precedes the disarmed check
+            best = "Terminate"
+        elif not armed:
+            best = "None"
+        elif self._delay_us > 0 and not takeover and can_be_delayed(best) and hold_can_run:  # L489-500
             self.delayed = best; best = "Hold"
         if takeover and best in ("Hold", "RTL", "Land", "Descend"):  # L502-535, actionAllowsUserTakeover L647-651
             best = "Warn"
@@ -166,6 +182,8 @@ class Selector:
         if best == "Terminate":
             self.terminated = True
         self.selected = best
+        self._last_armed = armed
+        self._last_failed = set(self._failed)
         return best
 
 

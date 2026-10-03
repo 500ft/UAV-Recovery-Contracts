@@ -1,0 +1,1 @@
+ld: warning: ignoring duplicate libraries: 'platforms/common/libpx4_platform.a', 'platforms/common/px4_work_queue/libpx4_work_queue.a', 'platforms/common/work_queue/libwork_queue.a', 'platforms/posix/src/px4/common/libpx4_layer.a', 'platforms/posix/src/px4/common/px4_daemon/libpx4_daemon.a'

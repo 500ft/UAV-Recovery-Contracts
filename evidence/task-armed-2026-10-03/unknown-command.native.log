@@ -1,0 +1,28 @@
+[.] Sanitizer coverage enabled. Counter map size: 49917, Cmp map size: 262144
+ERROR [px4_work_queue] not running
+ERROR [px4_work_queue] wq:lp_default not available
+ERROR [px4_work_queue] init failed
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from DifferentialDelay
+[ RUN      ] DifferentialDelay.run_sequence
+/Users/redhose/.cache/uav-failsafe-composition/px4/PX4-Autopilot/src/modules/commander/failsafe/differential_delay_test.cpp:174: Failure
+Failed
+unknown command 'unknown_command' on line 1
+Stack trace:
+  0x10449fd3c: testing::internal::HandleExceptionsInMethodIfSupported<>()
+  0x10449f8d4: testing::Test::Run()
+  0x1044a3dd4: testing::TestInfo::Run()
+  0x1044a77f8: testing::TestSuite::Run()
+... Google Test internal frames ...
+
+[  FAILED  ] DifferentialDelay.run_sequence (0 ms)
+[----------] 1 test from DifferentialDelay (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] DifferentialDelay.run_sequence
+
+ 1 FAILED TEST

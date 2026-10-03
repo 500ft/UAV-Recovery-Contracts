@@ -49,7 +49,8 @@ def run_model(seq: Path) -> list[dict]:
     params = dict(DEFAULTS)
     cmds = parse(seq)
     sel = None
-    flags, applied_flags = {}, {}
+    flags = {}
+    armed = True
     mode, applied_mode = "POSCTL", "POSCTL"
     rows, t_us = [], START_US
 
@@ -60,14 +61,11 @@ def run_model(seq: Path) -> list[dict]:
         nonlocal applied_mode
         mode_changed = mode != applied_mode
         for name, hazard in FLAG_TO_HAZARD.items():
-            was, now = applied_flags.get(name, 0), flags.get(name, 0)
-            if now and not was and hazard not in sel.active:
+            now = flags.get(name, 0)
+            if now:
                 sel.raise_hazard(hazard)
-            if mode_changed and not now and hazard in sel.active:
-                sel.clear_hazard(hazard, mode_changed_or_disarmed=True)
-            if not now and hazard == "position_low":
-                sel.clear_hazard(hazard)
-            applied_flags[name] = now
+            else:
+                sel.clear_hazard(hazard, mode_changed_or_disarmed=mode_changed)
         applied_mode = mode
 
     for _n, cmd, *args in cmds:
@@ -77,9 +75,14 @@ def run_model(seq: Path) -> list[dict]:
             v = float(args[1])
             params[args[0]] = int(v) if float(v).is_integer() and args[0] != "COM_FAIL_ACT_T" else v
             continue
+        if cmd == "armed":
+            armed = int(args[0]) != 0
+            # An initial directive must also govern the construction update.
+            if sel is None:
+                continue
         if sel is None:
             sel = Selector(dict(params))
-            sel.step(0.0)
+            sel.step(0.0, armed=armed)
             emit()
         if cmd == "flag":
             flags[args[0]] = int(args[1])
@@ -92,7 +95,7 @@ def run_model(seq: Path) -> list[dict]:
             for _ in range(round(float(args[0]) * 1000 / dt_ms)):
                 t_us += dt_ms * 1000
                 apply_pending()
-                sel.step(dt_ms / 1000.0)
+                sel.step(dt_ms / 1000.0, armed=armed)
                 emit()
         else:
             raise SystemExit(f"unknown command {cmd}")

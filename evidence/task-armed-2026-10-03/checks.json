@@ -1,0 +1,46 @@
+{
+  "python": "/Users/redhose/.cache/uav-failsafe-composition/venv/bin/python",
+  "python_version": "3.11.8",
+  "jsonschema_version": "4.26.0",
+  "commands": [
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "exit": 0
+    },
+    {
+      "command": "python scripts/check_repo_contract.py",
+      "exit": 0
+    },
+    {
+      "command": "python scripts/acquisition_ledger.py --check",
+      "exit": 0
+    },
+    {
+      "command": "python scripts/reference_coverage.py --check",
+      "exit": 0
+    },
+    {
+      "command": "python evidence/task-2026-09-09/rerun_search.py --audit evidence/task-2026-09-11-public/database-export.json",
+      "exit": 0
+    },
+    {
+      "command": "python tools/check_presentation.py . \"UAV Failsafe Composition\" uav-failsafe-composition",
+      "exit": 0
+    },
+    {
+      "command": "python tools/test_presentation.py",
+      "exit": 0
+    },
+    {
+      "command": "python model/px4_failsafe.py",
+      "exit": 0
+    },
+    {
+      "command": "git diff origin/main --check",
+      "exit": 0
+    }
+  ],
+  "unit_tests_passed": 192,
+  "presentation_tests_passed": 4,
+  "review": "Self-review of changed model and adapters against pinned framework.cpp arming removal, delay update and Terminate order. Original corpus and evidence unchanged. Recorded position-mode discrepancy remains out of scope."
+}
