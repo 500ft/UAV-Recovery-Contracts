@@ -1,0 +1,30 @@
+{
+  "recorded_utc": "2026-10-03T21:33:03.825382+00:00",
+  "design_sha256": "c6f9f33bbe96f8dd55ff48721541bc2643062d9de146f75a922a72e73366df33",
+  "base_commit": "612312b8869443bfc1fd8cc64f2f90c5d5569e19",
+  "px4_commit": "d6f12ad1c4f70ad3230afd7d86e971421e02fef4",
+  "system": "macOS-14.7.3-arm64-arm-64bit",
+  "compiler": "Apple clang version 16.0.0 (clang-1600.0.26.6)\nTarget: arm64-apple-darwin23.6.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin\n",
+  "force_recompile_sources": {
+    "src/modules/commander/Commander.cpp": "ab21f8b26e7c44d8569b5c34bdd5f629d72bf8c969723f4927bc46ac5a5fffff",
+    "src/modules/commander/failsafe/failsafe.cpp": "e5dd6b8148b308a8cf6346ceb09dad211bfd20efe016a5f7ae2ee5a6c43856cb",
+    "src/modules/commander/failsafe/framework.cpp": "6f7b9c1a08624c317965f8ae2195dad03f9baf03dc1e4dbb3d08c22a748e96c6",
+    "src/modules/navigator/navigator_main.cpp": "935b784e667c6cc262cef50c9199eacc395ec8595098079bc4fc3c69cb82d9cd",
+    "src/modules/logger/logger.cpp": "2218ab36e3d327a805b52f0b62ac738c7af7774af2e819d23b65158d0edfec48",
+    "src/modules/mavlink/mavlink_receiver.cpp": "2743c0bd177dde97c78a1c23362a5a93d48d228e5d362e64f0eb7b575568a26b",
+    "src/modules/mavlink/mavlink_messages.cpp": "eb1e6865cfd48b40f06f9f6d1215cadae8a24f18b643b9ebf6654680c27db41b",
+    "src/modules/mavlink/mavlink_main.cpp": "3d66bd253868be2234ba36e0de9631f220e5cfcb7baed51c84b40a2674bd09a7"
+  },
+  "prior_binaries": {
+    "px4-original": "89e5ff695c5e6fcf973be8ae04ab85e7cf6afcc0a3c5ec9215865927ffec60ff",
+    "px4-instrumented": "f62f2fdc54f87cad8643b7338f11d52d036ef656326912cfdc12578a2d441f6a"
+  },
+  "build_metadata_sha256": {
+    "compile_commands.json": "4371bfd35c872ee67ac7ecb83da750db817ed2ebe0d41cae3a42b68a12959224",
+    "build.ninja": "c455dc7dffe22ef6c3c692de0232ae4722e405e9e06c52ce61bb8a7d12eadd92",
+    "submodules.txt": "3f37d006dff691196090e7456803773a5804bdb7a05c2cd83c6ed3c86eeba01a",
+    "CMakeCache.txt": "476d6016b6d65935fc9b381e7d40fa9f410b970cd027b4a83b0e69d539f9e7d8"
+  },
+  "build_command": "CCACHE_DISABLE=1 CCACHE_DIR=/Users/redhose/.cache/uav-failsafe-composition/ccache cmake --build /Users/redhose/.cache/uav-failsafe-composition/px4/PX4-Autopilot/build/px4_sitl_default --verbose -j 6",
+  "run_command": "/Users/redhose/.cache/uav-failsafe-composition/venv/bin/python -m harness.run_case --config px4-v1.17.0-sih-quadx-rtl --event datalink_loss --seed 201 --development-offset-s 0 --full-parameter-snapshot --intended-mode auto_loiter --px4-build /Users/redhose/.cache/uav-failsafe-composition/px4/PX4-Autopilot/build/px4_sitl_default --out /Users/redhose/.cache/uav-failsafe-composition/runs/runtime-rebuild-20261003/rebuild-control"
+}
