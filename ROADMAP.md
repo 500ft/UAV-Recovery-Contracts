@@ -31,15 +31,15 @@ behaviour was not yet explained ([critique](docs/specs/formal-composition/critiq
 
 ## Where it stands
 
-- **The armed-state defect is fixed on the exercised sequences.** The driver
-  applies `armed` at construction and each update. The model processes delay
-  state while disarmed, clears eligible action latches on arming transitions,
-  and preserves Terminate. The native run includes the original corpus and
-  focused arming cases. Under D7, claims for `position_accuracy_low` in POSCTL
-  with `COM_POS_LOW_ACT=3`, including disarm and rearm, remain blocked:
-  Python selects Hold where PX4 selects None. This counterexample remains in
-  the full corpus denominator ([results](evidence/task-armed-2026-10-03/after/report.json),
-  [run details](evidence/task-armed-2026-10-03/README.md)).
+- **The reserved corpus agrees after the scoped model repairs.** Directed and
+  random development found eligibility, clearing and shared-delay registration
+  errors. Their counterexamples are preserved. The implementation was frozen
+  before fresh verification, with results reported by mechanism and sequence
+  ([results](evidence/task-domain-2026-10-03/results.json)). The earlier POSCTL
+  position-accuracy discrepancy is resolved on its recorded trace. Under D7,
+  claims remain limited to the [declared domain and executed corpus](evidence/task-domain-2026-10-03/README.md):
+  fixed modes and the admitted datalink, geofence and position flags. RC loss,
+  mode switching, takeover and integrated vehicle behavior remain excluded.
 - **SITL runs now produce failsafes.** From 2026-09-21 to 09-29 every SITL run
   showed no failsafe action at all. The cause was the harness: it sent integer
   PX4 parameters as floats, so PX4 read a garbage action setting and chose
@@ -57,8 +57,8 @@ behaviour was not yet explained ([critique](docs/specs/formal-composition/critiq
 |---|---|---|---|
 | 1 | Sign off decisions D1–D13 | Owner | Done 2026-09-30 ([addendum](docs/specs/formal-composition/decisions-2026-09-19.md)) |
 | 2 | Reproduce and fix armed-state handling against the pinned native class | Agent | Done for the exercised cases; [evidence](evidence/task-armed-2026-10-03/README.md) |
-| 3 | Define the supported domain, resolve or exclude the recorded mode counterexample, then run directed cases before stratified random sequences | Agent | **Next step, outside this PR.** Report agreement only for the exercised corpus |
-| 4 | Close NP-3, NP-4 and NP-6; separate observable timing segments on one vehicle clock | Agent | Each recorded as resolved, or as a stated limit of the rig |
+| 3 | Define the supported domain, resolve the recorded mode counterexample, then run directed and stratified random cases with reserved verification | Agent | Done for the [executed corpus](evidence/task-domain-2026-10-03/README.md); no universal equivalence claim |
+| 4 | Close NP-3, NP-4 and NP-6; separate observable timing segments on one vehicle clock | Agent | **Next step, outside this PR.** Each recorded as resolved, or as a stated limit of the rig |
 | 5 | Commit the required cell list as scenario identities (D25), then run every cell and compare each with the model | Agent | Traces committed; every cell classified |
 | 6 | Apply the D7 gate. If the model holds, run the first supported hazard pair (D9) | Agent | Gate result and any blocked subdomains recorded |
 | 7 | Release the benchmark: configurations, harness, traces, model, comparison report | Agent | Tagged release with a README that states the verdict |

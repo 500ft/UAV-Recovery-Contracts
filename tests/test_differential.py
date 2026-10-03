@@ -1,6 +1,7 @@
 """The model must keep agreeing with what PX4's REAL Failsafe class did on the recorded sequences.
 
-The recorded output comes from a CI run of oracle/run_differential.sh (evidence/task-differential-2026-09-29).
+The records include the original CI corpus (evidence/task-differential-2026-09-29)
+and later local native runs (evidence/task-armed-* and evidence/task-domain-*).
 It does not depend on the model, so this is an offline regression against real behaviour, not a model checking
 itself. It does NOT re-run the C++ class: that needs the pinned build, and the recorded binary hash says which.
 """
@@ -11,6 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "oracle/differential"))
 import driver  # noqa: E402
+import campaign  # noqa: E402
 
 SEQ = ROOT / "oracle/differential/sequences"
 REC = ROOT / "evidence/task-differential-2026-09-29"
@@ -76,16 +78,12 @@ class ArmedStateDifferentialTests(unittest.TestCase):
                 self.assertGreater(len(real), 1)
                 model = driver.run_model(seq)
                 if seq.stem == "position-disarm-rearm":
-                    # D7: position_accuracy_low in POSCTL with COM_POS_LOW_ACT=3
-                    # is unsupported. PX4 checks it only in Auto Mission/Loiter;
-                    # this driver currently activates it in POSCTL as well.
+                    # Preserve task 1's mismatch; task 2 repairs mode eligibility.
                     recorded = driver.read_csv(self.evidence / "after" / f"{seq.stem}.model.csv")
-                    self.assertEqual(model, recorded)
                     self.assertEqual({r["action"] for r in real}, {"None"})
-                    self.assertEqual({r["action"] for r in model}, {"None", "Hold"})
-                    self.assertFalse(driver.compare(model, real, driver.dt_of(seq))["agree_exactly"])
-                else:
-                    self.assertEqual(model, real)
+                    self.assertEqual({r["action"] for r in recorded}, {"None", "Hold"})
+                    self.assertFalse(driver.compare(recorded, real, driver.dt_of(seq))["agree_exactly"])
+                self.assertEqual(model, real)
 
     def test_original_sequences_against_fresh_native_outputs(self):
         for seq in sorted(SEQ.glob("*.seq")):
@@ -109,6 +107,31 @@ class ArmedStateDifferentialTests(unittest.TestCase):
             seq.write_text("unknown_command\n")
             with self.assertRaisesRegex(SystemExit, "unknown command unknown_command"):
                 driver.run_model(seq)
+
+
+class DeclaredDomainDifferentialTests(unittest.TestCase):
+    evidence = ROOT / "evidence/task-domain-2026-10-03"
+
+    def test_minimized_model_and_adapter_defects_against_native(self):
+        for seq in sorted((self.evidence / "counterexamples").glob("*.seq")):
+            with self.subTest(sequence=seq.stem):
+                native = driver.read_csv(seq.with_suffix(".oracle.csv"))
+                before = driver.read_csv(seq.with_suffix(".before.model.csv"))
+                self.assertNotEqual(before, native)
+                self.assertEqual(driver.run_model(seq), native)
+
+    def test_reserved_representatives_against_native(self):
+        for seq in sorted((self.evidence / "reserved-examples").glob("*.seq")):
+            with self.subTest(sequence=seq.stem):
+                self.assertEqual(driver.run_model(seq), driver.read_csv(seq.with_suffix(".oracle.csv")))
+
+    def test_campaign_exclusions_are_rejected_before_either_adapter(self):
+        cfg = json.loads((self.evidence / "campaign.json").read_text())
+        for seq in (self.evidence / "excluded-probes").glob("*.seq"):
+            with self.subTest(sequence=seq.stem):
+                self.assertIsNotNone(campaign.admit(seq, cfg))
+        for seq in (self.evidence / "counterexamples").glob("*.seq"):
+            self.assertIsNone(campaign.admit(seq, cfg), seq.name)
 
 
 if __name__ == "__main__":

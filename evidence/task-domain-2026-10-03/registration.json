@@ -1,0 +1,10 @@
+{
+  "recorded_before_execution_utc": "2026-10-03T20:43:18.111401+00:00",
+  "config_sha256": "bff119e880b8e7f79f06aaf7c6996b5f5e2238053a48d718ea54112f19b66f63",
+  "generator_sha256": "f1ff13387b62daf7a879807364837ec0e5b08982a19fd2683150d9f0de3560dc",
+  "corpus_manifest_sha256": "f8eb48abfc8cb9c6f5bb8eacc6b87ae7efe3ecc398cdd0709c2b15b2a4adcf38",
+  "native_identity": "../task-armed-2026-10-03/environment.json: after",
+  "generator_python": "Python 3.11.8",
+  "corpus_path": "/Users/redhose/.cache/uav-failsafe-composition/runs/domain-task2-20261003/corpus",
+  "policy": "Run directed, then development against main. Minimize disagreements and repair scoped root causes. Freeze model/driver hashes before running reserved once. Unresolved reserved failures block their subdomains; no further tuning on reserved outputs."
+}

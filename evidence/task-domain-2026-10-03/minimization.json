@@ -1,0 +1,37 @@
+{
+  "cases": [
+    {
+      "case": "disarm-clear",
+      "non_parameter_commands": 4,
+      "method": "Fixed parameters and AUTO_LOITER for the eligible-position case; greedy non-parameter command deletion, whole-tick duration reduction, then verify every remaining single-command deletion loses mismatch or admission."
+    },
+    {
+      "case": "hold-seeds-delay",
+      "non_parameter_commands": 4,
+      "method": "Fixed parameters and AUTO_LOITER for the eligible-position case; greedy non-parameter command deletion, whole-tick duration reduction, then verify every remaining single-command deletion loses mismatch or admission."
+    },
+    {
+      "case": "none-seeds-delay",
+      "non_parameter_commands": 4,
+      "method": "Fixed parameters and AUTO_LOITER for the eligible-position case; greedy non-parameter command deletion, whole-tick duration reduction, then verify every remaining single-command deletion loses mismatch or admission."
+    },
+    {
+      "case": "position-delay",
+      "non_parameter_commands": 3,
+      "method": "Fixed parameters and AUTO_LOITER for the eligible-position case; greedy non-parameter command deletion, whole-tick duration reduction, then verify every remaining single-command deletion loses mismatch or admission."
+    },
+    {
+      "case": "position-mode",
+      "non_parameter_commands": 2,
+      "method": "Fixed parameters and AUTO_LOITER for the eligible-position case; greedy non-parameter command deletion, whole-tick duration reduction, then verify every remaining single-command deletion loses mismatch or admission."
+    },
+    {
+      "case": "warning-clear",
+      "non_parameter_commands": 4,
+      "method": "Fixed parameters and AUTO_LOITER for the eligible-position case; greedy non-parameter command deletion, whole-tick duration reduction, then verify every remaining single-command deletion loses mismatch or admission."
+    }
+  ],
+  "candidate_evaluations": 63,
+  "native_executions": 59,
+  "scope": "Source-guided representatives of each root cause, then reduced with fixed parameters and AUTO_LOITER precondition for the position-delay case. Not a claim of globally shortest counterexamples."
+}

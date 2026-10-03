@@ -1,0 +1,18 @@
+{
+  "native_identity": "../task-armed-2026-10-03/environment.json: after",
+  "native_rebuilt": false,
+  "native_adapter_changed": false,
+  "python": "Python 3.11.8",
+  "environment_overrides": {
+    "ASAN_OPTIONS": null,
+    "DYLD_LIBRARY_PATH": null,
+    "DYLD_INSERT_LIBRARIES": null,
+    "DYLD_FORCE_FLAT_NAMESPACE": null
+  },
+  "per_process_overrides": [
+    "ORACLE_SEQUENCE",
+    "ORACLE_OUT"
+  ],
+  "minimizer_sha256": "48e0df575e42cff7e1fab1ae2f856ac5b96944cb07599516eebe6df83a7d691a",
+  "native_checkout_clean": true
+}

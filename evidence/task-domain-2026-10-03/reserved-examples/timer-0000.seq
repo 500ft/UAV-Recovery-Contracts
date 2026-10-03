@@ -1,0 +1,16 @@
+param NAV_DLL_ACT 5
+param GF_ACTION 5
+param COM_POS_LOW_ACT 1
+param COM_FAIL_ACT_T 0.101
+param COM_DLL_EXCEPT 0
+armed 1
+mode POSCTL
+flag geofence_breached 1
+run 0.100 1
+run 0.001 1
+run 0.001 1
+run 0.002 1
+flag geofence_breached 0
+run 0.001 1
+flag position_accuracy_low 1
+run 0.100 1

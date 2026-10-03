@@ -1,0 +1,356 @@
+{
+  "unit": "one sequence; fresh native process and Python selector",
+  "before": {
+    "directed": {
+      "all": {
+        "attempted": 36,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 36,
+        "agree": 25,
+        "disagree": 11
+      },
+      "arming": {
+        "attempted": 10,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 10,
+        "agree": 7,
+        "disagree": 3
+      },
+      "clear_reassert": {
+        "attempted": 10,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 10,
+        "agree": 6,
+        "disagree": 4
+      },
+      "position": {
+        "attempted": 4,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 4,
+        "agree": 0,
+        "disagree": 4
+      },
+      "reverse": {
+        "attempted": 2,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 2,
+        "agree": 2,
+        "disagree": 0
+      },
+      "simultaneous": {
+        "attempted": 2,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 2,
+        "agree": 2,
+        "disagree": 0
+      },
+      "timer": {
+        "attempted": 8,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 8,
+        "agree": 8,
+        "disagree": 0
+      }
+    },
+    "development": {
+      "all": {
+        "attempted": 1500,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 1500,
+        "agree": 1005,
+        "disagree": 495
+      },
+      "arming": {
+        "attempted": 300,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 300,
+        "agree": 218,
+        "disagree": 82
+      },
+      "clear_reassert": {
+        "attempted": 300,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 300,
+        "agree": 173,
+        "disagree": 127
+      },
+      "ordered": {
+        "attempted": 300,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 300,
+        "agree": 185,
+        "disagree": 115
+      },
+      "simultaneous": {
+        "attempted": 300,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 300,
+        "agree": 224,
+        "disagree": 76
+      },
+      "timer": {
+        "attempted": 300,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 300,
+        "agree": 205,
+        "disagree": 95
+      }
+    }
+  },
+  "development_replay_after_fixes": {
+    "directed": {
+      "all": {
+        "attempted": 36,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 36,
+        "agree": 36,
+        "disagree": 0
+      },
+      "arming": {
+        "attempted": 10,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 10,
+        "agree": 10,
+        "disagree": 0
+      },
+      "clear_reassert": {
+        "attempted": 10,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 10,
+        "agree": 10,
+        "disagree": 0
+      },
+      "position": {
+        "attempted": 4,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 4,
+        "agree": 4,
+        "disagree": 0
+      },
+      "reverse": {
+        "attempted": 2,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 2,
+        "agree": 2,
+        "disagree": 0
+      },
+      "simultaneous": {
+        "attempted": 2,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 2,
+        "agree": 2,
+        "disagree": 0
+      },
+      "timer": {
+        "attempted": 8,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 8,
+        "agree": 8,
+        "disagree": 0
+      }
+    },
+    "development": {
+      "all": {
+        "attempted": 1500,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 1500,
+        "agree": 1500,
+        "disagree": 0
+      },
+      "arming": {
+        "attempted": 300,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 300,
+        "agree": 300,
+        "disagree": 0
+      },
+      "clear_reassert": {
+        "attempted": 300,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 300,
+        "agree": 300,
+        "disagree": 0
+      },
+      "ordered": {
+        "attempted": 300,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 300,
+        "agree": 300,
+        "disagree": 0
+      },
+      "simultaneous": {
+        "attempted": 300,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 300,
+        "agree": 300,
+        "disagree": 0
+      },
+      "timer": {
+        "attempted": 300,
+        "excluded": 0,
+        "invalid": 0,
+        "executed": 300,
+        "agree": 300,
+        "disagree": 0
+      }
+    }
+  },
+  "reserved": {
+    "all": {
+      "attempted": 1000,
+      "excluded": 0,
+      "invalid": 0,
+      "executed": 1000,
+      "agree": 1000,
+      "disagree": 0
+    },
+    "arming": {
+      "attempted": 200,
+      "excluded": 0,
+      "invalid": 0,
+      "executed": 200,
+      "agree": 200,
+      "disagree": 0
+    },
+    "clear_reassert": {
+      "attempted": 200,
+      "excluded": 0,
+      "invalid": 0,
+      "executed": 200,
+      "agree": 200,
+      "disagree": 0
+    },
+    "ordered": {
+      "attempted": 200,
+      "excluded": 0,
+      "invalid": 0,
+      "executed": 200,
+      "agree": 200,
+      "disagree": 0
+    },
+    "simultaneous": {
+      "attempted": 200,
+      "excluded": 0,
+      "invalid": 0,
+      "executed": 200,
+      "agree": 200,
+      "disagree": 0
+    },
+    "timer": {
+      "attempted": 200,
+      "excluded": 0,
+      "invalid": 0,
+      "executed": 200,
+      "agree": 200,
+      "disagree": 0
+    }
+  },
+  "admission_probes": {
+    "attempted": 8,
+    "excluded": 8,
+    "invalid": 0,
+    "executed": 0,
+    "agree": 0,
+    "disagree": 0
+  },
+  "classification": {
+    "adapter": 346,
+    "model": 126,
+    "adapter_and_model": 34,
+    "unsupported": 0,
+    "native_behavior": 0
+  },
+  "native_identity": "../task-armed-2026-10-03/environment.json:after",
+  "reserved_action_exposure": {
+    "timer": {
+      "all_none_sequences": 37,
+      "sequences_containing_action": {
+        "Disarm": 21,
+        "Hold": 68,
+        "Land": 49,
+        "None": 200,
+        "RTL": 35,
+        "Terminate": 47,
+        "Warn": 15
+      }
+    },
+    "simultaneous": {
+      "all_none_sequences": 9,
+      "sequences_containing_action": {
+        "Disarm": 21,
+        "Hold": 65,
+        "Land": 56,
+        "None": 200,
+        "RTL": 37,
+        "Terminate": 59,
+        "Warn": 15
+      }
+    },
+    "ordered": {
+      "all_none_sequences": 20,
+      "sequences_containing_action": {
+        "Disarm": 15,
+        "Hold": 81,
+        "Land": 56,
+        "None": 200,
+        "RTL": 25,
+        "Terminate": 58,
+        "Warn": 27
+      }
+    },
+    "clear_reassert": {
+      "all_none_sequences": 22,
+      "sequences_containing_action": {
+        "Disarm": 19,
+        "Hold": 72,
+        "Land": 44,
+        "None": 200,
+        "RTL": 39,
+        "Terminate": 51,
+        "Warn": 23
+      }
+    },
+    "arming": {
+      "all_none_sequences": 63,
+      "sequences_containing_action": {
+        "Disarm": 11,
+        "Hold": 55,
+        "Land": 37,
+        "None": 200,
+        "RTL": 25,
+        "Terminate": 36,
+        "Warn": 18
+      }
+    }
+  },
+  "duplicate_inputs": {
+    "within_development": 0,
+    "within_reserved": 0,
+    "between_development_and_reserved": 0
+  }
+}

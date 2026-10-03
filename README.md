@@ -37,18 +37,19 @@ so no external physics simulator is involved.
 
 | Check | Result | Evidence |
 | --- | --- | --- |
-| Python model against PX4's compiled `Failsafe` class, same input sequences | The model and compiled class agree on the original 11 recorded sequences. With the armed-state fix, 23 of 24 sequences in the expanded run agree update for update | [Armed-state results](evidence/task-armed-2026-10-03/after/report.json), [original evidence](evidence/task-differential-2026-09-29/README.md) |
+| Python model against PX4's compiled `Failsafe` class, same input sequences | After fixing eligibility and action-option errors found in development, 1,000 of 1,000 fresh reserved sequences agree exactly. Development had 495 disagreements in 1,500 random sequences and 11 in 36 directed sequences; all agree on replay after the fixes | [Results by mechanism](evidence/task-domain-2026-10-03/results.json), [domain and counterexamples](evidence/task-domain-2026-10-03/README.md) |
 | SITL datalink loss in Auto Loiter | Hold, then RTL, also on the unmodified PX4 binary | [Runtime record](evidence/task-runtime-2026-09-29/README.md) |
 | Time from link loss to RTL | 16.4 s and 16.7 s. The timers account for 15 s (10 s detection plus 5 s hold); the extra time is not explained yet | [results.json](evidence/task-runtime-2026-09-29/results.json) |
 
-The driver previously ignored `armed`. It now carries that input through
-construction, disarm, rearm, delay updates and action latches. Terminate stays
-latched across disarm. Agreement covers only the exercised sequences. The
-remaining counterexample is `position_accuracy_low` in POSCTL with
-`COM_POS_LOW_ACT=3`, including disarm and rearm: Python selects Hold where PX4
-selects None. Claims for this mode-eligibility subdomain are blocked under D7.
-The supported-domain review is next,
-before timing work or Study A ([run details](evidence/task-armed-2026-10-03/README.md)).
+The position-accuracy/POSCTL defect is resolved, with its historical outputs
+preserved. Agreement covers only the exercised corpus: datalink loss, geofence
+breach and position accuracy in fixed modes, including disarm and rearm. RC
+loss, mode switching, pilot takeover and integrated vehicle behavior remain
+outside this campaign. There were no invalid or excluded generated sequences;
+eight separate unsupported-input probes were rejected before either adapter.
+The [domain table](evidence/task-domain-2026-10-03/README.md#domain-recorded-before-execution)
+states the parameter and tick limits. This is not universal equivalence.
+Timing work is next; Study A has not run.
 
 The SITL result took a week to get right. Until then every run showed no
 failsafe action at all, whatever the hazard. The cause was the test harness:

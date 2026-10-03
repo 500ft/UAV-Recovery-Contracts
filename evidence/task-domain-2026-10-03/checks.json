@@ -1,0 +1,81 @@
+[
+  {
+    "command": [
+      "/Users/redhose/.cache/uav-failsafe-composition/venv/bin/python",
+      "scripts/check_repo_contract.py"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "/Users/redhose/.cache/uav-failsafe-composition/venv/bin/python",
+      "scripts/acquisition_ledger.py",
+      "--check"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "/Users/redhose/.cache/uav-failsafe-composition/venv/bin/python",
+      "scripts/reference_coverage.py",
+      "--check"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "/Users/redhose/.cache/uav-failsafe-composition/venv/bin/python",
+      "evidence/task-2026-09-09/rerun_search.py",
+      "--audit",
+      "evidence/task-2026-09-11-public/database-export.json"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "/Users/redhose/.cache/uav-failsafe-composition/venv/bin/python",
+      "tools/check_presentation.py",
+      ".",
+      "UAV Failsafe Composition",
+      "uav-failsafe-composition"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "/Users/redhose/.cache/uav-failsafe-composition/venv/bin/python",
+      "tools/test_presentation.py"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "/Users/redhose/.cache/uav-failsafe-composition/venv/bin/python",
+      "model/px4_failsafe.py"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "/Users/redhose/.cache/uav-failsafe-composition/venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-v"
+    ],
+    "exit": 0,
+    "passed": 195,
+    "log": "/Users/redhose/.cache/uav-failsafe-composition/runs/domain-task2-20261003/tests-final.log"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "exit": 0
+  }
+]

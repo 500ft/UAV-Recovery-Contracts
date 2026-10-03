@@ -1,0 +1,455 @@
+{
+  "disarm-clear": {
+    "classification": "model",
+    "cause": "failsafe.cpp link-loss Disarm keeps WhenConditionClears",
+    "before": {
+      "updates_model": 3,
+      "updates_oracle": 3,
+      "same_length": true,
+      "action_mismatch_updates": 1,
+      "first_mismatch_t_s": 0.2,
+      "model_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.1,
+          "Disarm"
+        ]
+      ],
+      "oracle_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.1,
+          "Disarm"
+        ],
+        [
+          0.2,
+          "None"
+        ]
+      ],
+      "same_transition_sequence": false,
+      "oracle_minus_model_shift_s": null,
+      "agree_within_one_update": false,
+      "agree_exactly": false
+    },
+    "after": {
+      "updates_model": 3,
+      "updates_oracle": 3,
+      "same_length": true,
+      "action_mismatch_updates": 0,
+      "first_mismatch_t_s": null,
+      "model_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.1,
+          "Disarm"
+        ],
+        [
+          0.2,
+          "None"
+        ]
+      ],
+      "oracle_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.1,
+          "Disarm"
+        ],
+        [
+          0.2,
+          "None"
+        ]
+      ],
+      "same_transition_sequence": true,
+      "oracle_minus_model_shift_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "agree_within_one_update": true,
+      "agree_exactly": true
+    }
+  },
+  "hold-seeds-delay": {
+    "classification": "model",
+    "cause": "framework.cpp 351-356: Auto options seed delay even when action Hold cannot itself be delayed",
+    "before": {
+      "updates_model": 7,
+      "updates_oracle": 7,
+      "same_length": true,
+      "action_mismatch_updates": 1,
+      "first_mismatch_t_s": 0.6,
+      "model_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.1,
+          "Hold"
+        ]
+      ],
+      "oracle_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.1,
+          "Hold"
+        ],
+        [
+          0.6,
+          "RTL"
+        ]
+      ],
+      "same_transition_sequence": false,
+      "oracle_minus_model_shift_s": null,
+      "agree_within_one_update": false,
+      "agree_exactly": false
+    },
+    "after": {
+      "updates_model": 7,
+      "updates_oracle": 7,
+      "same_length": true,
+      "action_mismatch_updates": 0,
+      "first_mismatch_t_s": null,
+      "model_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.1,
+          "Hold"
+        ],
+        [
+          0.6,
+          "RTL"
+        ]
+      ],
+      "oracle_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.1,
+          "Hold"
+        ],
+        [
+          0.6,
+          "RTL"
+        ]
+      ],
+      "same_transition_sequence": true,
+      "oracle_minus_model_shift_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "agree_within_one_update": true,
+      "agree_exactly": true
+    }
+  },
+  "none-seeds-delay": {
+    "classification": "model",
+    "cause": "framework.cpp 351-356: geofence None uses Auto and seeds the shared timer",
+    "before": {
+      "updates_model": 7,
+      "updates_oracle": 7,
+      "same_length": true,
+      "action_mismatch_updates": 1,
+      "first_mismatch_t_s": 0.6,
+      "model_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.2,
+          "Hold"
+        ]
+      ],
+      "oracle_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.2,
+          "Hold"
+        ],
+        [
+          0.6,
+          "RTL"
+        ]
+      ],
+      "same_transition_sequence": false,
+      "oracle_minus_model_shift_s": null,
+      "agree_within_one_update": false,
+      "agree_exactly": false
+    },
+    "after": {
+      "updates_model": 7,
+      "updates_oracle": 7,
+      "same_length": true,
+      "action_mismatch_updates": 0,
+      "first_mismatch_t_s": null,
+      "model_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.2,
+          "Hold"
+        ],
+        [
+          0.6,
+          "RTL"
+        ]
+      ],
+      "oracle_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.2,
+          "Hold"
+        ],
+        [
+          0.6,
+          "RTL"
+        ]
+      ],
+      "same_transition_sequence": true,
+      "oracle_minus_model_shift_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "agree_within_one_update": true,
+      "agree_exactly": true
+    }
+  },
+  "position-delay": {
+    "classification": "model",
+    "cause": "failsafe.cpp 372-413: position options use AlwaysModeSwitchOnly, so registration does not seed delay",
+    "before": {
+      "updates_model": 2,
+      "updates_oracle": 2,
+      "same_length": true,
+      "action_mismatch_updates": 1,
+      "first_mismatch_t_s": 0.1,
+      "model_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.1,
+          "Hold"
+        ]
+      ],
+      "oracle_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.1,
+          "RTL"
+        ]
+      ],
+      "same_transition_sequence": false,
+      "oracle_minus_model_shift_s": null,
+      "agree_within_one_update": false,
+      "agree_exactly": false
+    },
+    "after": {
+      "updates_model": 2,
+      "updates_oracle": 2,
+      "same_length": true,
+      "action_mismatch_updates": 0,
+      "first_mismatch_t_s": null,
+      "model_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.1,
+          "RTL"
+        ]
+      ],
+      "oracle_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.1,
+          "RTL"
+        ]
+      ],
+      "same_transition_sequence": true,
+      "oracle_minus_model_shift_s": [
+        0.0,
+        0.0
+      ],
+      "agree_within_one_update": true,
+      "agree_exactly": true
+    }
+  },
+  "position-mode": {
+    "classification": "adapter",
+    "cause": "failsafe.cpp 546-550: position check only in auto modes",
+    "before": {
+      "updates_model": 2,
+      "updates_oracle": 2,
+      "same_length": true,
+      "action_mismatch_updates": 1,
+      "first_mismatch_t_s": 0.1,
+      "model_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.1,
+          "Hold"
+        ]
+      ],
+      "oracle_transitions": [
+        [
+          0.0,
+          "None"
+        ]
+      ],
+      "same_transition_sequence": false,
+      "oracle_minus_model_shift_s": null,
+      "agree_within_one_update": false,
+      "agree_exactly": false
+    },
+    "after": {
+      "updates_model": 2,
+      "updates_oracle": 2,
+      "same_length": true,
+      "action_mismatch_updates": 0,
+      "first_mismatch_t_s": null,
+      "model_transitions": [
+        [
+          0.0,
+          "None"
+        ]
+      ],
+      "oracle_transitions": [
+        [
+          0.0,
+          "None"
+        ]
+      ],
+      "same_transition_sequence": true,
+      "oracle_minus_model_shift_s": [
+        0.0
+      ],
+      "agree_within_one_update": true,
+      "agree_exactly": true
+    }
+  },
+  "warning-clear": {
+    "classification": "model",
+    "cause": "framework.h ActionOptions default WhenConditionClears; failsafe.cpp geofence Warning keeps that default",
+    "before": {
+      "updates_model": 3,
+      "updates_oracle": 3,
+      "same_length": true,
+      "action_mismatch_updates": 1,
+      "first_mismatch_t_s": 0.2,
+      "model_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.1,
+          "Warn"
+        ]
+      ],
+      "oracle_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.1,
+          "Warn"
+        ],
+        [
+          0.2,
+          "None"
+        ]
+      ],
+      "same_transition_sequence": false,
+      "oracle_minus_model_shift_s": null,
+      "agree_within_one_update": false,
+      "agree_exactly": false
+    },
+    "after": {
+      "updates_model": 3,
+      "updates_oracle": 3,
+      "same_length": true,
+      "action_mismatch_updates": 0,
+      "first_mismatch_t_s": null,
+      "model_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.1,
+          "Warn"
+        ],
+        [
+          0.2,
+          "None"
+        ]
+      ],
+      "oracle_transitions": [
+        [
+          0.0,
+          "None"
+        ],
+        [
+          0.1,
+          "Warn"
+        ],
+        [
+          0.2,
+          "None"
+        ]
+      ],
+      "same_transition_sequence": true,
+      "oracle_minus_model_shift_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "agree_within_one_update": true,
+      "agree_exactly": true
+    }
+  }
+}

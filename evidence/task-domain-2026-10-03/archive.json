@@ -1,0 +1,7 @@
+{
+  "path": "/Users/redhose/.cache/uav-failsafe-composition/runs/domain-task2-20261003-raw.tar.gz",
+  "sha256": "cdc750e141d3188ca20c2bb829725d777f6fbbaaf66e81f75ad2730d3c7865e6",
+  "bytes": 7887322,
+  "contents": "Input manifest with individual seeds/hashes; frozen generator/config; directed and development baseline native/model outputs; eligibility-only and final model replays; fresh reserved native/model outputs; source-guided minimization candidates/traces and method; rejection probes; test logs.",
+  "regenerate_inputs": "Use the committed campaign.py generate command with campaign.json; the frozen pre-execution script is also inside the archive."
+}
