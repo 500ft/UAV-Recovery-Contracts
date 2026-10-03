@@ -29,12 +29,15 @@ still finishes the project.
 This is PX4 only. ArduPilot was dropped on 2026-09-24 because PX4's own
 behaviour was not yet explained ([critique](docs/specs/formal-composition/critique-2026-09-24.md)).
 
-## Where it stands (2026-09-30)
+## Where it stands
 
-- **The model matches PX4's real failsafe class.** On 11 input sequences the
-  Python model and PX4's compiled `Failsafe` class agree update for update. The
-  first comparison exposed an ordering bug in the model, which was fixed
-  ([evidence](evidence/task-differential-2026-09-29/README.md)).
+- **The armed-state defect is fixed on the exercised sequences.** The driver
+  applies `armed` at construction and each update. The model processes delay
+  state while disarmed, clears eligible action latches on arming transitions,
+  and preserves Terminate. The native run includes the original corpus and
+  focused arming cases. It also records an unresolved position-accuracy mode
+  counterexample ([results](evidence/task-armed-2026-10-03/after/report.json),
+  [run details](evidence/task-armed-2026-10-03/README.md)).
 - **SITL runs now produce failsafes.** From 2026-09-21 to 09-29 every SITL run
   showed no failsafe action at all. The cause was the harness: it sent integer
   PX4 parameters as floats, so PX4 read a garbage action setting and chose
@@ -51,10 +54,12 @@ behaviour was not yet explained ([critique](docs/specs/formal-composition/critiq
 | # | Step | Who | Done when |
 |---|---|---|---|
 | 1 | Sign off decisions D1–D13 | Owner | Done 2026-09-30 ([addendum](docs/specs/formal-composition/decisions-2026-09-19.md)) |
-| 2 | Close the open measurement items that affect Study A timing: NP-3 (the extra 1.4–1.7 s), NP-4 (full parameter snapshot per run), NP-6 (timing tolerance calibrated before any held-out run) | Agent | Each recorded as resolved, or as a stated limit of the rig. **Current step.** |
-| 3 | Commit the required cell list as scenario identities (D25), then run every cell and compare each with the model | Agent | Traces committed; every cell classified |
-| 4 | Apply the D7 gate. If the model holds, run the first supported hazard pair (D9) | Agent | Gate result and any blocked subdomains recorded |
-| 5 | Release the benchmark: configurations, harness, traces, model, comparison report | Agent | Tagged release with a README that states the verdict |
+| 2 | Reproduce and fix armed-state handling against the pinned native class | Agent | Done for the exercised cases; [evidence](evidence/task-armed-2026-10-03/README.md) |
+| 3 | Define the supported domain, resolve or exclude the recorded mode counterexample, then run directed cases before stratified random sequences | Agent | **Next step, outside this PR.** Report agreement only for the exercised corpus |
+| 4 | Close NP-3, NP-4 and NP-6; separate observable timing segments on one vehicle clock | Agent | Each recorded as resolved, or as a stated limit of the rig |
+| 5 | Commit the required cell list as scenario identities (D25), then run every cell and compare each with the model | Agent | Traces committed; every cell classified |
+| 6 | Apply the D7 gate. If the model holds, run the first supported hazard pair (D9) | Agent | Gate result and any blocked subdomains recorded |
+| 7 | Release the benchmark: configurations, harness, traces, model, comparison report | Agent | Tagged release with a README that states the verdict |
 
 The model checker (UPPAAL) is deferred under D8 option (b): it is only needed
 for composition properties beyond Study A.

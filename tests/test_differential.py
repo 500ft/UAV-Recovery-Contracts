@@ -5,6 +5,7 @@ It does not depend on the model, so this is an offline regression against real b
 itself. It does NOT re-run the C++ class: that needs the pinned build, and the recorded binary hash says which.
 """
 import json, sys, unittest
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -62,6 +63,43 @@ class DifferentialAgainstRecordedRealClassTests(unittest.TestCase):
         self.assertEqual(bad, ["s4_short_gap_reraise", "s4b_short_gap_reraise_10ms"])
         for k in bad:
             self.assertTrue(first[k]["agree_within_one_update"], k)
+
+
+class ArmedStateDifferentialTests(unittest.TestCase):
+    sequences = ROOT / "oracle/differential/armed-sequences"
+    evidence = ROOT / "evidence/task-armed-2026-10-03"
+
+    def test_armed_cases_against_executed_native_outputs(self):
+        for seq in sorted(self.sequences.glob("*.seq")):
+            # This executed counterexample concerns mode eligibility, the next task.
+            if seq.stem == "position-disarm-rearm":
+                continue
+            with self.subTest(sequence=seq.stem):
+                real = driver.read_csv(self.evidence / "after" / f"{seq.stem}.oracle.csv")
+                self.assertGreater(len(real), 1)
+                self.assertEqual(driver.run_model(seq), real)
+
+    def test_original_sequences_against_fresh_native_outputs(self):
+        for seq in sorted(SEQ.glob("*.seq")):
+            with self.subTest(sequence=seq.stem):
+                real = driver.read_csv(self.evidence / "after" / f"{seq.stem}.oracle.csv")
+                self.assertEqual(driver.run_model(seq), real)
+
+    def test_pre_fix_audit_and_mode_counterexample_are_preserved(self):
+        before = json.loads((self.evidence / "before/report.json").read_text())
+        self.assertTrue(before["audit-armed"]["agree_exactly"])
+        self.assertFalse(before["audit-disarmed"]["agree_exactly"])
+        after = json.loads((self.evidence / "after/report.json").read_text())
+        self.assertFalse(after["position-disarm-rearm"]["agree_exactly"])
+        for seq in self.sequences.glob("*.seq"):
+            self.assertIn(seq.stem, after)
+
+    def test_unknown_command_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            seq = Path(tmp) / "unknown.seq"
+            seq.write_text("unknown_command\n")
+            with self.assertRaisesRegex(SystemExit, "unknown command unknown_command"):
+                driver.run_model(seq)
 
 
 if __name__ == "__main__":

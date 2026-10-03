@@ -1,0 +1,17 @@
+[.] Sanitizer coverage enabled. Counter map size: 49917, Cmp map size: 262144
+ERROR [px4_work_queue] not running
+ERROR [px4_work_queue] wq:lp_default not available
+ERROR [px4_work_queue] init failed
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from DifferentialDelay
+[ RUN      ] DifferentialDelay.run_sequence
+WARN  [failsafe] Failsafe activated: entering Hold for 5 seconds
+WARN  [failsafe] Failsafe activated: entering Hold for 3 seconds
+WARN  [failsafe] Failsafe activated
+[       OK ] DifferentialDelay.run_sequence (6 ms)
+[----------] 1 test from DifferentialDelay (6 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (6 ms total)
+[  PASSED  ] 1 test.

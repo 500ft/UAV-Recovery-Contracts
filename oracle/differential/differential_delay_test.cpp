@@ -17,7 +17,8 @@
  *   run   SECONDS DT_MS  advance in DT_MS updates, writing one CSV row per update
  *
  * Commands take effect at the NEXT update, which is how flags reach the framework in a real vehicle.
- * The class is constructed lazily at the first non-param command and given one initial update at t = 5 s with
+ * Initial armed directives set the construction state. The first other non-param command constructs the class
+ * and gives it one initial update at t = 5 s with
  * no flags, exactly as PX4's own test does, so _last_update is seeded the same way.
  ****************************************************************************/
 
@@ -137,6 +138,11 @@ TEST(DifferentialDelay, run_sequence)
 			ASSERT_TRUE(ls >> name >> value) << "line " << line_no;
 			ASSERT_FALSE(failsafe) << "param after construction is not supported (line " << line_no << ")";
 			ASSERT_TRUE(set_param(name, value)) << "unknown or unsettable parameter " << name;
+			continue;
+		}
+
+		if (cmd == "armed" && !failsafe) {
+			int v; ASSERT_TRUE(ls >> v); state.armed = v != 0;
 			continue;
 		}
 

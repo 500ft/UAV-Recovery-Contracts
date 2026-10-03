@@ -1,0 +1,71 @@
+{
+  "audit-armed": {
+    "updates_model": 5,
+    "updates_oracle": 5,
+    "same_length": true,
+    "action_mismatch_updates": 0,
+    "first_mismatch_t_s": null,
+    "model_transitions": [
+      [
+        0.0,
+        "None"
+      ],
+      [
+        0.1,
+        "RTL"
+      ]
+    ],
+    "oracle_transitions": [
+      [
+        0.0,
+        "None"
+      ],
+      [
+        0.1,
+        "RTL"
+      ]
+    ],
+    "same_transition_sequence": true,
+    "oracle_minus_model_shift_s": [
+      0.0,
+      0.0
+    ],
+    "agree_within_one_update": true,
+    "agree_exactly": true
+  },
+  "audit-disarmed": {
+    "updates_model": 5,
+    "updates_oracle": 5,
+    "same_length": true,
+    "action_mismatch_updates": 2,
+    "first_mismatch_t_s": 0.3,
+    "model_transitions": [
+      [
+        0.0,
+        "None"
+      ],
+      [
+        0.1,
+        "RTL"
+      ]
+    ],
+    "oracle_transitions": [
+      [
+        0.0,
+        "None"
+      ],
+      [
+        0.1,
+        "RTL"
+      ],
+      [
+        0.3,
+        "None"
+      ]
+    ],
+    "same_transition_sequence": false,
+    "oracle_minus_model_shift_s": null,
+    "agree_within_one_update": false,
+    "agree_exactly": false
+  }
+}
