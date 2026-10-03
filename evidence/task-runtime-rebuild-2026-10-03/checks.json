@@ -1,0 +1,42 @@
+{
+  "initial_check_failure": "README linked checks.json before that report existed; both failing tests report this same missing local link",
+  "initial_test_log_sha256": "8858716a922398e502a052dba939843e073417249bcfda9134dad31755d498b3",
+  "native_build_exit": 0,
+  "native_run_exit": 0,
+  "tests": {
+    "command": "python -m unittest discover -s tests",
+    "count": 198,
+    "exit": 0,
+    "log_sha256": "d2bd27ca47848bbfb7aa4e2f0ba7975ef41732f7a422bce4cb64b04ae9a83a31"
+  },
+  "checks": [
+    {
+      "command": "python scripts/check_repo_contract.py",
+      "exit": 0
+    },
+    {
+      "command": "python scripts/acquisition_ledger.py --check",
+      "exit": 0
+    },
+    {
+      "command": "python scripts/reference_coverage.py --check",
+      "exit": 0
+    },
+    {
+      "command": "python evidence/task-2026-09-09/rerun_search.py --audit evidence/task-2026-09-11-public/database-export.json",
+      "exit": 0
+    },
+    {
+      "command": "python tools/check_presentation.py . UAV Failsafe Composition uav-failsafe-composition",
+      "exit": 0
+    },
+    {
+      "command": "python tools/test_presentation.py",
+      "exit": 0
+    }
+  ],
+  "data_reproduction": {
+    "command": "python evidence/task-runtime-rebuild-2026-10-03/analyze.py --extract",
+    "result": "byte-for-byte equality with results.json"
+  }
+}
