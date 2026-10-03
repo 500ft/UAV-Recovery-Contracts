@@ -22,5 +22,35 @@
     "harness/trace.py": "2803f943543995e6785565edf1c561e7217109b9d63a5e8de072c83116bea53d"
   },
   "clock": "PX4 hrt_absolute_time microseconds, SIH lockstep, one process boot per run",
-  "build_log_sha256": "7c7bea256d60064983a36d6e3a784ad33604f868c8c7afac852774e6c4a69f83"
+  "build_log_sha256": "7c7bea256d60064983a36d6e3a784ad33604f868c8c7afac852774e6c4a69f83",
+  "source_restored": true,
+  "restored_binary_sha256": "89e5ff695c5e6fcf973be8ae04ab85e7cf6afcc0a3c5ec9215865927ffec60ff",
+  "external_cache": "/Users/redhose/.cache/uav-failsafe-composition/runs/timing-task3-20261003",
+  "source_pinned_sha256": {
+    "msg/TelemetryStatus.msg": "2075bd7cf484dba5375464e6ca5c820bc982d34e30d2ff8fa382e748726ecda4",
+    "src/modules/mavlink/mavlink_receiver.cpp": "2743c0bd177dde97c78a1c23362a5a93d48d228e5d362e64f0eb7b575568a26b",
+    "src/modules/mavlink/mavlink_main.cpp": "3d66bd253868be2234ba36e0de9631f220e5cfcb7baed51c84b40a2674bd09a7",
+    "src/modules/mavlink/mavlink_parameters.cpp": "1f3c0d1cc1195564ad5b8ec0f1d742b47496273ca848cfee855c8a66dc07eb53",
+    "src/modules/commander/Commander.cpp": "ab21f8b26e7c44d8569b5c34bdd5f629d72bf8c969723f4927bc46ac5a5fffff",
+    "src/modules/commander/failsafe/failsafe.cpp": "e5dd6b8148b308a8cf6346ceb09dad211bfd20efe016a5f7ae2ee5a6c43856cb",
+    "src/modules/commander/failsafe/framework.cpp": "6f7b9c1a08624c317965f8ae2195dad03f9baf03dc1e4dbb3d08c22a748e96c6",
+    "src/modules/navigator/navigator_main.cpp": "935b784e667c6cc262cef50c9199eacc395ec8595098079bc4fc3c69cb82d9cd"
+  },
+  "execution_order": [
+    "dev101",
+    "original-control"
+  ],
+  "unexecuted_registered_labels": [
+    102,
+    103
+  ],
+  "run_command": "/Users/redhose/.cache/uav-failsafe-composition/venv/bin/python -m harness.run_case --config px4-v1.17.0-sih-quadx-rtl --event datalink_loss --seed 101 --development-offset-s 0 --full-parameter-snapshot --intended-mode auto_loiter --px4-build /Users/redhose/.cache/uav-failsafe-composition/px4/PX4-Autopilot/build/px4_sitl_default --out /Users/redhose/.cache/uav-failsafe-composition/runs/timing-task3-20261003/<dev101 or original-control>",
+  "design_commit": "c3b3f66",
+  "python": "3.11.8 | packaged by conda-forge | (main, Feb 16 2024, 20:49:36) [Clang 16.0.6 ]",
+  "runtime_packages": {
+    "pymavlink": "2.4.49",
+    "pyulog": "1.2.4",
+    "jsonschema": "4.26.0"
+  },
+  "build_type": "RelWithDebInfo; existing px4_sitl_default compiler/link flags unchanged"
 }

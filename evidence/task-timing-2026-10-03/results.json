@@ -1,0 +1,681 @@
+{
+ "evidence_state": "executed SIH development attempts; measurement prerequisite blocked",
+ "attempts": 2,
+ "completed_injections": 1,
+ "instrumented_injections": 0,
+ "confirmation_runs": 0,
+ "full_snapshots": 2,
+ "parameter_value_differences": [],
+ "unexecuted_registered_labels": [
+  102,
+  103
+ ],
+ "timing_pass_fail_enabled": false,
+ "calibrated_tolerance_s": null,
+ "runs": {
+  "dev101": {
+   "summary": {
+    "case_id": "px4-v1.17.0-sih-quadx-rtl__datalink_loss__development101_offset0",
+    "exit": 3,
+    "valid": {
+     "valid": false,
+     "reasons": [
+      "injection_before_takeoff",
+      "schema_failure"
+     ]
+    },
+    "transitions": [
+     {
+      "from": "AUTO_LOITER",
+      "to": "AUTO_TAKEOFF",
+      "vehicle_status_failsafe": false
+     },
+     {
+      "from": "AUTO_TAKEOFF",
+      "to": "DESCEND",
+      "vehicle_status_failsafe": true
+     }
+    ]
+   },
+   "binary_sha256": "f62f2fdc54f87cad8643b7338f11d52d036ef656326912cfdc12578a2d441f6a",
+   "instrumentation": "15a7bf7e36811baadda70ff466a71d6780e9c9c7d384ab604c792db09d3ee88f",
+   "clock": "one PX4 boot; ULog topic timestamps in hrt_absolute_time microseconds",
+   "snapshot_sha256": "b3f20ac8d9a116d1980916cd70ef2387216eadebc7ec1b6c0d3fca0ba3ed2280",
+   "snapshot_complete": true,
+   "parameter_count": 1794,
+   "parameter_types": {
+    "INT32": 520,
+    "FLOAT": 1274
+   },
+   "snapshot_host_duration_s": 0.08872579199669417,
+   "registry_sha256": {
+    "parameters.xml": "639ef45050f77593983c94a37b15bb9a87c089a0533ac62f11c0b2756d827d7b",
+    "src/lib/parameters/px4_parameters.hpp": "b7169e5aad3159524da38408c6eeb7316b4039700d70b7717b547fe9f9777f94"
+   },
+   "injection_cached_vehicle_s": null,
+   "failures": [
+    {
+     "kind": "failure",
+     "error": "RuntimeError",
+     "detail": "normal tracking was never established",
+     "t_host_s": 97.1434
+    }
+   ],
+   "timing": {},
+   "ulog": {
+    "ulog_sha256": "d461275bc73cd8f2ff952cc49526a4ac51234565f719fea59d72fdccc434f852",
+    "dropouts": [],
+    "topics": {
+     "failsafe_flags/0": {
+      "records": 156,
+      "first_us": 144000,
+      "last_us": 80980000,
+      "max_adjacent_gap_us": 552000,
+      "changes": {
+       "gcs_connection_lost": [
+        {
+         "t_us": 144000,
+         "value": 1
+        },
+        {
+         "t_us": 2520000,
+         "value": 0
+        }
+       ],
+       "local_position_invalid": [
+        {
+         "t_us": 144000,
+         "value": 1
+        },
+        {
+         "t_us": 3756000,
+         "value": 0
+        },
+        {
+         "t_us": 10560000,
+         "value": 1
+        }
+       ],
+       "local_altitude_invalid": [
+        {
+         "t_us": 144000,
+         "value": 1
+        },
+        {
+         "t_us": 792000,
+         "value": 0
+        },
+        {
+         "t_us": 15648000,
+         "value": 1
+        }
+       ]
+      }
+     },
+     "navigator_status/0": {
+      "records": 162,
+      "first_us": 64000,
+      "last_us": 81132000,
+      "max_adjacent_gap_us": 556000,
+      "changes": {
+       "nav_state": [
+        {
+         "t_us": 64000,
+         "value": 4
+        },
+        {
+         "t_us": 5484000,
+         "value": 17
+        },
+        {
+         "t_us": 10572000,
+         "value": 12
+        }
+       ]
+      }
+     },
+     "position_setpoint_triplet/0": {
+      "records": 29,
+      "first_us": 80000,
+      "last_us": 10572000,
+      "max_adjacent_gap_us": 5088000,
+      "changes": {
+       "current.valid": [
+        {
+         "t_us": 80000,
+         "value": 0
+        },
+        {
+         "t_us": 5484000,
+         "value": 1
+        },
+        {
+         "t_us": 10572000,
+         "value": 0
+        }
+       ],
+       "current.type": [
+        {
+         "t_us": 80000,
+         "value": 5
+        },
+        {
+         "t_us": 5484000,
+         "value": 3
+        },
+        {
+         "t_us": 10572000,
+         "value": 5
+        }
+       ]
+      }
+     },
+     "sensor_baro/0": {
+      "records": 9,
+      "first_us": 960000,
+      "last_us": 5460000,
+      "max_adjacent_gap_us": 1000000,
+      "changes": {}
+     },
+     "sensor_gps/0": {
+      "records": 6,
+      "first_us": 1008000,
+      "last_us": 5384000,
+      "max_adjacent_gap_us": 1000000,
+      "changes": {}
+     },
+     "sensor_mag/0": {
+      "records": 9,
+      "first_us": 1032000,
+      "last_us": 5472000,
+      "max_adjacent_gap_us": 1000000,
+      "changes": {}
+     },
+     "vehicle_global_position_groundtruth/0": {
+      "records": 811,
+      "first_us": 204000,
+      "last_us": 81104000,
+      "max_adjacent_gap_us": 100000,
+      "changes": {}
+     },
+     "vehicle_local_position/0": {
+      "records": 10116,
+      "first_us": 244000,
+      "last_us": 81164000,
+      "max_adjacent_gap_us": 8000,
+      "changes": {
+       "xy_valid": [
+        {
+         "t_us": 244000,
+         "value": 0
+        },
+        {
+         "t_us": 2788000,
+         "value": 1
+        },
+        {
+         "t_us": 10532000,
+         "value": 0
+        }
+       ],
+       "z_valid": [
+        {
+         "t_us": 244000,
+         "value": 0
+        },
+        {
+         "t_us": 788000,
+         "value": 1
+        },
+        {
+         "t_us": 15556000,
+         "value": 0
+        }
+       ]
+      }
+     },
+     "vehicle_status/0": {
+      "records": 169,
+      "first_us": 60000,
+      "last_us": 81136000,
+      "max_adjacent_gap_us": 508000,
+      "changes": {
+       "nav_state": [
+        {
+         "t_us": 60000,
+         "value": 4
+        },
+        {
+         "t_us": 5484000,
+         "value": 17
+        },
+        {
+         "t_us": 10572000,
+         "value": 12
+        }
+       ],
+       "arming_state": [
+        {
+         "t_us": 60000,
+         "value": 1
+        },
+        {
+         "t_us": 5460000,
+         "value": 2
+        }
+       ],
+       "gcs_connection_lost": [
+        {
+         "t_us": 60000,
+         "value": 1
+        },
+        {
+         "t_us": 2520000,
+         "value": 0
+        }
+       ]
+      },
+      "mode_changes": [
+       {
+        "first_logged_us": 60000,
+        "previous_logged_us": null,
+        "commit_stamp_us": 36000,
+        "nav": 4
+       },
+       {
+        "first_logged_us": 5484000,
+        "previous_logged_us": 5472000,
+        "commit_stamp_us": 5484000,
+        "nav": 17
+       },
+       {
+        "first_logged_us": 10572000,
+        "previous_logged_us": 10092000,
+        "commit_stamp_us": 10572000,
+        "nav": 12
+       }
+      ]
+     }
+    }
+   }
+  },
+  "original-control": {
+   "summary": {
+    "case_id": "px4-v1.17.0-sih-quadx-rtl__datalink_loss__development101_offset0",
+    "exit": 0,
+    "valid": {
+     "valid": true,
+     "reasons": []
+    },
+    "transitions": [
+     {
+      "from": "AUTO_LOITER",
+      "to": "AUTO_TAKEOFF",
+      "vehicle_status_failsafe": false
+     },
+     {
+      "from": "AUTO_TAKEOFF",
+      "to": "AUTO_LOITER",
+      "vehicle_status_failsafe": false
+     },
+     {
+      "from": "AUTO_LOITER",
+      "to": "AUTO_RTL",
+      "vehicle_status_failsafe": true
+     },
+     {
+      "from": "AUTO_RTL",
+      "to": "AUTO_LOITER",
+      "vehicle_status_failsafe": false
+     }
+    ]
+   },
+   "binary_sha256": "89e5ff695c5e6fcf973be8ae04ab85e7cf6afcc0a3c5ec9215865927ffec60ff",
+   "instrumentation": "none",
+   "clock": "one PX4 boot; ULog topic timestamps in hrt_absolute_time microseconds",
+   "snapshot_sha256": "5ec5a55c03e37402c6c9dd859258a8a46b78f9c22360d32a97e5366491a132f2",
+   "snapshot_complete": true,
+   "parameter_count": 1794,
+   "parameter_types": {
+    "INT32": 520,
+    "FLOAT": 1274
+   },
+   "snapshot_host_duration_s": 0.0929752920055762,
+   "registry_sha256": {
+    "parameters.xml": "639ef45050f77593983c94a37b15bb9a87c089a0533ac62f11c0b2756d827d7b",
+    "src/lib/parameters/px4_parameters.hpp": "b7169e5aad3159524da38408c6eeb7316b4039700d70b7717b547fe9f9777f94"
+   },
+   "injection_cached_vehicle_s": 58.284,
+   "failures": [],
+   "timing": {
+    "first_logged_consumed_flag_us": 70104000,
+    "rtl_commit_stamp_us": 75120000,
+    "logged_flag_to_rtl_commit_s": 5.016,
+    "cached_cut_to_rtl_commit_s": 16.836000000000006,
+    "last_qualifying_heartbeat_us": null,
+    "detector_evaluation_us": null,
+    "selected_action_us": null,
+    "navigator_execution_bracket_us": null,
+    "first_logged_navigator_rtl_us": 75120000,
+    "first_logged_valid_setpoint_after_rtl_us": 75172000,
+    "commit_to_navigator_status_s": 0.0,
+    "commit_to_valid_setpoint_s": 0.052,
+    "note": "logged flag to commit is one segment; cut stamp is a lower bound only; uninstrumented control lacks receive, detector, selector and navigator execution observations"
+   },
+   "ulog": {
+    "ulog_sha256": "b532f60a960ef8cb69873bcdf05d27ad1eaa4840e2b6a4f0da9349b1ae77b3ab",
+    "dropouts": [],
+    "topics": {
+     "failsafe_flags/0": {
+      "records": 184,
+      "first_us": 144000,
+      "last_us": 97128000,
+      "max_adjacent_gap_us": 588000,
+      "changes": {
+       "gcs_connection_lost": [
+        {
+         "t_us": 144000,
+         "value": 1
+        },
+        {
+         "t_us": 2520000,
+         "value": 0
+        },
+        {
+         "t_us": 70104000,
+         "value": 1
+        }
+       ],
+       "local_position_invalid": [
+        {
+         "t_us": 144000,
+         "value": 1
+        },
+        {
+         "t_us": 3816000,
+         "value": 0
+        }
+       ],
+       "local_altitude_invalid": [
+        {
+         "t_us": 144000,
+         "value": 1
+        },
+        {
+         "t_us": 792000,
+         "value": 0
+        }
+       ]
+      }
+     },
+     "navigator_status/0": {
+      "records": 196,
+      "first_us": 64000,
+      "last_us": 97092000,
+      "max_adjacent_gap_us": 556000,
+      "changes": {
+       "nav_state": [
+        {
+         "t_us": 64000,
+         "value": 4
+        },
+        {
+         "t_us": 5460000,
+         "value": 17
+        },
+        {
+         "t_us": 17064000,
+         "value": 4
+        },
+        {
+         "t_us": 75120000,
+         "value": 5
+        },
+        {
+         "t_us": 96588000,
+         "value": 4
+        }
+       ]
+      }
+     },
+     "position_setpoint_triplet/0": {
+      "records": 40,
+      "first_us": 84000,
+      "last_us": 97388000,
+      "max_adjacent_gap_us": 58056000,
+      "changes": {
+       "current.valid": [
+        {
+         "t_us": 84000,
+         "value": 0
+        },
+        {
+         "t_us": 5460000,
+         "value": 1
+        },
+        {
+         "t_us": 75120000,
+         "value": 0
+        },
+        {
+         "t_us": 75172000,
+         "value": 1
+        },
+        {
+         "t_us": 96588000,
+         "value": 0
+        }
+       ],
+       "current.type": [
+        {
+         "t_us": 84000,
+         "value": 5
+        },
+        {
+         "t_us": 5460000,
+         "value": 3
+        },
+        {
+         "t_us": 17052000,
+         "value": 2
+        },
+        {
+         "t_us": 75120000,
+         "value": 5
+        },
+        {
+         "t_us": 75172000,
+         "value": 2
+        },
+        {
+         "t_us": 75276000,
+         "value": 0
+        },
+        {
+         "t_us": 75324000,
+         "value": 4
+        },
+        {
+         "t_us": 96588000,
+         "value": 5
+        }
+       ]
+      }
+     },
+     "sensor_baro/0": {
+      "records": 97,
+      "first_us": 960000,
+      "last_us": 96960000,
+      "max_adjacent_gap_us": 1000000,
+      "changes": {}
+     },
+     "sensor_gps/0": {
+      "records": 97,
+      "first_us": 1008000,
+      "last_us": 97008000,
+      "max_adjacent_gap_us": 1000000,
+      "changes": {}
+     },
+     "sensor_mag/0": {
+      "records": 97,
+      "first_us": 1032000,
+      "last_us": 97032000,
+      "max_adjacent_gap_us": 1000000,
+      "changes": {}
+     },
+     "vehicle_global_position_groundtruth/0": {
+      "records": 975,
+      "first_us": 212000,
+      "last_us": 97512000,
+      "max_adjacent_gap_us": 100000,
+      "changes": {}
+     },
+     "vehicle_local_position/0": {
+      "records": 12172,
+      "first_us": 220000,
+      "last_us": 97588000,
+      "max_adjacent_gap_us": 8000,
+      "changes": {
+       "xy_valid": [
+        {
+         "t_us": 220000,
+         "value": 0
+        },
+        {
+         "t_us": 2788000,
+         "value": 1
+        }
+       ],
+       "z_valid": [
+        {
+         "t_us": 220000,
+         "value": 0
+        },
+        {
+         "t_us": 788000,
+         "value": 1
+        }
+       ]
+      }
+     },
+     "vehicle_status/0": {
+      "records": 204,
+      "first_us": 60000,
+      "last_us": 97092000,
+      "max_adjacent_gap_us": 504000,
+      "changes": {
+       "nav_state": [
+        {
+         "t_us": 60000,
+         "value": 4
+        },
+        {
+         "t_us": 5460000,
+         "value": 17
+        },
+        {
+         "t_us": 17064000,
+         "value": 4
+        },
+        {
+         "t_us": 75120000,
+         "value": 5
+        },
+        {
+         "t_us": 96588000,
+         "value": 4
+        }
+       ],
+       "arming_state": [
+        {
+         "t_us": 60000,
+         "value": 1
+        },
+        {
+         "t_us": 5436000,
+         "value": 2
+        },
+        {
+         "t_us": 96588000,
+         "value": 1
+        }
+       ],
+       "gcs_connection_lost": [
+        {
+         "t_us": 60000,
+         "value": 1
+        },
+        {
+         "t_us": 2520000,
+         "value": 0
+        },
+        {
+         "t_us": 70104000,
+         "value": 1
+        }
+       ]
+      },
+      "mode_changes": [
+       {
+        "first_logged_us": 60000,
+        "previous_logged_us": null,
+        "commit_stamp_us": 36000,
+        "nav": 4
+       },
+       {
+        "first_logged_us": 5460000,
+        "previous_logged_us": 5448000,
+        "commit_stamp_us": 5460000,
+        "nav": 17
+       },
+       {
+        "first_logged_us": 17064000,
+        "previous_logged_us": 17052000,
+        "commit_stamp_us": 17064000,
+        "nav": 4
+       },
+       {
+        "first_logged_us": 75120000,
+        "previous_logged_us": 74652000,
+        "commit_stamp_us": 75120000,
+        "nav": 5
+       },
+       {
+        "first_logged_us": 96588000,
+        "previous_logged_us": 96108000,
+        "commit_stamp_us": 96588000,
+        "nav": 4
+       }
+      ]
+     }
+    }
+   }
+  }
+ },
+ "artifact_sha256": {
+  "amendment-registration.json": "c67552ddf67ac88264f28512bfffd19b2b5317167773274e9b675dd69a109994",
+  "analyze.py": "7b70e2ae8e4592ffbcacd4b3803b3e5bf10a2cfca721195137277039de687f00",
+  "build.log": "7c7bea256d60064983a36d6e3a784ad33604f868c8c7afac852774e6c4a69f83",
+  "design.md": "0c3d727f4a5437ce6bcae31ba3fffc65fdc80fe6002be6ea32b64a55a74e32c0",
+  "diagnostic-amendment.md": "82b7bb8ad792313ba7671b9cef63f461f4753b672467cb6f87bebeda4227dd67",
+  "environment.json": "483c047e8c7b4ecc029fa417e204a1dc139defda2ef14a21c22e449029e598d2",
+  "instrumentation.patch": "15a7bf7e36811baadda70ff466a71d6780e9c9c7d384ab604c792db09d3ee88f",
+  "registration.json": "5c0ce2400f635a35a7948d060cc2effd5182b104e464f91efa6feae1874babc1",
+  "runs/dev101/case.json": "c55198294478e5958faae0242674225ba3fa82012824883ce04a9c8aefe55672",
+  "runs/dev101/flight.ulg.gz": "d09fb552af38a38c9be62564200fd1b49ea2a40e158e8095579752425a70190c",
+  "runs/dev101/parameters-full.json.gz": "3572fb520845432c0039d550ff3573bf5d2055709de00a6414e8d13a705f61a4",
+  "runs/dev101/px4.log.gz": "0fc5296349e684a9a8110bc41b91ef4444d454c3b8a2682cd2e5c0153aba9fd5",
+  "runs/dev101/raw.jsonl.gz": "9a5fbd46d3791170bd2c1f396bd69a38ee4ad2786d3d99677e576e5d6f25c62c",
+  "runs/dev101/summary.json": "29658f371397e68cf32b22ebb379abc3523a419a34cbff389cf7beedf4271068",
+  "runs/dev101/trace.json.gz": "22732710a0571f04488c9db99b9cc98095d0168e3c59da321177e4aee8f31319",
+  "runs/dev101/ulog-observations.json": "b6d8e99920e1e187333c4a7bce47204bca28a4e4960d45835c7ec3d6619aa35f",
+  "runs/original-control/case.json": "c55198294478e5958faae0242674225ba3fa82012824883ce04a9c8aefe55672",
+  "runs/original-control/flight.ulg.gz": "4369772b63d8dd0afa1fea3fea916318ed4dbf3e408a12bb3daab8360bf1a805",
+  "runs/original-control/parameters-full.json.gz": "e0b1bf5efa25388cdac34ef7e17150da4771d126fe3d18f1ef01fb41689243a1",
+  "runs/original-control/px4.log.gz": "109ca42db4638ab99c235bb4918e80438d586723e36b86f0cc39dac5d02719a3",
+  "runs/original-control/raw.jsonl.gz": "8e836b3f0538195474875f672dced54b0ed80a94576d1223286673433d4641c7",
+  "runs/original-control/summary.json": "0c3956bc51e3daa99cc2987670b59209a45822a1e7e8606710a06ad8820b7d08",
+  "runs/original-control/trace.json.gz": "eae48c170713be5614b4ec158f382535b580b2329c1afcace06bfb723dc27797",
+  "runs/original-control/ulog-observations.json": "df7d5766aa269e29640490556debb7e058b9edb86a48d09f2481b70647546866"
+ }
+}

@@ -46,8 +46,15 @@ behaviour was not yet explained ([critique](docs/specs/formal-composition/critiq
   "none". With the encoding fixed, a datalink loss in Auto Loiter gives Hold,
   then RTL, including on the unmodified PX4 binary
   ([evidence](evidence/task-runtime-2026-09-29/README.md)).
-- The RTL arrives 16.4–16.7 s after the link is cut. The configured timers
-  account for 15 s (10 s detection, 5 s hold). The extra time is open item NP-3.
+- **Full typed parameter capture now runs (NP-4).** The new instrumented
+  executable failed tracking before injection; the original-executable control
+  completed datalink loss with identical pre-arm parameter values. Both attempts
+  are [retained](evidence/task-timing-2026-10-03/README.md). The source trace
+  identifies heartbeat aging and telemetry publication before commander's
+  configured timeout. Full-chain measurement is blocked on diagnosing the
+  instrumented runtime's tracking failure. NP-6 sets no replacement tolerance:
+  host stream cessation still has no vehicle-clock upper bound, so timing remains
+  outside pass/fail under the signed protocol.
 - RC loss can't be injected in this simulator setup (decision D13), so Study A
   covers the other event classes.
 
@@ -58,7 +65,7 @@ behaviour was not yet explained ([critique](docs/specs/formal-composition/critiq
 | 1 | Sign off decisions D1–D13 | Owner | Done 2026-09-30 ([addendum](docs/specs/formal-composition/decisions-2026-09-19.md)) |
 | 2 | Reproduce and fix armed-state handling against the pinned native class | Agent | Done for the exercised cases; [evidence](evidence/task-armed-2026-10-03/README.md) |
 | 3 | Define the supported domain, resolve the recorded mode counterexample, then run directed and stratified random cases with reserved verification | Agent | Done for the [executed corpus](evidence/task-domain-2026-10-03/README.md); no universal equivalence claim |
-| 4 | Close NP-3, NP-4 and NP-6; separate observable timing segments on one vehicle clock | Agent | **Next step, outside this PR.** Each recorded as resolved, or as a stated limit of the rig |
+| 4 | Close NP-3, NP-4 and NP-6; separate observable timing segments on one vehicle clock | Agent | NP-4 executed. NP-3 source traced; runtime segmentation blocked by the retained tracking failure. NP-6 remains uncalibrated. **Next:** diagnose the instrumented runtime before further measurement or confirmation |
 | 5 | Commit the required cell list as scenario identities (D25), then run every cell and compare each with the model | Agent | Traces committed; every cell classified |
 | 6 | Apply the D7 gate. If the model holds, run the first supported hazard pair (D9) | Agent | Gate result and any blocked subdomains recorded |
 | 7 | Release the benchmark: configurations, harness, traces, model, comparison report | Agent | Tagged release with a README that states the verdict |

@@ -1,0 +1,23 @@
+{
+ "case_id": "px4-v1.17.0-sih-quadx-rtl__datalink_loss__development101_offset0",
+ "exit": 3,
+ "valid": {
+  "valid": false,
+  "reasons": [
+   "injection_before_takeoff",
+   "schema_failure"
+  ]
+ },
+ "transitions": [
+  {
+   "from": "AUTO_LOITER",
+   "to": "AUTO_TAKEOFF",
+   "vehicle_status_failsafe": false
+  },
+  {
+   "from": "AUTO_TAKEOFF",
+   "to": "DESCEND",
+   "vehicle_status_failsafe": true
+  }
+ ]
+}

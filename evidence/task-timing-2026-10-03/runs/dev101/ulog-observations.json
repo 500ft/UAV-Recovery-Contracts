@@ -1,0 +1,236 @@
+{
+ "ulog_sha256": "d461275bc73cd8f2ff952cc49526a4ac51234565f719fea59d72fdccc434f852",
+ "dropouts": [],
+ "topics": {
+  "failsafe_flags/0": {
+   "records": 156,
+   "first_us": 144000,
+   "last_us": 80980000,
+   "max_adjacent_gap_us": 552000,
+   "changes": {
+    "gcs_connection_lost": [
+     {
+      "t_us": 144000,
+      "value": 1
+     },
+     {
+      "t_us": 2520000,
+      "value": 0
+     }
+    ],
+    "local_position_invalid": [
+     {
+      "t_us": 144000,
+      "value": 1
+     },
+     {
+      "t_us": 3756000,
+      "value": 0
+     },
+     {
+      "t_us": 10560000,
+      "value": 1
+     }
+    ],
+    "local_altitude_invalid": [
+     {
+      "t_us": 144000,
+      "value": 1
+     },
+     {
+      "t_us": 792000,
+      "value": 0
+     },
+     {
+      "t_us": 15648000,
+      "value": 1
+     }
+    ]
+   }
+  },
+  "navigator_status/0": {
+   "records": 162,
+   "first_us": 64000,
+   "last_us": 81132000,
+   "max_adjacent_gap_us": 556000,
+   "changes": {
+    "nav_state": [
+     {
+      "t_us": 64000,
+      "value": 4
+     },
+     {
+      "t_us": 5484000,
+      "value": 17
+     },
+     {
+      "t_us": 10572000,
+      "value": 12
+     }
+    ]
+   }
+  },
+  "position_setpoint_triplet/0": {
+   "records": 29,
+   "first_us": 80000,
+   "last_us": 10572000,
+   "max_adjacent_gap_us": 5088000,
+   "changes": {
+    "current.valid": [
+     {
+      "t_us": 80000,
+      "value": 0
+     },
+     {
+      "t_us": 5484000,
+      "value": 1
+     },
+     {
+      "t_us": 10572000,
+      "value": 0
+     }
+    ],
+    "current.type": [
+     {
+      "t_us": 80000,
+      "value": 5
+     },
+     {
+      "t_us": 5484000,
+      "value": 3
+     },
+     {
+      "t_us": 10572000,
+      "value": 5
+     }
+    ]
+   }
+  },
+  "sensor_baro/0": {
+   "records": 9,
+   "first_us": 960000,
+   "last_us": 5460000,
+   "max_adjacent_gap_us": 1000000,
+   "changes": {}
+  },
+  "sensor_gps/0": {
+   "records": 6,
+   "first_us": 1008000,
+   "last_us": 5384000,
+   "max_adjacent_gap_us": 1000000,
+   "changes": {}
+  },
+  "sensor_mag/0": {
+   "records": 9,
+   "first_us": 1032000,
+   "last_us": 5472000,
+   "max_adjacent_gap_us": 1000000,
+   "changes": {}
+  },
+  "vehicle_global_position_groundtruth/0": {
+   "records": 811,
+   "first_us": 204000,
+   "last_us": 81104000,
+   "max_adjacent_gap_us": 100000,
+   "changes": {}
+  },
+  "vehicle_local_position/0": {
+   "records": 10116,
+   "first_us": 244000,
+   "last_us": 81164000,
+   "max_adjacent_gap_us": 8000,
+   "changes": {
+    "xy_valid": [
+     {
+      "t_us": 244000,
+      "value": 0
+     },
+     {
+      "t_us": 2788000,
+      "value": 1
+     },
+     {
+      "t_us": 10532000,
+      "value": 0
+     }
+    ],
+    "z_valid": [
+     {
+      "t_us": 244000,
+      "value": 0
+     },
+     {
+      "t_us": 788000,
+      "value": 1
+     },
+     {
+      "t_us": 15556000,
+      "value": 0
+     }
+    ]
+   }
+  },
+  "vehicle_status/0": {
+   "records": 169,
+   "first_us": 60000,
+   "last_us": 81136000,
+   "max_adjacent_gap_us": 508000,
+   "changes": {
+    "nav_state": [
+     {
+      "t_us": 60000,
+      "value": 4
+     },
+     {
+      "t_us": 5484000,
+      "value": 17
+     },
+     {
+      "t_us": 10572000,
+      "value": 12
+     }
+    ],
+    "arming_state": [
+     {
+      "t_us": 60000,
+      "value": 1
+     },
+     {
+      "t_us": 5460000,
+      "value": 2
+     }
+    ],
+    "gcs_connection_lost": [
+     {
+      "t_us": 60000,
+      "value": 1
+     },
+     {
+      "t_us": 2520000,
+      "value": 0
+     }
+    ]
+   },
+   "mode_changes": [
+    {
+     "first_logged_us": 60000,
+     "previous_logged_us": null,
+     "commit_stamp_us": 36000,
+     "nav": 4
+    },
+    {
+     "first_logged_us": 5484000,
+     "previous_logged_us": 5472000,
+     "commit_stamp_us": 5484000,
+     "nav": 17
+    },
+    {
+     "first_logged_us": 10572000,
+     "previous_logged_us": 10092000,
+     "commit_stamp_us": 10572000,
+     "nav": 12
+    }
+   ]
+  }
+ }
+}

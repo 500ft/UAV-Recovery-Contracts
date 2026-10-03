@@ -1,0 +1,32 @@
+{
+ "case_id": "px4-v1.17.0-sih-quadx-rtl__datalink_loss__development101_offset0",
+ "configuration_id": "px4-v1.17.0-sih-quadx-rtl",
+ "event": "datalink_loss",
+ "seed": 101,
+ "inject_at_vehicle_s": 40.0,
+ "horizon_s": 45.0,
+ "expected_action": "RTL",
+ "firmware_commit": "d6f12ad1c4f70ad3230afd7d86e971421e02fef4",
+ "firmware_tag": "v1.17.0",
+ "airframe": "10040_sihsim_quadx",
+ "parameters_sha256": "afac1e42f55ac68b78a27235d03dc623d0416f4a40aa5de451d2267d27ca4b3b",
+ "parameters": {
+  "SYS_FAILURE_EN": 1,
+  "COM_RC_IN_MODE": 3,
+  "COM_RCL_EXCEPT": 0,
+  "COM_DLL_EXCEPT": 0,
+  "RTL_RETURN_ALT": 60.0,
+  "RTL_DESCEND_ALT": 30.0,
+  "RTL_LAND_DELAY": 0.0,
+  "GF_PREDICT": 0,
+  "NAV_DLL_ACT": 2,
+  "NAV_RCL_ACT": 2,
+  "COM_OBL_RC_ACT": 3,
+  "GF_ACTION": 3,
+  "COM_POS_LOW_ACT": 3,
+  "COM_LOW_BAT_ACT": 1
+ },
+ "intended_mode": "auto_loiter",
+ "restore_after_s": 0.0,
+ "purpose": "development diagnostic, not confirmation"
+}

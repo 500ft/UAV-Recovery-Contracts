@@ -39,7 +39,7 @@ so no external physics simulator is involved.
 | --- | --- | --- |
 | Python model against PX4's compiled `Failsafe` class, same input sequences | After fixing eligibility and action-option errors found in development, 1,000 of 1,000 fresh reserved sequences agree exactly. Development had 495 disagreements in 1,500 random sequences and 11 in 36 directed sequences; all agree on replay after the fixes | [Results by mechanism](evidence/task-domain-2026-10-03/results.json), [domain and counterexamples](evidence/task-domain-2026-10-03/README.md) |
 | SITL datalink loss in Auto Loiter | Hold, then RTL, also on the unmodified PX4 binary | [Runtime record](evidence/task-runtime-2026-09-29/README.md) |
-| Time from link loss to RTL | 16.4 s and 16.7 s. The timers account for 15 s (10 s detection plus 5 s hold); the extra time is not explained yet | [results.json](evidence/task-runtime-2026-09-29/results.json) |
+| Runtime measurement prerequisites | Both new attempts captured all 1,794 compiled parameters. The instrumented build failed tracking before injection; the original-executable control reached Hold then RTL. Full-chain timing remains blocked | [Executed diagnostic](evidence/task-timing-2026-10-03/README.md), [results.json](evidence/task-timing-2026-10-03/results.json) |
 
 The position-accuracy/POSCTL defect is resolved, with its historical outputs
 preserved. Agreement covers only the exercised corpus: datalink loss, geofence
@@ -49,7 +49,12 @@ outside this campaign. There were no invalid or excluded generated sequences;
 eight separate unsupported-input probes were rejected before either adapter.
 The [domain table](evidence/task-domain-2026-10-03/README.md#domain-recorded-before-execution)
 states the parameter and tick limits. This is not universal equivalence.
-Timing work is next; Study A has not run.
+The source trace identifies heartbeat aging and telemetry publication before
+commander's configured timeout. The last received heartbeat is distinct from
+both commander's timeout anchor and the runner's cached cut stamp. The
+instrumented runtime needs a tracking-failure diagnosis before that whole chain
+can be measured. No new timing tolerance was calibrated; timing remains outside
+pass/fail, and Study A confirmation has not run.
 
 The SITL result took a week to get right. Until then every run showed no
 failsafe action at all, whatever the hazard. The cause was the test harness:

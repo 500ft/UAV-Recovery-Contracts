@@ -7,8 +7,8 @@
 
 The earlier `parameters_sha256` tried to be the first and the second at once, which cannot work: a case cannot
 be selected by the hash of a readback that does not exist until the vehicle is up. Splitting them also fixes a
-quieter problem. The runner reads back only the parameters it explicitly set, so that hash covers the overrides
-and not the vehicle's configuration; it is named `overrides_readback_sha256` here and nothing calls it complete.
+quieter problem. The override hash covers only parameters explicitly set. An optional full typed snapshot
+is a separate raw artifact in execution identity; it does not change that hash's scope or completeness field.
 """
 from __future__ import annotations
 import hashlib, json

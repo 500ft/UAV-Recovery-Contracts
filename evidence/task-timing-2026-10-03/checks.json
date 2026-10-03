@@ -1,0 +1,55 @@
+{
+  "full_suite": {
+    "command": "python -m unittest discover -s tests",
+    "tests": 198,
+    "exit": 0,
+    "log_sha256": "c1b7947e3417bd8c417b4e893bcb69535af9e1274e8c54567b6470c9cf983e8d"
+  },
+  "affected_recheck": {
+    "command": "python -m unittest discover -s tests -p test_timing_evidence.py -v",
+    "tests": 1,
+    "exit": 0
+  },
+  "contract": {
+    "command": "python scripts/check_repo_contract.py",
+    "exit": 0
+  },
+  "checks": [
+    {
+      "command": "python scripts/acquisition_ledger.py --check",
+      "exit": 0,
+      "output": "Acquisition ledger consistent; source provenance gaps remain explicit\n",
+      "stderr": ""
+    },
+    {
+      "command": "python scripts/reference_coverage.py --check",
+      "exit": 0,
+      "output": "reference coverage OK: {\"day2_historical\": \"0/6\", \"day4_public\": \"3/6\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": "python evidence/task-2026-09-09/rerun_search.py --audit evidence/task-2026-09-11-public/database-export.json",
+      "exit": 0,
+      "output": "{\n  \"unsupported_provenance_routes\": 0,\n  \"missing_request_provenance\": 0,\n  \"response_record_mismatches\": 0,\n  \"query_count_mismatches\": 0,\n  \"response_hash_mismatches\": 0,\n  \"count_unit\": \"normalized identifier records; not distinct studies\",\n  \"record_count\": 317,\n  \"normalized_identifier_count\": 317,\n  \"declared_identifier_count_matches\": true,\n  \"rows_without_successful_logged_query\": 0,\n  \"unlogged_row_ids\": [],\n  \"known_anchor_matches\": [\n    \"arxiv:2505.02357\",\n    \"arxiv:2602.07264\"\n  ],\n  \"anchor_set_complete\": false,\n  \"recall\": null,\n  \"recall_reason\": \"Incomplete eligible anchor register; overlap is not recall. Query-route completeness is reported separately.\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "python tools/check_presentation.py . UAV Failsafe Composition uav-failsafe-composition",
+      "exit": 0,
+      "output": "{\n  \"repository\": \"uav-failsafe-composition\",\n  \"files_checked\": 5,\n  \"local_links_checked\": 60,\n  \"external_links_not_fetched\": 11,\n  \"issues\": [],\n  \"scientific_validation\": false\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "python tools/test_presentation.py",
+      "exit": 0,
+      "output": "",
+      "stderr": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.095s\n\nOK\n"
+    }
+  ],
+  "native_build_exit": 0,
+  "run_exit": {
+    "dev101": 3,
+    "original-control": 0
+  },
+  "whitespace": "git diff --check passed"
+}
