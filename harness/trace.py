@@ -249,7 +249,7 @@ def build_trace(out: Path, case: dict, matrix: dict) -> dict:
                    realized_events={e["name"]: e["t_vehicle_s"] for e in events
                                     if e["name"] in ("arm", "takeoff_complete", "injection", "horizon_reached")},
                    raw_artifacts={n: h for n, h in
-                                  ((f, file_sha256(out / f)) for f in ("raw.jsonl", "flight.ulg")) if h})
+                                  ((f, file_sha256(out / f)) for f in ("raw.jsonl", "flight.ulg", "parameters-full.json")) if h})
     an = analysis(ex["execution_id"], inputs=ex["raw_artifacts"] if isinstance(ex["raw_artifacts"], dict) else {},
                   protocol_version=SCHEMA.get("title", "trace-schema"),
                   verdict_config=dict(tolerance_source="protocols/expected-timelines.json"))

@@ -60,21 +60,29 @@ def case_id(configuration_id: str, event: str, seed: int) -> str:
     return f"{configuration_id}__{event}__seed{seed}"
 
 
-def resolve(configuration_id: str, event: str, seed: int) -> dict:
+def resolve(configuration_id: str, event: str, seed: int, *, development_offset_s: float | None = None) -> dict:
     """The frozen case, or a ValueError naming exactly what is wrong. The runner never invents a default."""
     if configuration_id not in ROWS:
         raise ValueError(f"unknown configuration_id {configuration_id!r}; matrix has {sorted(ROWS)}")
     if event not in EVENT_CLASSES and event != "none":
         raise ValueError(f"unknown event class {event!r}; frozen classes are {list(EVENT_CLASSES)} (D4)")
-    if seed not in SEED_OFFSET_S:
+    if development_offset_s is not None:
+        import math
+        if seed in SEED_OFFSET_S or not math.isfinite(development_offset_s) or abs(development_offset_s) > 2:
+            raise ValueError("development requires a non-frozen label and a finite offset within +/-2 s")
+        offset = development_offset_s
+    elif seed not in SEED_OFFSET_S:
         raise ValueError(f"seed {seed} is not in the frozen seed list {sorted(SEED_OFFSET_S)}")
+    else:
+        offset = SEED_OFFSET_S[seed]
     row = ROWS[configuration_id]
     return dict(
-        case_id=case_id(configuration_id, event, seed),
+        case_id=case_id(configuration_id, event, seed) if development_offset_s is None else
+                f"{configuration_id}__{event}__development{seed}_offset{offset:g}",
         configuration_id=configuration_id,
         event=event,
         seed=seed,
-        inject_at_vehicle_s=round(NOMINAL_INJECT_T_S + SEED_OFFSET_S[seed], 3),
+        inject_at_vehicle_s=round(NOMINAL_INJECT_T_S + offset, 3),
         horizon_s=HORIZON_S,
         expected_action=row["realised_action_per_class"].get(event),
         firmware_commit=MATRIX["firmware"]["commit"],

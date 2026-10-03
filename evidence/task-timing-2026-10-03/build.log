@@ -1,0 +1,62 @@
+[0/1] Re-running CMake...
+-- PX4_GIT_TAG: v1.17.0
+CMake Warning (policy) at CMakeLists.txt:176 (find_package):
+  Policy CMP0148 is not set: The FindPythonInterp and FindPythonLibs modules
+  are removed.  Run "cmake --help-policy CMP0148" for policy details.  Use
+  the cmake_policy command to set the policy and suppress this warning.
+This warning is for project developers.  Use -Wno-author or -Wno-policy to
+suppress it.
+
+-- PX4 config file: /Users/redhose/.cache/uav-failsafe-composition/px4/PX4-Autopilot/boards/px4/sitl/default.px4board
+-- PLATFORM posix
+-- ROMFSROOT px4fmu_common
+-- TESTING y
+-- ETHERNET y
+-- ROOT_PATH .
+-- PARAM_FILE /fs/mtd_params
+-- PX4 config: px4_sitl_default
+-- PX4 platform: posix
+-- PX4 lockstep: enabled
+-- cmake build type: RelWithDebInfo
+-- ccache enabled (export CCACHE_DISABLE=1 to disable)
+CMake Warning (deprecated) at platforms/posix/src/px4/common/lockstep_scheduler/CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+This warning is for project developers.  Use -Wno-author or -Wno-deprecated
+to suppress it.
+
+-- Could NOT find gz-transport (missing: gz-transport_DIR)
+-- Gazebo simulation bridge module disabled: missing dependencies
+-- Could NOT find Protobuf (missing: Protobuf_LIBRARIES Protobuf_INCLUDE_DIR) 
+-- Could NOT find gz-transport (missing: gz-transport_DIR)
+-- Could NOT find gz-sim (missing: gz-sim_DIR)
+-- Could NOT find gz-sensors (missing: gz-sensors_DIR)
+-- Could NOT find gz-plugin (missing: gz-plugin_DIR)
+-- ROMFS: ROMFS/px4fmu_common
+-- Configuring done (1.9s)
+-- Generating done (0.5s)
+-- Build files have been written to: /Users/redhose/.cache/uav-failsafe-composition/px4/PX4-Autopilot/build/px4_sitl_default
+[1/22] Generating git version header
+[2/20] Generating px4 event json file from source
+[3/20] Generating combined event json file
+[4/20] Generating component_general.json and checksums.h
+[5/20] Building CXX object src/modules/commander/failsafe/CMakeFiles/failsafe.dir/failsafe.cpp.o
+[6/20] Building CXX object src/modules/commander/failsafe/CMakeFiles/failsafe.dir/framework.cpp.o
+[7/20] Linking CXX static library src/modules/commander/failsafe/libfailsafe.a
+[8/20] Building CXX object src/modules/navigator/CMakeFiles/modules__navigator.dir/navigator_main.cpp.o
+[9/20] Building CXX object src/modules/logger/CMakeFiles/modules__logger.dir/logger.cpp.o
+[10/20] ROMFS: copying extras
+[11/20] Linking CXX static library src/modules/logger/libmodules__logger.a
+[12/20] Linking CXX static library src/modules/navigator/libmodules__navigator.a
+[13/20] Building CXX object src/modules/commander/CMakeFiles/modules__commander.dir/Commander.cpp.o
+[14/20] Linking CXX static library src/modules/commander/libmodules__commander.a
+[15/20] Building CXX object src/modules/mavlink/CMakeFiles/modules__mavlink.dir/mavlink_receiver.cpp.o
+[16/20] Building CXX object src/modules/mavlink/CMakeFiles/modules__mavlink.dir/mavlink_messages.cpp.o
+[17/20] Building CXX object src/modules/mavlink/CMakeFiles/modules__mavlink.dir/mavlink_main.cpp.o
+[18/20] Linking CXX static library src/modules/mavlink/libmodules__mavlink.a
+[19/20] Linking CXX executable bin/px4
+ld: warning: ignoring duplicate libraries: '-lm', 'platforms/common/px4_work_queue/libpx4_work_queue.a', 'platforms/common/uORB/libuORB.a', 'platforms/posix/src/px4/common/libpx4_layer.a', 'platforms/posix/src/px4/common/lockstep_scheduler/liblockstep_scheduler.a', 'platforms/posix/src/px4/common/px4_daemon/libpx4_daemon.a', 'src/lib/parameters/libparameters.a', 'src/modules/dataman/libmodules__dataman.a', 'src/modules/navigator/MissionFeasibility/libmission_feasibility_checker.a', 'src/modules/navigator/libmodules__navigator.a'

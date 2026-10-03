@@ -1,0 +1,152 @@
+diff --git a/src/modules/commander/Commander.cpp b/src/modules/commander/Commander.cpp
+index 663223c..a47743f 100644
+--- a/src/modules/commander/Commander.cpp
++++ b/src/modules/commander/Commander.cpp
+@@ -2353,7 +2353,8 @@ bool Commander::handleModeIntentionAndFailsafe()
+ 	// If a failsafe is active we must pass the request along as it might lead to a user-takeover.
+ 	bool mode_change_requested = _user_mode_intention.getHadModeChangeAndClear();
+ 
+-	uint8_t updated_user_intented_mode = _failsafe.update(hrt_absolute_time(), state, mode_change_requested,
++	const hrt_abstime diagnostic_update_us = hrt_absolute_time();
++	uint8_t updated_user_intented_mode = _failsafe.update(diagnostic_update_us, state, mode_change_requested,
+ 					     _failsafe_user_override_request,
+ 					     _failsafe_flags);
+ 	_failsafe_user_override_request = false;
+@@ -2385,6 +2386,11 @@ bool Commander::handleModeIntentionAndFailsafe()
+ 		break;
+ 	}
+ 
++	PX4_INFO("UAV_DIAG commit t=%llu armed=%d intended=%u action=%d nav=%u",
++		 (unsigned long long)diagnostic_update_us, (int)state.armed, (unsigned)state.user_intended_mode,
++		 (int)_failsafe.selectedAction(), (unsigned)_vehicle_status.nav_state);
++	PX4_INFO("UAV_TIME commit t=%llu update=%llu nav=%u", (unsigned long long)hrt_absolute_time(),
++		 (unsigned long long)diagnostic_update_us, (unsigned)_vehicle_status.nav_state);
+ 	_vehicle_status.failsafe = _failsafe.inFailsafe();
+ 	_vehicle_status.failsafe_and_user_took_over = _failsafe.userTakeoverActive();
+ 
+@@ -2843,6 +2849,7 @@ void Commander::dataLinkCheck()
+ 	}
+ 
+ 
++	const hrt_abstime diagnostic_detector_us = hrt_absolute_time();
+ 	// GCS data link loss failsafe
+ 	if (!_vehicle_status.gcs_connection_lost) {
+ 		if ((_datalink_last_heartbeat_gcs != 0)
+@@ -2859,6 +2866,10 @@ void Commander::dataLinkCheck()
+ 		}
+ 	}
+ 
++	PX4_INFO("UAV_TIME detector t=%llu end=%llu anchor=%llu lost=%d",
++		 (unsigned long long)diagnostic_detector_us, (unsigned long long)hrt_absolute_time(),
++		 (unsigned long long)_datalink_last_heartbeat_gcs, (int)_vehicle_status.gcs_connection_lost);
++
+ 	// ONBOARD CONTROLLER data link loss failsafe
+ 	if ((_datalink_last_heartbeat_onboard_controller > 0)
+ 	    && (hrt_elapsed_time(&_datalink_last_heartbeat_onboard_controller) > (_param_com_obc_loss_t.get() * 1_s))
+diff --git a/src/modules/commander/failsafe/failsafe.cpp b/src/modules/commander/failsafe/failsafe.cpp
+index 6a61d65..df02a86 100644
+--- a/src/modules/commander/failsafe/failsafe.cpp
++++ b/src/modules/commander/failsafe/failsafe.cpp
+@@ -512,6 +512,13 @@ void Failsafe::checkStateAndMode(const hrt_abstime &time_us, const State &state,
+ 	const bool dll_loss_ignored = dll_loss_ignored_mission || dll_loss_ignored_loiter || dll_loss_ignored_offboard ||
+ 				      dll_loss_ignored_takeoff || ignore_any_link_loss_vtol_takeoff_fixedwing || dll_loss_ignored_land;
+ 
++	PX4_INFO("UAV_DIAG check t=%llu armed=%d mode=%u gcs=%d fence=%d",
++		 (unsigned long long)time_us, (int)state.armed, (unsigned)state.user_intended_mode,
++		 (int)status_flags.gcs_connection_lost, (int)status_flags.geofence_breached);
++	PX4_INFO("UAV_DIAG params t=%llu dll=%d gf=%d except=%d ignored=%d",
++		 (unsigned long long)time_us, (int)_param_nav_dll_act.get(), (int)_param_gf_action.get(),
++		 (int)_param_com_dll_except.get(), (int)dll_loss_ignored);
++
+ 	if (_param_nav_dll_act.get() != int32_t(gcs_connection_loss_failsafe_mode::Disabled) && !dll_loss_ignored) {
+ 		CHECK_FAILSAFE(status_flags, gcs_connection_lost,
+ 			       fromNavDllOrRclActParam(_param_nav_dll_act.get()).causedBy(Cause::GCSConnectionLoss));
+diff --git a/src/modules/commander/failsafe/framework.cpp b/src/modules/commander/failsafe/framework.cpp
+index 19528b5..5b3482b 100644
+--- a/src/modules/commander/failsafe/framework.cpp
++++ b/src/modules/commander/failsafe/framework.cpp
+@@ -48,6 +48,7 @@ using namespace time_literals;
+ FailsafeBase::FailsafeBase(ModuleParams *parent) : ModuleParams(parent)
+ {
+ 	_current_start_delay = _param_com_fail_act_t.get() * 1_s;
++	PX4_INFO("UAV_DIAG init t=%llu delay=%.6f", (unsigned long long)hrt_absolute_time(), (double)_param_com_fail_act_t.get());
+ }
+ 
+ uint8_t FailsafeBase::update(const hrt_abstime &time_us, const State &state, bool user_intended_mode_updated,
+@@ -103,6 +104,14 @@ uint8_t FailsafeBase::update(const hrt_abstime &time_us, const State &state, boo
+ 	_last_update = time_us;
+ 	_last_status_flags = status_flags;
+ 	_last_armed = state.armed;
++	PX4_INFO("UAV_DIAG update t=%llu action=%d delayed=%d takeover=%d deferred=%d",
++		 (unsigned long long)time_us, (int)action_state.action, (int)action_state.delayed_action,
++		 (int)action_state.user_takeover, (int)action_state.failsafe_deferred);
++	PX4_INFO("UAV_DIAG delay t=%llu current=%llu start=%llu configured=%.6f",
++		 (unsigned long long)time_us, (unsigned long long)_current_delay,
++		 (unsigned long long)_current_start_delay, (double)_param_com_fail_act_t.get());
++	PX4_INFO("UAV_TIME selected t=%llu update=%llu action=%d", (unsigned long long)hrt_absolute_time(),
++		 (unsigned long long)time_us, (int)action_state.action);
+ 	return _last_user_intended_mode;
+ }
+ 
+diff --git a/src/modules/mavlink/mavlink_main.cpp b/src/modules/mavlink/mavlink_main.cpp
+index 0312a0b..c9b39e9 100644
+--- a/src/modules/mavlink/mavlink_main.cpp
++++ b/src/modules/mavlink/mavlink_main.cpp
+@@ -2824,6 +2824,8 @@ void Mavlink::publish_telemetry_status()
+ 	// telemetry_status is also updated from the receiver thread, but never the same fields
+ 	_tstatus.timestamp = hrt_absolute_time();
+ 	_telemetry_status_pub.publish(_tstatus);
++	PX4_INFO("UAV_TIME telem t=%llu ch=%u gcs=%d", (unsigned long long)_tstatus.timestamp,
++		 (unsigned)get_channel(), (int)_tstatus.heartbeat_type_gcs);
+ 	_tstatus_updated = false;
+ }
+ 
+diff --git a/src/modules/mavlink/mavlink_receiver.cpp b/src/modules/mavlink/mavlink_receiver.cpp
+index 49ce052..3b72e2b 100644
+--- a/src/modules/mavlink/mavlink_receiver.cpp
++++ b/src/modules/mavlink/mavlink_receiver.cpp
+@@ -2162,6 +2162,8 @@ MavlinkReceiver::handle_message_heartbeat(mavlink_message_t *msg)
+ 
+ 			case MAV_TYPE_GCS:
+ 				_heartbeat_type_gcs = now;
++				PX4_INFO("UAV_TIME rx t=%llu ch=%u sys=%u comp=%u", (unsigned long long)now,
++					 (unsigned)_mavlink.get_channel(), (unsigned)msg->sysid, (unsigned)msg->compid);
+ 				break;
+ 
+ 			case MAV_TYPE_ONBOARD_CONTROLLER:
+@@ -2938,6 +2940,8 @@ void MavlinkReceiver::CheckHeartbeats(const hrt_abstime &t, bool force)
+ 
+ 		_mavlink.telemetry_status_updated();
+ 		_last_heartbeat_check = t;
++		PX4_INFO("UAV_TIME age t=%llu ch=%u last=%llu gcs=%d", (unsigned long long)t,
++			 (unsigned)_mavlink.get_channel(), (unsigned long long)_heartbeat_type_gcs, (int)tstatus.heartbeat_type_gcs);
+ 	}
+ }
+ 
+diff --git a/src/modules/navigator/navigator_main.cpp b/src/modules/navigator/navigator_main.cpp
+index 69ca989..8e411ae 100644
+--- a/src/modules/navigator/navigator_main.cpp
++++ b/src/modules/navigator/navigator_main.cpp
+@@ -884,6 +884,7 @@ void Navigator::run()
+ 			_wait_for_vehicle_status_timestamp = 0;
+ 		}
+ 
++		const hrt_abstime diagnostic_navigator_us = hrt_absolute_time();
+ 		/* iterate through navigation modes and set active/inactive for each */
+ 		for (unsigned int i = 0; i < NAVIGATOR_MODE_ARRAY_SIZE; i++) {
+ 			if (_navigation_mode_array[i]) {
+@@ -897,9 +898,14 @@ void Navigator::run()
+ 			reset_triplets();
+ 		}
+ 
++		const bool diagnostic_triplet_updated = _pos_sp_triplet_updated;
+ 		if (_pos_sp_triplet_updated) {
+ 			publish_position_setpoint_triplet();
+ 		}
++		PX4_INFO("UAV_TIME navigator t=%llu end=%llu nav=%u mode=%d sp=%d",
++			 (unsigned long long)diagnostic_navigator_us, (unsigned long long)hrt_absolute_time(),
++			 (unsigned)_vstatus.nav_state, _navigation_mode ? (int)_navigation_mode->getNavigatorStateId() : -1,
++			 (int)diagnostic_triplet_updated);
+ 
+ 		if (_mission_result_updated) {
+ 			publish_mission_result();
