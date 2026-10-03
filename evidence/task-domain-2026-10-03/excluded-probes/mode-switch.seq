@@ -1,0 +1,4 @@
+mode POSCTL
+run 0.1 100
+mode AUTO_LOITER
+run 0.1 100

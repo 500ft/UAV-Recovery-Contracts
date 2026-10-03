@@ -126,8 +126,10 @@ class Selector:
 
     def clear_hazard(self, hazard: str, mode_changed_or_disarmed: bool = False) -> None:
         self._failed.discard(hazard)
-        # ClearCondition: link-loss/geofence/offboard actions clear OnModeChangeOrDisarm (failsafe.cpp L54, L102, L108...), position-low clears WhenConditionClears (L388-404)
-        if self.active.get(hazard) != "Terminate" and (hazard == "position_low" or mode_changed_or_disarmed):
+        # failsafe.cpp action options: Warn/None/Disarm use WhenConditionClears.
+        # Position actions also clear with their condition, except Terminate (Never).
+        act = self.active.get(hazard)
+        if act != "Terminate" and (act in ("None", "Warn", "Disarm") or hazard == "position_low" or mode_changed_or_disarmed):
             self.active.pop(hazard, None)
 
     def step(self, dt_s: float, armed: bool = True, takeover: bool = False, hold_can_run: bool = True) -> str:
@@ -156,8 +158,14 @@ class Selector:
         self._delay_us = self._delay_us - dt_us if dt_us < self._delay_us else 0
         # checkStateAndMode -> checkFailsafe L351-356: a new delayable action with no delay running fills
         # _current_delay from _current_start_delay, AFTER the elapsed time has been taken off
-        for _hazard, act in self._newly:
-            if self._configured_us() > 100_000 and act != "Warn" and self._delay_us == 0 and can_be_delayed(act):
+        for hazard, act in self._newly:
+            # Registration depends on Auto takeover, not on whether this action
+            # can itself be delayed. Link Hold and geofence None seed the shared
+            # timer; position actions and geofence Hold do not (failsafe.cpp
+            # L43-127, L372-413; framework.cpp L351-356).
+            auto_takeover = (act not in ("Disarm", "Terminate") and hazard != "position_low"
+                             and not (hazard == "geofence_breach" and act == "Hold"))
+            if self._configured_us() > 100_000 and act != "Warn" and self._delay_us == 0 and auto_takeover:
                 self._delay_us = self._start_delay_us
         self._newly.clear()
         # clearDelayIfNeeded L653-668: no Hold-first delay when already in a failsafe (selected > Hold),

@@ -1,0 +1,8 @@
+{
+  "recorded_before_reserved_execution_utc": "2026-10-03T20:50:56.244167+00:00",
+  "model_sha256": "3b85428dc3c15b7d52ff5c364723ecf8baad97123d5151c86c86f5c458244a9e",
+  "driver_sha256": "a726eebc91f3f1df16999a66dda0ba244736287f95c8f985eb86dbffd6a621cd",
+  "native_adapter_sha256": "b5f9b798443f676835991c1e69a59e9720771b70db3f6c50caa643b895bab052",
+  "source_diff_sha256": "7be9ccf2ee4236e7ec36a0880cb7f18ffb8340f40d22e3d09d4584d23a5f3346",
+  "policy": "No implementation changes based on the reserved results. Any remaining disagreement blocks its subdomain under D7."
+}

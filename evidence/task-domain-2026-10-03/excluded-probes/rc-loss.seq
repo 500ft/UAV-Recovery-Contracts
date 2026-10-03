@@ -1,0 +1,2 @@
+flag manual_control_signal_lost 1
+run 0.1 100

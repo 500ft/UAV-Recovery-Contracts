@@ -62,6 +62,11 @@ def run_model(seq: Path) -> list[dict]:
         mode_changed = mode != applied_mode
         for name, hazard in FLAG_TO_HAZARD.items():
             now = flags.get(name, 0)
+            # failsafe.cpp L515 and L546-550: these checks are conditional.
+            if hazard == "datalink_loss" and params["NAV_DLL_ACT"] == 0:
+                now = 0
+            if hazard == "position_low" and mode != "AUTO_LOITER":
+                now = 0  # AUTO_MISSION is not represented by this adapter.
             if now:
                 sel.raise_hazard(hazard)
             else:

@@ -1,0 +1,8 @@
+{"sequence": "fractional-tick.seq", "stratum": "fractional", "sha256": "d04cfdc18ad6474dc1c0957080a6f5d9bfcdbac6aeefe8690bac2edf119a14f2", "status": "excluded", "reason": "fractional update count"}
+{"sequence": "mode-switch.seq", "stratum": "mode", "sha256": "26af276110a1c6573f2c01c3f9438d54b6272cc69a842b871b9a7f25f8f43de2", "status": "excluded", "reason": "mode switching excluded"}
+{"sequence": "nonboolean.seq", "stratum": "nonboolean", "sha256": "ed2ff89259d587774cc8da3955a8e244b124d77a2dfbbb2a234659e9cc87ff1a", "status": "excluded", "reason": "armed must be Boolean"}
+{"sequence": "not-finite.seq", "stratum": "not", "sha256": "2325efc46176e3f8d009f9672193f104209f2d538fdcc9e11b6ece9e4060a87b", "status": "excluded", "reason": "invalid tick or duration"}
+{"sequence": "parameter-after-construction.seq", "stratum": "parameter", "sha256": "82a8da483db48ec9e0e3d1edec26785c1b9401977115463efa73b2a37d3a27dd", "status": "excluded", "reason": "parameter after construction"}
+{"sequence": "rc-loss.seq", "stratum": "rc", "sha256": "d93c41fea64025e69c4d78a8ea07b62f7570b71e5ed10f40b34089c577abb809", "status": "excluded", "reason": "flag outside declared domain"}
+{"sequence": "unknown-command.seq", "stratum": "unknown", "sha256": "a6357ee755c136bf3f32f1277ed27292d5e8af83502462a3f6b44edf52b0e776", "status": "excluded", "reason": "unsupported command or arity"}
+{"sequence": "unlisted-param.seq", "stratum": "unlisted", "sha256": "a3cc4b5a99567c2d34772dee1e5984bffeba8bbf20208402f352fa7514990fb0", "status": "excluded", "reason": "parameter outside declared values"}

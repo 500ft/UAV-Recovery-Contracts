@@ -1,0 +1,20 @@
+{
+  "px4_commit": "d6f12ad1c4f70ad3230afd7d86e971421e02fef4",
+  "repo_base": "b08f7d8173596db6530b2047f03e06e9921362f2",
+  "strata": ["timer", "simultaneous", "ordered", "clear_reassert", "arming"],
+  "development": {"seed": 2026100301, "per_stratum": 300},
+  "reserved": {"seed": 2026100302, "per_stratum": 200},
+  "parameters": {
+    "NAV_DLL_ACT": [0, 1, 2, 3, 5, 6],
+    "GF_ACTION": [0, 1, 2, 3, 4, 5],
+    "COM_POS_LOW_ACT": [0, 1, 2, 3, 4, 5],
+    "COM_FAIL_ACT_T": [0, 0.05, 0.099, 0.1, 0.101, 0.2, 0.5, 1.0]
+  },
+  "fixed_parameters": {"COM_DLL_EXCEPT": 0},
+  "flags": ["gcs_connection_lost", "geofence_breached", "position_accuracy_low"],
+  "modes": ["POSCTL", "ALTCTL", "AUTO_LOITER", "OFFBOARD"],
+  "tick_ms": [1, 10, 100],
+  "extra_events": [2, 6],
+  "max_updates": 10000,
+  "reset": "Fresh native process and Python Selector per sequence. Parameters before construction; flags initially false. Initial armed directive applies to construction. Mode fixed after its first directive before any run."
+}

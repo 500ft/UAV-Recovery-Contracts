@@ -1,0 +1,21 @@
+param NAV_DLL_ACT 1
+param GF_ACTION 3
+param COM_POS_LOW_ACT 4
+param COM_FAIL_ACT_T 0.05
+param COM_DLL_EXCEPT 0
+armed 1
+mode POSCTL
+flag gcs_connection_lost 1
+run 0.001 1
+flag gcs_connection_lost 0
+run 0.002 1
+flag gcs_connection_lost 1
+run 0.052 1
+flag position_accuracy_low 0
+run 0.002 1
+flag position_accuracy_low 1
+run 0.051 1
+flag position_accuracy_low 0
+run 0.051 1
+flag gcs_connection_lost 0
+run 0.051 1

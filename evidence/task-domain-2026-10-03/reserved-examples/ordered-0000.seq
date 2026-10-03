@@ -1,0 +1,15 @@
+param NAV_DLL_ACT 1
+param GF_ACTION 0
+param COM_POS_LOW_ACT 0
+param COM_FAIL_ACT_T 0.5
+param COM_DLL_EXCEPT 0
+armed 1
+mode OFFBOARD
+flag gcs_connection_lost 1
+run 0.010 10
+flag geofence_breached 1
+run 0.520 10
+flag position_accuracy_low 1
+run 0.010 10
+flag position_accuracy_low 0
+run 0.010 10
