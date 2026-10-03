@@ -64,8 +64,12 @@ The single environment correction puts the matching ASAN dylib first, using
 `target_link_options(functional-differential_delay_test BEFORE PRIVATE
 "<compiler runtime>/libclang_rt.asan_osx_dynamic.dylib")`. The compiler runtime
 path comes from `/usr/bin/c++ --print-runtime-dir`. The
-[final command](link-command.txt), [symbol bindings](symbol-bindings.txt) and
-[build log](build.log) record the result. Sanitizers, two-level symbol binding
+[final command](link-command.txt), [undefined ASAN imports](symbol-bindings.txt)
+and [build log](build.log) record the result. The symbol listing retains only
+the undefined ASAN imports that identify the runtime binding. The verbose
+listing is preserved at
+`/Users/redhose/.cache/uav-failsafe-composition/runs/armed-task1-20261003/symbol-bindings-verbose.txt`.
+Sanitizers, two-level symbol binding
 and compiler warning flags remain enabled. No PX4 behavior, global toolchain
 setting, permissions or runtime approvals changed. Hashes use Python hashlib.
 
