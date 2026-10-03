@@ -39,7 +39,7 @@ so no external physics simulator is involved.
 | --- | --- | --- |
 | Python model against PX4's compiled `Failsafe` class, same input sequences | After fixing eligibility and action-option errors found in development, 1,000 of 1,000 fresh reserved sequences agree exactly. Development had 495 disagreements in 1,500 random sequences and 11 in 36 directed sequences; all agree on replay after the fixes | [Results by mechanism](evidence/task-domain-2026-10-03/results.json), [domain and counterexamples](evidence/task-domain-2026-10-03/README.md) |
 | SITL datalink loss in Auto Loiter | Hold, then RTL, also on the unmodified PX4 binary | [Runtime record](evidence/task-runtime-2026-09-29/README.md) |
-| Runtime measurement prerequisites | Both new attempts captured all 1,794 compiled parameters. The instrumented build failed tracking before injection; the original-executable control reached Hold then RTL. Full-chain timing remains blocked | [Executed diagnostic](evidence/task-timing-2026-10-03/README.md), [results.json](evidence/task-timing-2026-10-03/results.json) |
+| Runtime measurement prerequisites | The clean uninstrumented rebuild completed the matched datalink-loss control with the same full typed parameter values as both prior attempts. The earlier instrumented failure remains unlocalized | [Rebuild control](evidence/task-runtime-rebuild-2026-10-03/README.md), [results.json](evidence/task-runtime-rebuild-2026-10-03/results.json) |
 
 The position-accuracy/POSCTL defect is resolved, with its historical outputs
 preserved. Agreement covers only the exercised corpus: datalink loss, geofence
@@ -52,8 +52,8 @@ states the parameter and tick limits. This is not universal equivalence.
 The source trace identifies heartbeat aging and telemetry publication before
 commander's configured timeout. The last received heartbeat is distinct from
 both commander's timeout anchor and the runner's cached cut stamp. The
-instrumented runtime needs a tracking-failure diagnosis before that whole chain
-can be measured. No new timing tolerance was calibrated; timing remains outside
+uninstrumented rebuild did not reproduce the tracking failure. The instrumented
+runtime still needs a specific diagnosis before that whole chain can be measured. No new timing tolerance was calibrated; timing remains outside
 pass/fail, and Study A confirmation has not run.
 
 The SITL result took a week to get right. Until then every run showed no

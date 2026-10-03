@@ -1,0 +1,54 @@
+{
+  "saved-original": {
+    "size": 5752864,
+    "libraries": [
+      "\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1351.0.0)",
+      "\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 1800.105.0)"
+    ]
+  },
+  "prior-instrumented": {
+    "size": 5752864,
+    "libraries": [
+      "\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1351.0.0)",
+      "\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 1800.105.0)"
+    ]
+  },
+  "rebuilt": {
+    "size": 5752864,
+    "libraries": [
+      "\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1351.0.0)",
+      "\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 1800.105.0)"
+    ]
+  },
+  "source_sha256": {
+    "src/modules/simulation/sensor_baro_sim/SensorBaroSim.cpp": "b818d54c968bcfc810291e9d594affb7ef7c10290fcdecd3338ebd46507af1d5",
+    "src/modules/simulation/sensor_mag_sim/SensorMagSim.cpp": "edf78345a7edbcb649b60b2c92f4919f7f5c9e4330551f2fe88660d2cc6a2053",
+    "src/modules/simulation/sensor_gps_sim/SensorGpsSim.cpp": "c5ac246e2b4fa0073e2efab153145f3f8f0af28c336df7b200816978da451287",
+    "platforms/common/px4_work_queue/WorkQueue.cpp": "b80c5e809a09a265f7195ff842b53638a4f40e33d337bb4201c51ddf214e55dc",
+    "platforms/common/px4_work_queue/ScheduledWorkItem.cpp": "957104ee6ca1341c8f8557edb62a60680d5f8bd0ec2306b9f0e935dc39763b46"
+  },
+  "sensor_objects": {
+    "build/px4_sitl_default/src/modules/simulation/sensor_mag_sim/CMakeFiles/modules__simulation__senosr_mag_sim.dir/SensorMagSim.cpp.o": {
+      "sha256": "0f85e39282d70304e24870d1df0637baa8bc74462c474b765cb82924975d2490",
+      "mtime_ns": 1789568116440203698
+    },
+    "build/px4_sitl_default/src/modules/simulation/sensor_baro_sim/CMakeFiles/modules__simulation__sensor_baro_sim.dir/SensorBaroSim.cpp.o": {
+      "sha256": "780d607bab4f9292fc59699b210abe23746655b66add034c907f993545006bd6",
+      "mtime_ns": 1789568116223135483
+    },
+    "build/px4_sitl_default/src/modules/simulation/sensor_gps_sim/CMakeFiles/modules__simulation__sensor_gps_sim.dir/SensorGpsSim.cpp.o": {
+      "sha256": "7e141d3adada777908fd63abcf43e53a43fcd6b6e38c1eb2bae93cc06e320507",
+      "mtime_ns": 1789568116269545252
+    },
+    "build/px4_sitl_default/src/modules/simulation/sensor_airspeed_sim/CMakeFiles/modules__simulation__sensor_airspeed_sim.dir/SensorAirspeedSim.cpp.o": {
+      "sha256": "b29d939112f9c23111db011cfe19f10d3a905feb3d81b984ca3ee89d9e5287ec",
+      "mtime_ns": 1789568116038928527
+    },
+    "build/px4_sitl_default/src/modules/simulation/sensor_agp_sim/CMakeFiles/modules__simulation__sensor_agp_sim.dir/SensorAgpSim.cpp.o": {
+      "sha256": "d9214117c8bbad2b9e4919627827e108b2e423b8d2f95ec40f892bfee0815295",
+      "mtime_ns": 1789568115943231953
+    }
+  },
+  "submodules_sha256": "3f37d006dff691196090e7456803773a5804bdb7a05c2cd83c6ed3c86eeba01a",
+  "submodules_clean": true
+}

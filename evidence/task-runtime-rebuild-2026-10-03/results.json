@@ -1,0 +1,360 @@
+{
+ "evidence_state": "executed SIH development rebuild control",
+ "attempts": 1,
+ "confirmation_runs": 0,
+ "repair_verification_runs": 0,
+ "new_parameter_count": 1794,
+ "snapshot_complete": true,
+ "snapshot_sha256": "bb00191c5029fa19d59a850a633bf04c6fc5f7c26c25540f3f41860717c65266",
+ "binary_sha256": "02db70f2001b706badbd54ffd2b90ec6afec84bf55580ea3cdf82d8c6e3ea3a3",
+ "compiled_translation_units": 8,
+ "summary": {
+  "case_id": "px4-v1.17.0-sih-quadx-rtl__datalink_loss__development201_offset0",
+  "exit": 0,
+  "valid": {
+   "valid": true,
+   "reasons": []
+  },
+  "transitions": [
+   {
+    "from": "AUTO_LOITER",
+    "to": "AUTO_TAKEOFF",
+    "vehicle_status_failsafe": false
+   },
+   {
+    "from": "AUTO_TAKEOFF",
+    "to": "AUTO_LOITER",
+    "vehicle_status_failsafe": false
+   },
+   {
+    "from": "AUTO_LOITER",
+    "to": "AUTO_RTL",
+    "vehicle_status_failsafe": true
+   },
+   {
+    "from": "AUTO_RTL",
+    "to": "AUTO_LOITER",
+    "vehicle_status_failsafe": false
+   }
+  ]
+ },
+ "comparisons": {
+  "dev101": {
+   "parameter_differences": [],
+   "prior_summary_sha256": "29658f371397e68cf32b22ebb379abc3523a419a34cbff389cf7beedf4271068",
+   "prior_snapshot_sha256": "b3f20ac8d9a116d1980916cd70ef2387216eadebc7ec1b6c0d3fca0ba3ed2280"
+  },
+  "original-control": {
+   "parameter_differences": [],
+   "prior_summary_sha256": "0c3956bc51e3daa99cc2987670b59209a45822a1e7e8606710a06ad8820b7d08",
+   "prior_snapshot_sha256": "5ec5a55c03e37402c6c9dd859258a8a46b78f9c22360d32a97e5366491a132f2"
+  }
+ },
+ "ulog": {
+  "ulog_sha256": "e3811762c470068713aa571d06a48d649602e838dd9d49a3297481a5e734a2d1",
+  "dropouts": [],
+  "topics": {
+   "failsafe_flags/0": {
+    "records": 184,
+    "first_us": 144000,
+    "last_us": 97116000,
+    "max_adjacent_gap_us": 576000,
+    "changes": {
+     "gcs_connection_lost": [
+      {
+       "t_us": 144000,
+       "value": 1
+      },
+      {
+       "t_us": 2520000,
+       "value": 0
+      },
+      {
+       "t_us": 70104000,
+       "value": 1
+      }
+     ],
+     "local_position_invalid": [
+      {
+       "t_us": 144000,
+       "value": 1
+      },
+      {
+       "t_us": 3744000,
+       "value": 0
+      }
+     ],
+     "local_altitude_invalid": [
+      {
+       "t_us": 144000,
+       "value": 1
+      },
+      {
+       "t_us": 792000,
+       "value": 0
+      }
+     ]
+    }
+   },
+   "navigator_status/0": {
+    "records": 195,
+    "first_us": 64000,
+    "last_us": 97080000,
+    "max_adjacent_gap_us": 556000,
+    "changes": {
+     "nav_state": [
+      {
+       "t_us": 64000,
+       "value": 4
+      },
+      {
+       "t_us": 5472000,
+       "value": 17
+      },
+      {
+       "t_us": 17064000,
+       "value": 4
+      },
+      {
+       "t_us": 75120000,
+       "value": 5
+      },
+      {
+       "t_us": 96576000,
+       "value": 4
+      }
+     ]
+    }
+   },
+   "position_setpoint_triplet/0": {
+    "records": 40,
+    "first_us": 84000,
+    "last_us": 97332000,
+    "max_adjacent_gap_us": 58056000,
+    "changes": {
+     "current.valid": [
+      {
+       "t_us": 84000,
+       "value": 0
+      },
+      {
+       "t_us": 5472000,
+       "value": 1
+      },
+      {
+       "t_us": 75120000,
+       "value": 0
+      },
+      {
+       "t_us": 75172000,
+       "value": 1
+      },
+      {
+       "t_us": 96576000,
+       "value": 0
+      }
+     ],
+     "current.type": [
+      {
+       "t_us": 84000,
+       "value": 5
+      },
+      {
+       "t_us": 5472000,
+       "value": 3
+      },
+      {
+       "t_us": 17060000,
+       "value": 2
+      },
+      {
+       "t_us": 75120000,
+       "value": 5
+      },
+      {
+       "t_us": 75172000,
+       "value": 2
+      },
+      {
+       "t_us": 75276000,
+       "value": 0
+      },
+      {
+       "t_us": 75324000,
+       "value": 4
+      },
+      {
+       "t_us": 96576000,
+       "value": 5
+      }
+     ]
+    }
+   },
+   "sensor_baro/0": {
+    "records": 97,
+    "first_us": 960000,
+    "last_us": 96960000,
+    "max_adjacent_gap_us": 1000000,
+    "changes": {}
+   },
+   "sensor_gps/0": {
+    "records": 97,
+    "first_us": 1008000,
+    "last_us": 97008000,
+    "max_adjacent_gap_us": 1000000,
+    "changes": {}
+   },
+   "sensor_mag/0": {
+    "records": 97,
+    "first_us": 1032000,
+    "last_us": 97032000,
+    "max_adjacent_gap_us": 1000000,
+    "changes": {}
+   },
+   "vehicle_global_position_groundtruth/0": {
+    "records": 975,
+    "first_us": 208000,
+    "last_us": 97508000,
+    "max_adjacent_gap_us": 100000,
+    "changes": {}
+   },
+   "vehicle_local_position/0": {
+    "records": 12167,
+    "first_us": 244000,
+    "last_us": 97572000,
+    "max_adjacent_gap_us": 8000,
+    "changes": {
+     "xy_valid": [
+      {
+       "t_us": 244000,
+       "value": 0
+      },
+      {
+       "t_us": 2788000,
+       "value": 1
+      }
+     ],
+     "z_valid": [
+      {
+       "t_us": 244000,
+       "value": 0
+      },
+      {
+       "t_us": 788000,
+       "value": 1
+      }
+     ]
+    }
+   },
+   "vehicle_status/0": {
+    "records": 203,
+    "first_us": 60000,
+    "last_us": 97080000,
+    "max_adjacent_gap_us": 504000,
+    "changes": {
+     "nav_state": [
+      {
+       "t_us": 60000,
+       "value": 4
+      },
+      {
+       "t_us": 5472000,
+       "value": 17
+      },
+      {
+       "t_us": 17064000,
+       "value": 4
+      },
+      {
+       "t_us": 75120000,
+       "value": 5
+      },
+      {
+       "t_us": 96576000,
+       "value": 4
+      }
+     ],
+     "arming_state": [
+      {
+       "t_us": 60000,
+       "value": 1
+      },
+      {
+       "t_us": 5448000,
+       "value": 2
+      },
+      {
+       "t_us": 96576000,
+       "value": 1
+      }
+     ],
+     "gcs_connection_lost": [
+      {
+       "t_us": 60000,
+       "value": 1
+      },
+      {
+       "t_us": 2520000,
+       "value": 0
+      },
+      {
+       "t_us": 70104000,
+       "value": 1
+      }
+     ]
+    },
+    "mode_changes": [
+     {
+      "first_logged_us": 60000,
+      "previous_logged_us": null,
+      "commit_stamp_us": 36000,
+      "nav": 4
+     },
+     {
+      "first_logged_us": 5472000,
+      "previous_logged_us": 5460000,
+      "commit_stamp_us": 5472000,
+      "nav": 17
+     },
+     {
+      "first_logged_us": 17064000,
+      "previous_logged_us": 16560000,
+      "commit_stamp_us": 17064000,
+      "nav": 4
+     },
+     {
+      "first_logged_us": 75120000,
+      "previous_logged_us": 74652000,
+      "commit_stamp_us": 75120000,
+      "nav": 5
+     },
+     {
+      "first_logged_us": 96576000,
+      "previous_logged_us": 96108000,
+      "commit_stamp_us": 96576000,
+      "nav": 4
+     }
+    ]
+   }
+  }
+ },
+ "additional_timing_observations_executed": false,
+ "remaining_blocker": "The clean rebuild completed. The earlier instrumented failure is not localized to a particular observation call or sensor-work-queue mechanism; no specific repair is isolated.",
+ "artifacts_sha256": {
+  "analyze.py": "3cadd699ed23a7242811dae92428370a5e30b9b93f96e099491d5a7ab4d99196",
+  "build.log": "3d13bd8087d79b066b068863f9254285bed964382fea352faeec799767291351",
+  "dependencies.json": "8dfeecc0ce34fb575faacd246afa44f35db9cabcf1a996a1a4d45e01bfa03d33",
+  "design.md": "c6f9f33bbe96f8dd55ff48721541bc2643062d9de146f75a922a72e73366df33",
+  "rebuild.json": "dcd045530f564abea1ad1403b0077016a427f43d2822db0826210ba44bf96aa2",
+  "registration.json": "50cf32e142624ceaa093ae564690b57ca1eb60bec0c240a23efee1acf05cc0c0",
+  "restoration.json": "e6f1c4a9aaa147c7b3dea053684064d70b04418fc3063521d4b0d2f5441a6259",
+  "run/case.json": "ca6f855fd6e6fa7fbc0f4b36e5e89c82b5b25dfbf78ca1de3c6003b5bcf5ce84",
+  "run/flight.ulg.gz": "dd490f386590d86dbe9733e7adbbb1d09e5e54ee748d78cc08b26e8bc7800de0",
+  "run/parameters-full.json.gz": "ee81416bfb243afaacf78ca96a1c9d601e53f01d150c93fb05fed1a8e9b38dd8",
+  "run/px4.log.gz": "55ab9b249119afcae8600ed3102b11fef371e7c6b2d63d06b4ca3ea34f55fa5f",
+  "run/raw.jsonl.gz": "c2c4c1b0f79e1b37c54017b60503e65b6815743fb4035c7dc438a96598cac78f",
+  "run/summary.json": "b09642d624ec2b6ff2091da7bea31999a9274db3c73995aaa763b458b7b35bde",
+  "run/trace.json.gz": "c6f743439539b3f60490a7f66fdf1a2713552b18a2d21dfcfb09fc78b11961cc",
+  "run/ulog-observations.json": "60a5f481a3068397c01c942675e038d77cd0ea82e7aaea5ba201705da98b1103"
+ }
+}

@@ -1,0 +1,12 @@
+{
+  "source_clean": true,
+  "restored_binary_sha256": "89e5ff695c5e6fcf973be8ae04ab85e7cf6afcc0a3c5ec9215865927ffec60ff",
+  "runtime_packages": {
+    "pymavlink": "2.4.49",
+    "pyulog": "1.2.4",
+    "jsonschema": "4.26.0"
+  },
+  "cache": "/Users/redhose/.cache/uav-failsafe-composition/runs/runtime-rebuild-20261003",
+  "retained_binary": "/Users/redhose/.cache/uav-failsafe-composition/runs/runtime-rebuild-20261003/px4-rebuilt-uninstrumented",
+  "run_exit": 0
+}
