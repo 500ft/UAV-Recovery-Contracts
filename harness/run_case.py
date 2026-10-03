@@ -21,7 +21,8 @@ Baselines: GCS heartbeat 1 Hz [B5]; offboard setpoints 10 Hz, above the 2 Hz pro
 failure injection needs SYS_FAILURE_EN [B3]; parameter defaults and timers [B10].
 """
 from __future__ import annotations
-import argparse, json, os, shutil, signal, struct, subprocess, sys, threading, time
+import argparse, json, os, re, shutil, signal, struct, subprocess, sys, threading, time
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from harness.cases import resolve, MATRIX, PER_EVENT_PARAMS, PER_MODE_PARAMS
@@ -86,6 +87,7 @@ class Vehicle:
         self.prearm_ok = False
         self.health = None
         self.param_types = {}
+        self.param_wire = {}
 
     def pump(self, timeout=1.0):
         m = self.gcs.recv_match(blocking=True, timeout=timeout)
@@ -136,7 +138,34 @@ class Vehicle:
         else:
             raise ValueError(f"unsupported PX4 parameter type {ptype}")
         self.param_types[message.param_id.rstrip("\x00")] = ptype
+        self.param_wire[message.param_id.rstrip("\x00")] = struct.pack("<f", message.param_value).hex()
         return value
+
+    def snapshot_parameters(self, build, out):
+        """Read the whole compiled registry, including parameters MAVLink's used list omits."""
+        xml = build / "parameters.xml"
+        header = build / "src/lib/parameters/px4_parameters.hpp"
+        registry = {p.attrib["name"]: p.attrib["type"] for p in ET.parse(xml).iter("parameter")}
+        enum = header.read_text().split("enum class params : uint16_t {", 1)[1].split("};", 1)[0]
+        names = set(re.findall(r"^\s*([A-Z][A-Z0-9_]+),", enum, re.M))
+        if names != set(registry):
+            raise RuntimeError("parameter XML does not match the compiled registry")
+        snapshot = dict(complete=False, scope="full compiled registry, sequential pre-arm read",
+                        registry_sha256={str(p.relative_to(build)): file_sha256(p) for p in (xml, header)},
+                        host_start_monotonic_s=time.monotonic(), parameters={})
+        try:
+            for name, kind in sorted(registry.items()):
+                value = self.read_param(name)
+                expected_type = {"INT32": mav.MAV_PARAM_TYPE_INT32, "FLOAT": mav.MAV_PARAM_TYPE_REAL32}[kind]
+                if self.param_types[name] != expected_type:
+                    raise RuntimeError(f"parameter type mismatch: {name}")
+                snapshot["parameters"][name] = dict(type=kind, value=value, wire_hex=self.param_wire[name])
+            snapshot["complete"] = True
+        finally:
+            snapshot["host_end_monotonic_s"] = time.monotonic()
+            (out / "parameters-full.json").write_text(json.dumps(snapshot, indent=1, allow_nan=False) + "\n")
+        self.log(dict(kind="parameter_snapshot", sha256=file_sha256(out / "parameters-full.json"),
+                      complete=True, count=len(registry), scope=snapshot["scope"]))
 
     def read_param(self, name):
         """Read the typed value, draining queued replies before the request.
@@ -189,6 +218,10 @@ def main(argv=None) -> int:
     ap.add_argument("--config", required=True)
     ap.add_argument("--event", required=True)
     ap.add_argument("--seed", type=int, required=True)
+    ap.add_argument("--development-offset-s", type=float,
+                    help="explicit development offset; --seed must be outside all frozen seed lists")
+    ap.add_argument("--full-parameter-snapshot", action="store_true",
+                    help="read every compiled parameter before arming and retain typed values")
     ap.add_argument("--px4-build", required=True)
     ap.add_argument("--out", required=True, help="parent directory; the run directory is named by the case id")
     ap.add_argument("--restore-after", type=float, default=0.0, help="seconds after injection to restore the input")
@@ -203,7 +236,7 @@ def main(argv=None) -> int:
         from harness.cases import NOT_INJECTABLE
         if a.event in NOT_INJECTABLE:
             raise ValueError(f"{a.event} is not injectable in this rig: {NOT_INJECTABLE[a.event]}")
-        case = resolve(a.config, a.event, a.seed)
+        case = resolve(a.config, a.event, a.seed, development_offset_s=a.development_offset_s)
     except ValueError as e:
         print(f"case refused: {e}", file=sys.stderr)
         return SETUP_FAILURE
@@ -245,6 +278,8 @@ def main(argv=None) -> int:
     # stored Auto Loiter capture used to silently become the Offboard case (critique 2026-09-24, F2/TASK 2).
     case["intended_mode"] = a.intended_mode
     case["restore_after_s"] = float(a.restore_after)
+    if a.development_offset_s is not None:
+        case["purpose"] = "development diagnostic, not confirmation"
     (out / "case.json").write_text(json.dumps(case, indent=1) + "\n")
     log(dict(kind="case_resolved", case_id=case["case_id"]))
     if a.dry_run:
@@ -308,6 +343,8 @@ def main(argv=None) -> int:
               evidence="param_export in raw.jsonl", requested=len(params), mismatched=mismatched)
         if mismatched:
             raise RuntimeError(f"parameters did not take effect: {mismatched}")
+        if a.full_parameter_snapshot:
+            v.snapshot_parameters(build, out)
 
         for msg_id, interval in ((mav.MAVLINK_MSG_ID_LOCAL_POSITION_NED, 100000),
                                  (mav.MAVLINK_MSG_ID_GLOBAL_POSITION_INT, 100000),
