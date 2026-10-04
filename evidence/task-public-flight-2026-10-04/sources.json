@@ -1,0 +1,178 @@
+{
+ "firmware": {
+  "retrieved_utc": "2026-10-04T22:31:11.611741+00:00",
+  "files": [
+   {
+    "candidate": "candidate-b",
+    "revision": "c2fb48990aacebc938c4e9998c7d5348f858fd22",
+    "path": "src/modules/logger/logged_topics.cpp",
+    "url": "https://raw.githubusercontent.com/PX4/PX4-Autopilot/c2fb48990aacebc938c4e9998c7d5348f858fd22/src/modules/logger/logged_topics.cpp",
+    "sha256": "33c1cd7c55dc81d4fa53153b7f269401b67c7f6edc929707ec536203096bcfe5"
+   },
+   {
+    "candidate": "candidate-b",
+    "revision": "c2fb48990aacebc938c4e9998c7d5348f858fd22",
+    "path": "src/modules/logger/logged_topics.h",
+    "url": "https://raw.githubusercontent.com/PX4/PX4-Autopilot/c2fb48990aacebc938c4e9998c7d5348f858fd22/src/modules/logger/logged_topics.h",
+    "sha256": "fff2e812617d4d40e3d403471ad19aec2b71dc2aa9bb0c427c1a0c3f6117f3b3"
+   },
+   {
+    "candidate": "candidate-b",
+    "revision": "c2fb48990aacebc938c4e9998c7d5348f858fd22",
+    "path": "src/modules/logger/logger.cpp",
+    "url": "https://raw.githubusercontent.com/PX4/PX4-Autopilot/c2fb48990aacebc938c4e9998c7d5348f858fd22/src/modules/logger/logger.cpp",
+    "sha256": "2218ab36e3d327a805b52f0b62ac738c7af7774af2e819d23b65158d0edfec48"
+   },
+   {
+    "candidate": "candidate-b",
+    "revision": "c2fb48990aacebc938c4e9998c7d5348f858fd22",
+    "path": "src/modules/commander/HealthAndArmingChecks/HealthAndArmingChecks.cpp",
+    "url": "https://raw.githubusercontent.com/PX4/PX4-Autopilot/c2fb48990aacebc938c4e9998c7d5348f858fd22/src/modules/commander/HealthAndArmingChecks/HealthAndArmingChecks.cpp",
+    "sha256": "5d0a2920534870e7f3eb1afeb6b3d65712dc92fa492a367dbefdb0f0d44a3d02"
+   },
+   {
+    "candidate": "candidate-c",
+    "revision": "94cb2012792b2ae89f0b147cfee53ee31ae550be",
+    "path": "src/modules/logger/logged_topics.cpp",
+    "url": "https://raw.githubusercontent.com/PX4/PX4-Autopilot/94cb2012792b2ae89f0b147cfee53ee31ae550be/src/modules/logger/logged_topics.cpp",
+    "sha256": "6d07d2df4df5f9f742fe6df2c1c78242b7936e2fc04edeb16a21f57691a386fd"
+   },
+   {
+    "candidate": "candidate-c",
+    "revision": "94cb2012792b2ae89f0b147cfee53ee31ae550be",
+    "path": "src/modules/logger/logged_topics.h",
+    "url": "https://raw.githubusercontent.com/PX4/PX4-Autopilot/94cb2012792b2ae89f0b147cfee53ee31ae550be/src/modules/logger/logged_topics.h",
+    "sha256": "cb46dc12e5b08b51e4ac77a75a419ed611088fffdd7769a17ab757be8a4a7f30"
+   },
+   {
+    "candidate": "candidate-c",
+    "revision": "94cb2012792b2ae89f0b147cfee53ee31ae550be",
+    "path": "src/modules/logger/logger.cpp",
+    "url": "https://raw.githubusercontent.com/PX4/PX4-Autopilot/94cb2012792b2ae89f0b147cfee53ee31ae550be/src/modules/logger/logger.cpp",
+    "sha256": "ec39a03c9cfac6e0a6cf3ef0b83173bc3c88998461d1367dfdf84b7f6a76b5ee"
+   },
+   {
+    "candidate": "candidate-c",
+    "revision": "94cb2012792b2ae89f0b147cfee53ee31ae550be",
+    "path": "src/modules/commander/HealthAndArmingChecks/HealthAndArmingChecks.cpp",
+    "url": "https://raw.githubusercontent.com/PX4/PX4-Autopilot/94cb2012792b2ae89f0b147cfee53ee31ae550be/src/modules/commander/HealthAndArmingChecks/HealthAndArmingChecks.cpp",
+    "sha256": "b7dc5dc722367c7c0a5878c70a16e47574735c5dc081c2e2cdd92f5a19c330ed"
+   },
+   {
+    "candidate": "candidate-c",
+    "revision": "94cb2012792b2ae89f0b147cfee53ee31ae550be",
+    "path": "src/modules/commander/failsafe/failsafe.cpp",
+    "url": "https://raw.githubusercontent.com/PX4/PX4-Autopilot/94cb2012792b2ae89f0b147cfee53ee31ae550be/src/modules/commander/failsafe/failsafe.cpp",
+    "sha256": "a4e4fc05a125e1877875d683854f40a92033b9c7e33e537c30692bf8ec425e3d"
+   },
+   {
+    "candidate": "candidate-c",
+    "revision": "94cb2012792b2ae89f0b147cfee53ee31ae550be",
+    "path": "src/modules/commander/Commander.cpp",
+    "url": "https://raw.githubusercontent.com/PX4/PX4-Autopilot/94cb2012792b2ae89f0b147cfee53ee31ae550be/src/modules/commander/Commander.cpp",
+    "sha256": "d82557a9b3f503b7b76dee43885a75c68b771612e08c7217bce346d9b338d43d"
+   },
+   {
+    "candidate": "candidate-c",
+    "revision": "94cb2012792b2ae89f0b147cfee53ee31ae550be",
+    "path": "src/modules/navigator/geofence.cpp",
+    "url": "https://raw.githubusercontent.com/PX4/PX4-Autopilot/94cb2012792b2ae89f0b147cfee53ee31ae550be/src/modules/navigator/geofence.cpp",
+    "sha256": "e74481aa4872ff5f2b9b7ed4cd449d6002eedc1e8b4aa3a23721c41db2ce97ea"
+   },
+   {
+    "candidate": "candidate-c",
+    "revision": "94cb2012792b2ae89f0b147cfee53ee31ae550be",
+    "path": "src/modules/commander/HealthAndArmingChecks/checks/geofenceCheck.cpp",
+    "url": "https://raw.githubusercontent.com/PX4/PX4-Autopilot/94cb2012792b2ae89f0b147cfee53ee31ae550be/src/modules/commander/HealthAndArmingChecks/checks/geofenceCheck.cpp",
+    "sha256": "75a2cb40e625fa493e303b3e1fcd9afa5484caee8d0d4368679c6149c90b05bb"
+   },
+   {
+    "candidate": "candidate-c",
+    "revision": "94cb2012792b2ae89f0b147cfee53ee31ae550be",
+    "path": "src/modules/navigator/navigator_main.cpp",
+    "url": "https://raw.githubusercontent.com/PX4/PX4-Autopilot/94cb2012792b2ae89f0b147cfee53ee31ae550be/src/modules/navigator/navigator_main.cpp",
+    "sha256": "9a5f8c86be34b5913a548046216866940734fce7ae0f474dcf9c9283ecd674b5"
+   },
+   {
+    "candidate": "candidate-c",
+    "revision": "94cb2012792b2ae89f0b147cfee53ee31ae550be",
+    "path": "src/modules/navigator/navigator.h",
+    "url": "https://raw.githubusercontent.com/PX4/PX4-Autopilot/94cb2012792b2ae89f0b147cfee53ee31ae550be/src/modules/navigator/navigator.h",
+    "sha256": "e311a7183a1ad804522be6cee3010cfcd1bc5dcc22b44a404e7d0b69aee64a91"
+   },
+   {
+    "candidate": "candidate-c",
+    "revision": "94cb2012792b2ae89f0b147cfee53ee31ae550be",
+    "path": "src/modules/commander/failsafe/failsafe.h",
+    "url": "https://raw.githubusercontent.com/PX4/PX4-Autopilot/94cb2012792b2ae89f0b147cfee53ee31ae550be/src/modules/commander/failsafe/failsafe.h",
+    "sha256": "d55c5c69abcec9c13ce146b5906e9342677087ae03f739f833064804d6b51e90"
+   },
+   {
+    "candidate": "candidate-c",
+    "revision": "94cb2012792b2ae89f0b147cfee53ee31ae550be",
+    "path": "src/modules/commander/failsafe/framework.cpp",
+    "url": "https://raw.githubusercontent.com/PX4/PX4-Autopilot/94cb2012792b2ae89f0b147cfee53ee31ae550be/src/modules/commander/failsafe/framework.cpp",
+    "sha256": "eeeacc246aaf77fddbbc0af1bd4a5918d29fccd37b1e16c060b3b07ba97eebd8"
+   },
+   {
+    "candidate": "candidate-c",
+    "revision": "94cb2012792b2ae89f0b147cfee53ee31ae550be",
+    "path": "msg/GeofenceResult.msg",
+    "url": "https://raw.githubusercontent.com/PX4/PX4-Autopilot/94cb2012792b2ae89f0b147cfee53ee31ae550be/msg/GeofenceResult.msg",
+    "sha256": "dbde76c6802b4f3388a7094534249c40ab18059bd206aff90ab4f4adfb284250"
+   },
+   {
+    "candidate": "candidate-c",
+    "revision": "94cb2012792b2ae89f0b147cfee53ee31ae550be",
+    "path": "msg/versioned/VehicleStatus.msg",
+    "url": "https://raw.githubusercontent.com/PX4/PX4-Autopilot/94cb2012792b2ae89f0b147cfee53ee31ae550be/msg/versioned/VehicleStatus.msg",
+    "sha256": "9e69a38a8a592d8fed78d09fe429acf2cbddd1b7eb710dc55eebbb64d4624b52"
+   },
+   {
+    "candidate": "candidate-c",
+    "revision": "94cb2012792b2ae89f0b147cfee53ee31ae550be",
+    "path": "src/modules/navigator/GeofenceBreachAvoidance/geofence_breach_avoidance.h",
+    "url": "https://raw.githubusercontent.com/PX4/PX4-Autopilot/94cb2012792b2ae89f0b147cfee53ee31ae550be/src/modules/navigator/GeofenceBreachAvoidance/geofence_breach_avoidance.h",
+    "sha256": "65ee4517d49079baa47c8c74af95ec548eacf156b952f1edf1501f955401c42c"
+   },
+   {
+    "candidate": "candidate-a",
+    "revision": "d6f12ad1c4f70ad3230afd7d86e971421e02fef4",
+    "path": "src/modules/logger/logged_topics.cpp",
+    "sha256": "33c1cd7c55dc81d4fa53153b7f269401b67c7f6edc929707ec536203096bcfe5"
+   },
+   {
+    "candidate": "candidate-a",
+    "revision": "d6f12ad1c4f70ad3230afd7d86e971421e02fef4",
+    "path": "src/modules/logger/logged_topics.h",
+    "sha256": "fff2e812617d4d40e3d403471ad19aec2b71dc2aa9bb0c427c1a0c3f6117f3b3"
+   }
+  ]
+ },
+ "flight_review_interface": {
+  "revision": "aa4a1fce090ee6cd9040a22a22256d8c78536698",
+  "retrieved_utc": "2026-10-04T22:23:33.299053+00:00",
+  "files": {
+   "LICENSE.md": "e41d8032df291eabea651ff578b20d2bc8d19f7c82761589607a66e547ede99d",
+   "app__tornado_handlers__browse.py": "788f3c2f0e2880fc17ff03a2a8d80f8aa73d1503b80c88e3f5e3ad58d19cc8f6",
+   "app__tornado_handlers__upload.py": "442a6f087af3b835a4539a1a21bbcddab69c2334427047195d1b4fafb3a319ef",
+   "app__plot_app__templates__browse.html": "ad3d6139262a3fad090ca29fef19538909d70b08606354f1b77f86bd9ae0d319",
+   "upload-page.html": "b544b3f2c98d73b03d5e3f9c7faa34d79c322ef25d590b579266566dbef6e607",
+   "app__tornado_handlers__db_info_json.py": "ab10ffb423ee623f7ff5a9c9e97f5aca7e5c3dfe5a03cd9468419dea1c0227ea",
+   "app__download_logs.py": "3e0d326ed9892046d094413edbf8ca9ca8ded00e7296a3c0053ea69d47fc819d",
+   "app__plot_app__templates__upload.html": "f565c664016059835e08bb63414752c8a1a37141f62b7eb57c815b08132f6ae9",
+   "browse-page.html": "9bc6fa0933d8202cf43ff9bbf332790cae5e8540e1f292206770af309be2bee6",
+   "flight-review-tree.json": "ff022b1f35a03e31ae2fb17f8504ce82f82743dfb27b3c1d4ac1baf899c296bd"
+  }
+ },
+ "data_license": {
+  "license": "CC BY 4.0",
+  "attribution": "PX4",
+  "documentation_url": "https://docs.px4.io/main/en/dev_log/flight_log_analysis_statistical",
+  "upload_url": "https://review.px4.io/",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "retrieved_date": "2026-10-04",
+  "software_license_separate": "PX4/flight_review code is BSD-3-Clause; repository code is MIT. Neither licenses the flight data."
+ },
+ "privacy": "Log-specific URLs, downloaded pages, vehicle identifiers and full parameter records remain in the external source manifest/cache. No additional author field occurs in ULog info; retrieved page credit is PX4 Team. Derived material credits PX4 and links the dataset and license."
+}

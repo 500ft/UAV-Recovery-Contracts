@@ -112,14 +112,13 @@ def run_checks() -> list[str]:
         if not (ROOT / relative).is_file():
             errors.append(f"missing required file: {relative}")
 
-    # The invariant is that no STUDY RESULT exists, which is still true. The wording changed on 2026-09-24:
-    # diagnostic development runs in SIH/SITL do exist, and a contract that denied them was enforcing a
-    # sentence the repository had outgrown rather than the honesty it was written to protect.
+    # Study A remains unexecuted. Development runs and public-log observations exist;
+    # the repository must distinguish those from newly conducted flights.
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     if "No study result has been generated" not in readme:
         errors.append("README must state that no study result has been generated")
-    if "no HITL or flight data exists" not in readme:
-        errors.append("README must state that no HITL or flight data exists")
+    if "No new flights were conducted" not in readme:
+        errors.append("README must distinguish public logs from newly conducted flights")
 
     result_notice = (ROOT / "results/README.md").read_text(encoding="utf-8")
     if "No study result is available" not in result_notice:

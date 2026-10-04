@@ -1,0 +1,197 @@
+{
+ "executed_utc": "2026-10-04T22:39:43.201484+00:00",
+ "checks": [
+  {
+   "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+   ],
+   "exit_code": 0,
+   "output_sha256": "f9c97f96edb7263c0133c78e13967b032fe49a6162c18fa78dfd1314772f3265",
+   "external_log": "recheck-1.txt"
+  },
+  {
+   "command": [
+    "python",
+    "scripts/check_repo_contract.py"
+   ],
+   "exit_code": 0,
+   "output_sha256": "75060c1145d33b7492fbb513a075067e653b15e25e38ffc4d111b1611513ad52",
+   "external_log": "recheck-2.txt"
+  },
+  {
+   "command": [
+    "python",
+    "scripts/acquisition_ledger.py",
+    "--check"
+   ],
+   "exit_code": 0,
+   "output_sha256": "262db2f49fb8a34b0f0e394ec7f1b7df353b5f378ff4e8e3ed49d2dace71d638",
+   "external_log": "check-3.txt"
+  },
+  {
+   "command": [
+    "python",
+    "scripts/reference_coverage.py",
+    "--check"
+   ],
+   "exit_code": 0,
+   "output_sha256": "dfa2bc03a5b2b8257749481da5a637a6b3c5d66899935516fd44295437d8c5a7",
+   "external_log": "check-4.txt"
+  },
+  {
+   "command": [
+    "python",
+    "evidence/task-2026-09-09/rerun_search.py",
+    "--audit",
+    "evidence/task-2026-09-11-public/database-export.json"
+   ],
+   "exit_code": 0,
+   "output_sha256": "8557eede54d4d9d1c2486536a6023ea77f3bde56a8fa58c1a510adc4f3a48fdf",
+   "external_log": "check-5.txt"
+  },
+  {
+   "command": [
+    "python",
+    "tools/check_presentation.py",
+    ".",
+    "UAV Failsafe Composition",
+    "uav-failsafe-composition"
+   ],
+   "exit_code": 0,
+   "output_sha256": "84bb119aefff07a15ce236c16dcfae66d2d5eec9b200b31f5dfcc975c86a7864",
+   "external_log": "recheck-6.txt"
+  },
+  {
+   "command": [
+    "python",
+    "tools/test_presentation.py"
+   ],
+   "exit_code": 0,
+   "output_sha256": "7926728658ddf2bf527023750a1a9bdaf2c602b4e4a723c944deea18276d56bb",
+   "external_log": "recheck-7.txt"
+  },
+  {
+   "command": [
+    "git",
+    "diff",
+    "--check"
+   ],
+   "exit_code": 0,
+   "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "external_log": "recheck-8.txt"
+  }
+ ],
+ "preliminary_inspection_failure": "A pyulog API probe requested nonexistent default_parameters and raised AttributeError; preserved in the external inspection-attempts.txt. No default-parameter reconstruction is used.",
+ "initial_checks": [
+  {
+   "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+   ],
+   "exit_code": 1,
+   "output_sha256": "97b9c24664a7352dd0a7aefee2987519c0b6ea6a8f1c314c3ebd317c6be8ab45",
+   "external_log": "check-1.txt"
+  },
+  {
+   "command": [
+    "python",
+    "scripts/check_repo_contract.py"
+   ],
+   "exit_code": 1,
+   "output_sha256": "fed16b4f24612651518764ecde0cd330597d722bdc4be8168ca7e4b3e6e9e407",
+   "external_log": "check-2.txt"
+  },
+  {
+   "command": [
+    "python",
+    "scripts/acquisition_ledger.py",
+    "--check"
+   ],
+   "exit_code": 0,
+   "output_sha256": "262db2f49fb8a34b0f0e394ec7f1b7df353b5f378ff4e8e3ed49d2dace71d638",
+   "external_log": "check-3.txt"
+  },
+  {
+   "command": [
+    "python",
+    "scripts/reference_coverage.py",
+    "--check"
+   ],
+   "exit_code": 0,
+   "output_sha256": "dfa2bc03a5b2b8257749481da5a637a6b3c5d66899935516fd44295437d8c5a7",
+   "external_log": "check-4.txt"
+  },
+  {
+   "command": [
+    "python",
+    "evidence/task-2026-09-09/rerun_search.py",
+    "--audit",
+    "evidence/task-2026-09-11-public/database-export.json"
+   ],
+   "exit_code": 0,
+   "output_sha256": "8557eede54d4d9d1c2486536a6023ea77f3bde56a8fa58c1a510adc4f3a48fdf",
+   "external_log": "check-5.txt"
+  },
+  {
+   "command": [
+    "python",
+    "tools/check_presentation.py",
+    ".",
+    "UAV Failsafe Composition",
+    "uav-failsafe-composition"
+   ],
+   "exit_code": 0,
+   "output_sha256": "84bb119aefff07a15ce236c16dcfae66d2d5eec9b200b31f5dfcc975c86a7864",
+   "external_log": "check-6.txt"
+  },
+  {
+   "command": [
+    "python",
+    "tools/test_presentation.py"
+   ],
+   "exit_code": 0,
+   "output_sha256": "c1765c37aa46c7770a684fc7a04ca8de204fd7fa4a12a0f6fbf28b9e1aa29cff",
+   "external_log": "check-7.txt"
+  },
+  {
+   "command": [
+    "git",
+    "diff",
+    "--check"
+   ],
+   "exit_code": 0,
+   "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "external_log": "diff-check.txt"
+  }
+ ],
+ "rechecked_utc": "2026-10-04T22:41:16.553015+00:00",
+ "initial_failure_reason": "The README contract required an obsolete assertion that no flight data existed; its flight wording was updated for the first public-log inspection. The Study A notice was retained.",
+ "reproduction_and_privacy": {
+  "raw_reextraction": "byte-identical to results.json",
+  "privacy_audit": "New files contain no retained source URLs/log IDs, ULog vehicle UUIDs, boot epochs, absolute local paths or coordinate fields. Topic and parameter output is allowlisted; raw commands/events/positions are omitted. Relative times and generic hardware/airframe types retained. Manual field/source review completed.",
+  "checked_files": [
+   "README.md",
+   "ROADMAP.md",
+   "tests/test_public_flight_observation.py",
+   "evidence/task-public-flight-2026-10-04/checks.json",
+   "evidence/task-public-flight-2026-10-04/results.json",
+   "evidence/task-public-flight-2026-10-04/selection.json",
+   "evidence/task-public-flight-2026-10-04/sources.json",
+   "evidence/task-public-flight-2026-10-04/README.md",
+   "evidence/task-public-flight-2026-10-04/analyze.py",
+   "scripts/check_repo_contract.py"
+  ]
+ },
+ "self_review": "Reviewed exact-revision logger and failsafe path, clock brackets, replay exclusions, selection deviation, source/data licensing and output allowlists. No source or native binary was changed; retained PX4 checkout remains clean."
+}

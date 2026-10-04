@@ -4,10 +4,11 @@ When a drone loses its command link or companion computer, the autopilot's
 failsafe logic decides what happens next. This project builds a model of PX4's
 failsafe logic from its source code, checks it against PX4 itself, and
 measures in simulation which action PX4 takes after each kind of command loss,
-and when.
+and when. It also inspects public flight logs for separately reported event
+reconstruction and replay feasibility.
 
 [![Repository checks](https://github.com/500ft/uav-failsafe-composition/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/500ft/uav-failsafe-composition/actions/workflows/ci.yml)
-![Evidence: simulation development runs](https://img.shields.io/badge/evidence-simulation_development_runs-415a77)
+![Evidence: development runs and public logs](https://img.shields.io/badge/evidence-development_runs_and_public_logs-415a77)
 [![License: MIT](https://img.shields.io/badge/license-MIT-276c6b)](LICENSE)
 
 [Where it stands](#where-it-stands) · [Roadmap](ROADMAP.md) ·
@@ -32,14 +33,15 @@ explains how that narrowed the question.
 
 ## Where it stands
 
-The setup is PX4 v1.17.0 (commit `d6f12ad`) with its built-in SIH quadrotor,
-so no external physics simulator is involved.
+The simulation setup is PX4 v1.17.0 (commit `d6f12ad`) with its built-in SIH
+quadrotor. Public-log firmware revisions and exclusions are reported separately.
 
 | Check | Result | Evidence |
 | --- | --- | --- |
 | Python model against PX4's compiled `Failsafe` class, same input sequences | After fixing eligibility and action-option errors found in development, 1,000 of 1,000 fresh reserved sequences agree exactly. Development had 495 disagreements in 1,500 random sequences and 11 in 36 directed sequences; all agree on replay after the fixes | [Results by mechanism](evidence/task-domain-2026-10-03/results.json), [domain and counterexamples](evidence/task-domain-2026-10-03/README.md) |
 | SITL datalink loss in Auto Loiter | Hold, then RTL, also on the unmodified PX4 binary | [Runtime record](evidence/task-runtime-2026-09-29/README.md) |
 | Runtime measurement prerequisites | The clean uninstrumented rebuild completed the matched datalink-loss control with the same full typed parameter values as both prior attempts. The earlier instrumented failure remains unlocalized | [Rebuild control](evidence/task-runtime-rebuild-2026-10-03/README.md), [results.json](evidence/task-runtime-rebuild-2026-10-03/results.json) |
+| Public-log feasibility | Three logs inspected; one sampled geofence timeline reconstructed, zero admitted replays. The observed Hold-to-RTL commit interval was about 5.005 seconds on an older firmware revision | [Observations and exclusions](evidence/task-public-flight-2026-10-04/README.md), [results.json](evidence/task-public-flight-2026-10-04/results.json) |
 
 The position-accuracy/POSCTL defect is resolved, with its historical outputs
 preserved. Agreement covers only the exercised corpus: datalink loss, geofence
@@ -96,17 +98,19 @@ git diff -- evidence/task-day3-2026-09-09/acquisition-ledger.json
 
 ## What's next
 
-Run Study A: every required single-event SITL cell (five event classes across
-the pinned configurations) compared with the model. Each cell needs a valid,
-classified result, and any unexplained disagreement blocks claims for that
-area. The study decisions were signed off on 2026-09-30; the
-[roadmap](ROADMAP.md) lists the remaining steps.
+The public-data-first step needs a permitted event log on the existing firmware
+pin with the history and consumed inputs needed for replay. The inspected
+geofence log provides a sampled timeline, but its version, mode history and
+missing selector updates prevent admission. The [roadmap](ROADMAP.md) keeps
+this acquisition need separate from runtime diagnosis and the required Study A
+cells. Physical validation remains later work.
 
 ## Limits
 
-- Everything so far is development work in simulation.
-  No study result has been generated yet; the confirmation campaign has not run,
-  and no HITL or flight data exists.
+- Results are simulation development work and a small public-log feasibility
+  inspection. Public-log exclusions concern observability and the supported
+  domain; they are not model-mismatch results. No study result has been generated
+  for Study A; confirmation and HITL have not run. No new flights were conducted.
 - RC loss can't be injected in this simulator setup, so it is excluded.
 - Injection times are lower bounds; the injection latency has not been
   calibrated.
@@ -136,5 +140,9 @@ saw. Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a
 [pull request or issue](https://github.com/500ft/uav-failsafe-composition/issues).
 
 Software is [MIT licensed](LICENSE); third-party publications keep their own
-licenses. This is a research repository, not a flight-safety product.
+licenses. The new public-log observations credit PX4 under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/); their
+[source record](evidence/task-public-flight-2026-10-04/README.md#reproduce-and-attribution)
+keeps raw logs and identifying source URLs outside git. This is a research
+repository, not a flight-safety product.
 [Repository identity](docs/REPOSITORY_IDENTITY.md).

@@ -26,11 +26,28 @@ Every outcome ends in a release: pinned configurations, injection harness,
 traces, and the comparison against the model. A result where the model fails
 still finishes the project.
 
+The owner has added a public-data-first investigation, with physical validation
+later. A separately reported external-log evaluation must identify exact
+firmware revisions, observable inputs and exclusions. Public logs do not
+complete Study A or establish general equivalence. The existing differential
+corpus and the Study A coverage gate remain in place.
+
 This is PX4 only. ArduPilot was dropped on 2026-09-24 because PX4's own
 behaviour was not yet explained ([critique](docs/specs/formal-composition/critique-2026-09-24.md)).
 
 ## Where it stands
 
+- **Public-log feasibility has an executed result.** The
+  [small candidate inspection](evidence/task-public-flight-2026-10-04/README.md)
+  reconstructs a sampled geofence timeline on its recorded firmware revision.
+  None of the candidates meets the existing replay domain and input-history
+  gate. The pin-matching candidate is a simulator log without failsafe flags;
+  the datalink candidate also has RC loss; the geofence candidate has an older
+  revision and incomplete selector history. Counts, sample gaps and relative
+  timing are in the [results](evidence/task-public-flight-2026-10-04/results.json).
+  No native build or model comparison was admitted. The next public-data need
+  is a permitted event log on the existing pin with pre-arm history, actual
+  logger configuration and the consumed inputs needed for replay.
 - **The reserved corpus agrees after the scoped model repairs.** Directed and
   random development found eligibility, clearing and shared-delay registration
   errors. Their counterexamples are preserved. The implementation was frozen
@@ -67,10 +84,11 @@ behaviour was not yet explained ([critique](docs/specs/formal-composition/critiq
 | 1 | Sign off decisions D1–D13 | Owner | Done 2026-09-30 ([addendum](docs/specs/formal-composition/decisions-2026-09-19.md)) |
 | 2 | Reproduce and fix armed-state handling against the pinned native class | Agent | Done for the exercised cases; [evidence](evidence/task-armed-2026-10-03/README.md) |
 | 3 | Define the supported domain, resolve the recorded mode counterexample, then run directed and stratified random cases with reserved verification | Agent | Done for the [executed corpus](evidence/task-domain-2026-10-03/README.md); no universal equivalence claim |
-| 4 | Close NP-3, NP-4 and NP-6; separate observable timing segments on one vehicle clock | Agent | NP-4 executed. NP-3 source traced; runtime segmentation blocked by the retained tracking failure. NP-6 remains uncalibrated. The matched clean rebuild completed. **Next:** localize the instrumented sensor interruption before selecting a repair or resuming timing observations |
-| 5 | Commit the required cell list as scenario identities (D25), then run every cell and compare each with the model | Agent | Traces committed; every cell classified |
-| 6 | Apply the D7 gate. If the model holds, run the first supported hazard pair (D9) | Agent | Gate result and any blocked subdomains recorded |
-| 7 | Release the benchmark: configurations, harness, traces, model, comparison report | Agent | Tagged release with a README that states the verdict |
+| 4 | Inspect a small public-log candidate set and reconstruct an event or establish the replay blocker | Agent | Done for the [executed candidates](evidence/task-public-flight-2026-10-04/README.md). **Current step:** obtain the missing version-compatible event history before admitting replay or expanding cohorts |
+| 5 | Close NP-3, NP-4 and NP-6; separate observable timing segments on one vehicle clock | Agent | Independent Study A prerequisite. NP-4 executed. NP-3 source traced; runtime segmentation blocked by the retained tracking failure. NP-6 remains uncalibrated. The matched clean rebuild completed. Localize the instrumented sensor interruption before selecting a repair or resuming timing observations |
+| 6 | Commit the required cell list as scenario identities (D25), then run every cell and compare each with the model | Agent | Traces committed; every cell classified |
+| 7 | Apply the D7 gate. If the model holds, run the first supported hazard pair (D9) | Agent | Gate result and any blocked subdomains recorded |
+| 8 | Release the benchmark: configurations, harness, traces, model, comparison report | Agent | Tagged release with a README that states the verdict and separately reports external-log evaluation |
 
 The model checker (UPPAAL) is deferred under D8 option (b): it is only needed
 for composition properties beyond Study A.
