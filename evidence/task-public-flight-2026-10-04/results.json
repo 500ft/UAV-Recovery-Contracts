@@ -1,0 +1,1742 @@
+{
+ "state": "executed public-log development feasibility; incomplete observability for replay",
+ "extraction": {
+  "python": "3.11.8",
+  "pyulog": "1.2.4",
+  "script_sha256": "75a6518cb9a51d5c163d11b363840591b70fcbd196026c83f00768a39f9a9548",
+  "sources_sha256": "db0d59c07ea12bc6011b34faa8161a7471463178c3c3e6b235a5dcdd16be59c3"
+ },
+ "counts": {
+  "metadata_rows_returned": {
+   "pin": 10,
+   "failsafe": 10,
+   "geofence": 8,
+   "datalink": 2,
+   "position-loss": 0
+  },
+  "attempted_downloads": 3,
+  "parsed_logs": 3,
+  "replay_excluded_logs": 3,
+  "reconstructed_events": 1,
+  "model_replays": 0,
+  "native_builds": 0,
+  "confirmation_runs": 0
+ },
+ "selection_deviation": "Keyword metadata pages were inspected despite available generic pin matches, to find event-labelled candidates. All three choices were recorded before parsing any ULog; all are development.",
+ "clock": "Microseconds relative to each ULog header start, on that vehicle boot clock. Negative values are cached pre-start samples. No UTC or boot epoch is exported.",
+ "attribution": {
+  "creator": "PX4",
+  "source": "https://review.px4.io/",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "modifications": "Allowlisted fields, relative timestamps, transition and gap summaries; raw logs and source-specific URLs retained privately."
+ },
+ "exclusions": {
+  "candidate-a": "Pinned source, but PX4_SITL hardware identity; no failsafe_flags topic or observed failsafe. Excluded as a public-flight event.",
+  "candidate-b": "Different firmware; RC loss precedes datalink loss and remains active across it. RC is outside the admitted domain. Log starts armed; complete selector history and update inputs unavailable.",
+  "candidate-c": "Different firmware; MANUAL then ALTCTL then POSCTL mode history. Geofence result topic, pre-arm selector history, per-update flags and request/override consumption are unavailable. Reconstruct sampled event only; no model replay."
+ },
+ "logs": {
+  "candidate-a": {
+   "raw_sha256": "ca896f030ca9d338d365574d9c9f9444412796d7cbedbed1d6911873207b689b",
+   "bytes": 45315088,
+   "build": {
+    "ver_sw": "d6f12ad1c4f70ad3230afd7d86e971421e02fef4",
+    "ver_sw_release": 17891583,
+    "ver_vendor_sw_release": 255,
+    "ver_hw": "PX4_SITL",
+    "sys_name": "PX4",
+    "sys_os_name": "Linux",
+    "sys_toolchain": "GNU GCC",
+    "sys_toolchain_ver": "13.3.0"
+   },
+   "executable_sha256": null,
+   "duration_us": 815900000,
+   "parameter_count": 902,
+   "parameter_changes": 215,
+   "parameter_snapshot_sha256": "02d9a7c60baff99ed0a37e9a4a5c7ce8d9a1a0b81cc80d699770cba9a64b2184",
+   "parameter_scope": "All ULog initial parameter records and changes retained locally with types. PX4 logs used parameters; completeness against the executed binary is unproven.",
+   "parameters": {
+    "SDLOG_PROFILE": 131,
+    "SDLOG_MODE": 1,
+    "SDLOG_BACKEND": 3,
+    "SYS_AUTOSTART": 10040,
+    "COM_DL_LOSS_T": 10,
+    "COM_FAIL_ACT_T": 5.0,
+    "NAV_DLL_ACT": 0,
+    "GF_ACTION": 2,
+    "GF_PREDICT": 0,
+    "COM_POS_LOW_ACT": 3,
+    "COM_POS_FS_EPH": 5.0,
+    "COM_RC_LOSS_T": 1.0,
+    "NAV_RCL_ACT": 2,
+    "COM_RC_OVERRIDE": 1,
+    "COM_RCL_EXCEPT": 0,
+    "COM_DLL_EXCEPT": 0,
+    "COM_LOW_BAT_ACT": 3,
+    "COM_FLTT_LOW_ACT": 0,
+    "COM_IMB_PROP_ACT": 0,
+    "COM_OBL_RC_ACT": 0,
+    "COM_WIND_MAX_ACT": 0,
+    "COM_FLT_TIME_MAX": -1
+   },
+   "relevant_parameter_changes": [
+    {
+     "t_us": 0,
+     "name": "COM_RC_LOSS_T",
+     "type": "float32",
+     "value": 1.0
+    },
+    {
+     "t_us": 0,
+     "name": "SYS_AUTOSTART",
+     "type": "int32",
+     "value": 10040
+    },
+    {
+     "t_us": 60000,
+     "name": "COM_RC_LOSS_T",
+     "type": "float32",
+     "value": 1.0
+    },
+    {
+     "t_us": 60000,
+     "name": "SYS_AUTOSTART",
+     "type": "int32",
+     "value": 10040
+    },
+    {
+     "t_us": 80000,
+     "name": "COM_RC_LOSS_T",
+     "type": "float32",
+     "value": 1.0
+    },
+    {
+     "t_us": 80000,
+     "name": "SYS_AUTOSTART",
+     "type": "int32",
+     "value": 10040
+    },
+    {
+     "t_us": 80000,
+     "name": "COM_RC_LOSS_T",
+     "type": "float32",
+     "value": 1.0
+    },
+    {
+     "t_us": 80000,
+     "name": "SYS_AUTOSTART",
+     "type": "int32",
+     "value": 10040
+    },
+    {
+     "t_us": 100000,
+     "name": "COM_RC_LOSS_T",
+     "type": "float32",
+     "value": 1.0
+    },
+    {
+     "t_us": 100000,
+     "name": "SYS_AUTOSTART",
+     "type": "int32",
+     "value": 10040
+    },
+    {
+     "t_us": 120000,
+     "name": "COM_RC_LOSS_T",
+     "type": "float32",
+     "value": 1.0
+    },
+    {
+     "t_us": 120000,
+     "name": "SYS_AUTOSTART",
+     "type": "int32",
+     "value": 10040
+    },
+    {
+     "t_us": 140000,
+     "name": "COM_RC_LOSS_T",
+     "type": "float32",
+     "value": 1.0
+    },
+    {
+     "t_us": 140000,
+     "name": "SYS_AUTOSTART",
+     "type": "int32",
+     "value": 10040
+    },
+    {
+     "t_us": 240000,
+     "name": "COM_RC_LOSS_T",
+     "type": "float32",
+     "value": 1.0
+    },
+    {
+     "t_us": 240000,
+     "name": "SYS_AUTOSTART",
+     "type": "int32",
+     "value": 10040
+    }
+   ],
+   "dropout_records": 0,
+   "dropout_duration_ms": 0,
+   "absent_topics": [
+    "failsafe_flags",
+    "navigator_status",
+    "telemetry_status",
+    "config_overrides",
+    "geofence_result",
+    "action_request",
+    "vehicle_command"
+   ],
+   "topics": {
+    "event/0": {
+     "samples": 36,
+     "first_us": 0,
+     "last_us": 815584000,
+     "gap_us": {
+      "min": 0,
+      "median": 0,
+      "max": 358776000
+     },
+     "changes": {}
+    },
+    "vehicle_land_detected/0": {
+     "samples": 825,
+     "first_us": -128000,
+     "last_us": 815632000,
+     "gap_us": {
+      "min": 8000,
+      "median": 1000000.0,
+      "max": 1000000
+     },
+     "changes": {
+      "landed": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -128000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 16800000,
+        "first_sample_us": 17384000,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 812576000,
+        "first_sample_us": 813576000,
+        "value": 1
+       }
+      ]
+     }
+    },
+    "vehicle_status/0": {
+     "samples": 1627,
+     "first_us": -236000,
+     "last_us": 815584000,
+     "gap_us": {
+      "min": 12000,
+      "median": 504000.0,
+      "max": 504000
+     },
+     "changes": {
+      "arming_state": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -236000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 15628000,
+        "first_sample_us": 15760000,
+        "value": 2
+       },
+       {
+        "previous_sample_us": 815392000,
+        "first_sample_us": 815584000,
+        "value": 1
+       }
+      ],
+      "nav_state": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -236000,
+        "value": 4,
+        "commit_us": -968000
+       },
+       {
+        "previous_sample_us": 15616000,
+        "first_sample_us": 15628000,
+        "value": 14,
+        "commit_us": 15628000
+       },
+       {
+        "previous_sample_us": 726916000,
+        "first_sample_us": 726928000,
+        "value": 18,
+        "commit_us": 726928000
+       },
+       {
+        "previous_sample_us": 815392000,
+        "first_sample_us": 815584000,
+        "value": 14,
+        "commit_us": 815584000
+       }
+      ],
+      "nav_state_user_intention": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -236000,
+        "value": 4
+       },
+       {
+        "previous_sample_us": 15616000,
+        "first_sample_us": 15628000,
+        "value": 14
+       },
+       {
+        "previous_sample_us": 726916000,
+        "first_sample_us": 726928000,
+        "value": 18
+       },
+       {
+        "previous_sample_us": 815392000,
+        "first_sample_us": 815584000,
+        "value": 14
+       }
+      ],
+      "failsafe": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -236000,
+        "value": 0
+       }
+      ],
+      "vehicle_type": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -236000,
+        "value": 1
+       }
+      ],
+      "failsafe_and_user_took_over": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -236000,
+        "value": 0
+       }
+      ],
+      "failsafe_defer_state": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -236000,
+        "value": 0
+       }
+      ],
+      "gcs_connection_lost": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -236000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 1264000,
+        "first_sample_us": 1276000,
+        "value": 0
+       }
+      ],
+      "in_transition_mode": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -236000,
+        "value": 0
+       }
+      ]
+     }
+    }
+   },
+   "retrieved_date": "2026-10-04"
+  },
+  "candidate-b": {
+   "raw_sha256": "6edf8e77b02c4588f53fc7f044ce4cbcd1ee0e6634b94b09e3dae21ba97d790e",
+   "bytes": 2745859,
+   "build": {
+    "ver_sw": "c2fb48990aacebc938c4e9998c7d5348f858fd22",
+    "ver_sw_release": 17891392,
+    "ver_vendor_sw_release": 64,
+    "ver_hw": "PX4_FMU_V6XRT",
+    "sys_name": "PX4",
+    "sys_os_name": "NuttX",
+    "sys_toolchain": "GNU GCC",
+    "sys_toolchain_ver": "13.2.1 20231009"
+   },
+   "executable_sha256": null,
+   "duration_us": 72658234,
+   "parameter_count": 1024,
+   "parameter_changes": 0,
+   "parameter_snapshot_sha256": "34db4d17f5f242ef29910c690c45a11048f81fe78aba6f75dfb23cf7d973b5cf",
+   "parameter_scope": "All ULog initial parameter records and changes retained locally with types. PX4 logs used parameters; completeness against the executed binary is unproven.",
+   "parameters": {
+    "SDLOG_PROFILE": 1,
+    "SDLOG_MODE": 0,
+    "SDLOG_BACKEND": 3,
+    "SYS_AUTOSTART": 4019,
+    "COM_DL_LOSS_T": 10,
+    "COM_FAIL_ACT_T": 5.0,
+    "NAV_DLL_ACT": 2,
+    "GF_ACTION": 2,
+    "GF_PREDICT": 0,
+    "COM_POS_LOW_ACT": 3,
+    "COM_POS_FS_EPH": 5.0,
+    "COM_RC_LOSS_T": 0.5,
+    "NAV_RCL_ACT": 2,
+    "COM_RC_OVERRIDE": 1,
+    "COM_RCL_EXCEPT": 0,
+    "COM_DLL_EXCEPT": 0,
+    "COM_LOW_BAT_ACT": 3,
+    "COM_FLTT_LOW_ACT": 0,
+    "COM_IMB_PROP_ACT": 0,
+    "COM_OBL_RC_ACT": 0,
+    "COM_WIND_MAX_ACT": 0,
+    "COM_FLT_TIME_MAX": -1
+   },
+   "relevant_parameter_changes": [],
+   "dropout_records": 0,
+   "dropout_duration_ms": 0,
+   "absent_topics": [
+    "geofence_result",
+    "action_request"
+   ],
+   "topics": {
+    "config_overrides/0": {
+     "samples": 147,
+     "first_us": -1558823,
+     "last_us": 72321000,
+     "gap_us": {
+      "min": 505011,
+      "median": 506000.0,
+      "max": 510937
+     },
+     "changes": {
+      "defer_failsafes": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -1558823,
+        "value": 0
+       }
+      ],
+      "defer_failsafes_timeout_s": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -1558823,
+        "value": 0.0
+       }
+      ]
+     }
+    },
+    "event/0": {
+     "samples": 68,
+     "first_us": -34591858,
+     "last_us": 71662403,
+     "gap_us": {
+      "min": 1,
+      "median": 5,
+      "max": 34584068
+     },
+     "changes": {}
+    },
+    "failsafe_flags/0": {
+     "samples": 142,
+     "first_us": -491894,
+     "last_us": 72178160,
+     "gap_us": {
+      "min": 109951,
+      "median": 549993,
+      "max": 604930
+     },
+     "changes": {
+      "mode_req_angular_velocity": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 8312190
+       }
+      ],
+      "mode_req_attitude": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 8311166
+       }
+      ],
+      "mode_req_local_alt": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 8257918
+       }
+      ],
+      "mode_req_local_position": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 7995448
+       }
+      ],
+      "mode_req_local_position_relaxed": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 262212
+       }
+      ],
+      "mode_req_global_position": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 56
+       }
+      ],
+      "mode_req_global_position_relaxed": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "mode_req_mission": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 8
+       }
+      ],
+      "mode_req_offboard_signal": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 16384
+       }
+      ],
+      "mode_req_home_position": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 32
+       }
+      ],
+      "mode_req_wind_and_flight_time_compliance": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 2621464
+       }
+      ],
+      "mode_req_prevent_arming": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 3944480
+       }
+      ],
+      "mode_req_manual_control": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 34119
+       }
+      ],
+      "mode_req_other": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 2139095040
+       }
+      ],
+      "angular_velocity_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "attitude_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "local_altitude_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "local_position_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "local_position_invalid_relaxed": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "local_velocity_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "global_position_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "global_position_invalid_relaxed": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "auto_mission_missing": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "offboard_control_signal_lost": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 1
+       }
+      ],
+      "home_position_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "manual_control_signal_lost": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 19302175,
+        "first_sample_us": 19632180,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 31941116,
+        "first_sample_us": 32381330,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 34713198,
+        "first_sample_us": 35153167,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 35153167,
+        "first_sample_us": 35263138,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 35923109,
+        "first_sample_us": 36143154,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 36253105,
+        "first_sample_us": 36363127,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 43623439,
+        "first_sample_us": 43843264,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 46043108,
+        "first_sample_us": 46263113,
+        "value": 0
+       }
+      ],
+      "gcs_connection_lost": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 30148137,
+        "first_sample_us": 30291558,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 32931153,
+        "first_sample_us": 33063266,
+        "value": 0
+       }
+      ],
+      "battery_warning": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "battery_low_remaining_time": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "battery_unhealthy": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "geofence_breached": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "mission_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "vtol_fixed_wing_system_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "wind_limit_exceeded": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "flight_time_limit_exceeded": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "position_accuracy_low": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "navigator_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "fd_critical_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "fd_esc_arming_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "fd_imbalanced_prop": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ],
+      "fd_motor_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -491894,
+        "value": 0
+       }
+      ]
+     }
+    },
+    "navigator_status/0": {
+     "samples": 145,
+     "first_us": -381735,
+     "last_us": 72515149,
+     "gap_us": {
+      "min": 113206,
+      "median": 505733.5,
+      "max": 548228
+     },
+     "changes": {
+      "nav_state": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -381735,
+        "value": 2
+       },
+       {
+        "previous_sample_us": 19530175,
+        "first_sample_us": 19643381,
+        "value": 4
+       },
+       {
+        "previous_sample_us": 24197046,
+        "first_sample_us": 24648369,
+        "value": 5
+       },
+       {
+        "previous_sample_us": 47231070,
+        "first_sample_us": 47418164,
+        "value": 2
+       }
+      ],
+      "failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -381735,
+        "value": 0
+       }
+      ]
+     }
+    },
+    "telemetry_status/0": {
+     "samples": 72,
+     "first_us": 91014,
+     "last_us": 71060994,
+     "gap_us": {
+      "min": 220011,
+      "median": 1009994,
+      "max": 1310012
+     },
+     "changes": {
+      "heartbeat_type_gcs": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 91014,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 19280993,
+        "first_sample_us": 20541437,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 32841001,
+        "first_sample_us": 33061012,
+        "value": 1
+       }
+      ]
+     }
+    },
+    "telemetry_status/1": {
+     "samples": 72,
+     "first_us": 764004,
+     "last_us": 71244038,
+     "gap_us": {
+      "min": 251964,
+      "median": 1253910,
+      "max": 1254261
+     },
+     "changes": {
+      "heartbeat_type_gcs": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 764004,
+        "value": 0
+       }
+      ]
+     }
+    },
+    "vehicle_command/0": {
+     "samples": 12,
+     "first_us": -16265,
+     "last_us": 71654979,
+     "gap_us": {
+      "min": 1,
+      "median": 2553943,
+      "max": 29026494
+     },
+     "changes": {}
+    },
+    "vehicle_land_detected/0": {
+     "samples": 81,
+     "first_us": -309368,
+     "last_us": 72614078,
+     "gap_us": {
+      "min": 10161,
+      "median": 1001387.0,
+      "max": 1001590
+     },
+     "changes": {
+      "landed": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -309368,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 1604018,
+        "first_sample_us": 2060041,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 71275849,
+        "first_sample_us": 71612741,
+        "value": 1
+       }
+      ]
+     }
+    },
+    "vehicle_status/0": {
+     "samples": 152,
+     "first_us": -7756,
+     "last_us": 72167001,
+     "gap_us": {
+      "min": 10985,
+      "median": 505996,
+      "max": 510756
+     },
+     "changes": {
+      "arming_state": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -7756,
+        "value": 2
+       },
+       {
+        "previous_sample_us": 71486029,
+        "first_sample_us": 71662428,
+        "value": 1
+       }
+      ],
+      "nav_state": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -7756,
+        "value": 2,
+        "commit_us": -65831012
+       },
+       {
+        "previous_sample_us": 19632192,
+        "first_sample_us": 19643260,
+        "value": 4,
+        "commit_us": 19643129
+       },
+       {
+        "previous_sample_us": 24197004,
+        "first_sample_us": 24648235,
+        "value": 5,
+        "commit_us": 24648105
+       },
+       {
+        "previous_sample_us": 47230998,
+        "first_sample_us": 47418130,
+        "value": 2,
+        "commit_us": 47418002
+       }
+      ],
+      "nav_state_user_intention": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -7756,
+        "value": 2
+       }
+      ],
+      "failsafe": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -7756,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 19632192,
+        "first_sample_us": 19643260,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 47230998,
+        "first_sample_us": 47418130,
+        "value": 0
+       }
+      ],
+      "vehicle_type": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -7756,
+        "value": 1
+       }
+      ],
+      "failsafe_and_user_took_over": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -7756,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 47230998,
+        "first_sample_us": 47418130,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 47418130,
+        "first_sample_us": 47429115,
+        "value": 0
+       }
+      ],
+      "failsafe_defer_state": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -7756,
+        "value": 0
+       }
+      ],
+      "gcs_connection_lost": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -7756,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 29972020,
+        "first_sample_us": 30291569,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 32821133,
+        "first_sample_us": 33063277,
+        "value": 0
+       }
+      ],
+      "in_transition_mode": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -7756,
+        "value": 0
+       }
+      ]
+     }
+    }
+   },
+   "retrieved_date": "2026-10-04"
+  },
+  "candidate-c": {
+   "raw_sha256": "262f027115504cd177be6f7168a22f57d73fa237bf8392b2023b6e2299d8b171",
+   "bytes": 3817222,
+   "build": {
+    "ver_sw": "94cb2012792b2ae89f0b147cfee53ee31ae550be",
+    "ver_sw_release": 17826303,
+    "ver_vendor_sw_release": 255,
+    "ver_hw": "CUBEPILOT_CUBEORANGEPLUS",
+    "sys_name": "PX4",
+    "sys_os_name": "NuttX",
+    "sys_toolchain": "GNU GCC",
+    "sys_toolchain_ver": "13.2.1 20231009"
+   },
+   "executable_sha256": null,
+   "duration_us": 79144156,
+   "parameter_count": 1130,
+   "parameter_changes": 0,
+   "parameter_snapshot_sha256": "adb1c1d5067f66d564c05e4db770c1e1e88dc1145e5476baf7fa8767c27985b0",
+   "parameter_scope": "All ULog initial parameter records and changes retained locally with types. PX4 logs used parameters; completeness against the executed binary is unproven.",
+   "parameters": {
+    "SDLOG_PROFILE": 1,
+    "SDLOG_MODE": 0,
+    "SYS_AUTOSTART": 4001,
+    "COM_DL_LOSS_T": 10,
+    "COM_FAIL_ACT_T": 5.0,
+    "NAV_DLL_ACT": 3,
+    "GF_ACTION": 3,
+    "GF_PREDICT": 0,
+    "COM_POS_LOW_ACT": 3,
+    "COM_POS_FS_EPH": 5.0,
+    "COM_RC_LOSS_T": 0.5,
+    "NAV_RCL_ACT": 3,
+    "COM_RC_OVERRIDE": 1,
+    "COM_RCL_EXCEPT": 0,
+    "COM_DLL_EXCEPT": 0,
+    "COM_LOW_BAT_ACT": 0,
+    "COM_POSCTL_NAVL": 0,
+    "COM_FLTT_LOW_ACT": 3,
+    "COM_IMB_PROP_ACT": 0,
+    "COM_OBL_RC_ACT": 0,
+    "COM_WIND_MAX_ACT": 0,
+    "COM_FLT_TIME_MAX": -1
+   },
+   "relevant_parameter_changes": [],
+   "dropout_records": 0,
+   "dropout_duration_ms": 0,
+   "absent_topics": [
+    "geofence_result"
+   ],
+   "topics": {
+    "action_request/0": {
+     "samples": 3,
+     "first_us": -92104,
+     "last_us": 69597733,
+     "gap_us": {
+      "min": 19940524,
+      "median": 34844918.5,
+      "max": 49749313
+     },
+     "changes": {}
+    },
+    "config_overrides/0": {
+     "samples": 160,
+     "first_us": -1376358,
+     "last_us": 78783681,
+     "gap_us": {
+      "min": 500001,
+      "median": 501866,
+      "max": 512951
+     },
+     "changes": {
+      "defer_failsafes": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -1376358,
+        "value": 0
+       }
+      ],
+      "defer_failsafes_timeout_s": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -1376358,
+        "value": 0.0
+       }
+      ]
+     }
+    },
+    "event/0": {
+     "samples": 38,
+     "first_us": -112138914,
+     "last_us": 78144815,
+     "gap_us": {
+      "min": 3,
+      "median": 6,
+      "max": 100012074
+     },
+     "changes": {}
+    },
+    "failsafe_flags/0": {
+     "samples": 153,
+     "first_us": -175049,
+     "last_us": 78906026,
+     "gap_us": {
+      "min": 211311,
+      "median": 522848.5,
+      "max": 589156
+     },
+     "changes": {
+      "mode_req_angular_velocity": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 8311934
+       }
+      ],
+      "mode_req_attitude": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 8310910
+       }
+      ],
+      "mode_req_local_alt": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 8257662
+       }
+      ],
+      "mode_req_local_position": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 7995448
+       }
+      ],
+      "mode_req_local_position_relaxed": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 262212
+       }
+      ],
+      "mode_req_global_position": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 56
+       }
+      ],
+      "mode_req_mission": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 8
+       }
+      ],
+      "mode_req_offboard_signal": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 16384
+       }
+      ],
+      "mode_req_home_position": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 32
+       }
+      ],
+      "mode_req_wind_and_flight_time_compliance": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 2621464
+       }
+      ],
+      "mode_req_prevent_arming": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 3944480
+       }
+      ],
+      "mode_req_manual_control": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 33863
+       }
+      ],
+      "mode_req_other": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 2139095040
+       }
+      ],
+      "angular_velocity_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "attitude_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "local_altitude_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "local_position_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "local_position_invalid_relaxed": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "local_velocity_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "global_position_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "auto_mission_missing": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 1
+       }
+      ],
+      "offboard_control_signal_lost": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 1
+       }
+      ],
+      "home_position_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "manual_control_signal_lost": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "gcs_connection_lost": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "battery_warning": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "battery_low_remaining_time": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "battery_unhealthy": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "geofence_breached": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 36578866,
+        "first_sample_us": 36890594,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 47878867,
+        "first_sample_us": 48090178,
+        "value": 0
+       }
+      ],
+      "mission_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "vtol_fixed_wing_system_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "wind_limit_exceeded": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "flight_time_limit_exceeded": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "local_position_accuracy_low": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "navigator_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "fd_critical_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "fd_esc_arming_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "fd_imbalanced_prop": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ],
+      "fd_motor_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -175049,
+        "value": 0
+       }
+      ]
+     }
+    },
+    "navigator_status/0": {
+     "samples": 158,
+     "first_us": 67914,
+     "last_us": 79057968,
+     "gap_us": {
+      "min": 175924,
+      "median": 505736,
+      "max": 550539
+     },
+     "changes": {
+      "nav_state": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 67914,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 19677705,
+        "first_sample_us": 19865088,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 36544748,
+        "first_sample_us": 36903132,
+        "value": 4
+       },
+       {
+        "previous_sample_us": 41439783,
+        "first_sample_us": 41908525,
+        "value": 5
+       },
+       {
+        "previous_sample_us": 66738019,
+        "first_sample_us": 66913943,
+        "value": 2
+       }
+      ],
+      "failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 67914,
+        "value": 0
+       }
+      ]
+     }
+    },
+    "telemetry_status/0": {
+     "samples": 78,
+     "first_us": 619736,
+     "last_us": 77614636,
+     "gap_us": {
+      "min": 254954,
+      "median": 999999,
+      "max": 1255057
+     },
+     "changes": {
+      "heartbeat_type_gcs": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 619736,
+        "value": 0
+       }
+      ]
+     }
+    },
+    "telemetry_status/1": {
+     "samples": 78,
+     "first_us": 1028754,
+     "last_us": 77423881,
+     "gap_us": {
+      "min": 62134,
+      "median": 1009813,
+      "max": 1947316
+     },
+     "changes": {
+      "heartbeat_type_gcs": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 1028754,
+        "value": 1
+       }
+      ]
+     }
+    },
+    "vehicle_command/0": {
+     "samples": 9,
+     "first_us": -154439413,
+     "last_us": 41908521,
+     "gap_us": {
+      "min": 1,
+      "median": 7286690.0,
+      "max": 145574395
+     },
+     "changes": {}
+    },
+    "vehicle_land_detected/0": {
+     "samples": 83,
+     "first_us": 57229,
+     "last_us": 78807227,
+     "gap_us": {
+      "min": 219997,
+      "median": 1009733.5,
+      "max": 1010260
+     },
+     "changes": {
+      "landed": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 57229,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 2477101,
+        "first_sample_us": 2697098,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 75797211,
+        "first_sample_us": 76137243,
+        "value": 1
+       }
+      ]
+     }
+    },
+    "vehicle_status/0": {
+     "samples": 163,
+     "first_us": -84830,
+     "last_us": 78650723,
+     "gap_us": {
+      "min": 10482,
+      "median": 502117.5,
+      "max": 512380
+     },
+     "changes": {
+      "arming_state": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -84830,
+        "value": 2
+       },
+       {
+        "previous_sample_us": 78022694,
+        "first_sample_us": 78145092,
+        "value": 1
+       }
+      ],
+      "nav_state": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -84830,
+        "value": 0,
+        "commit_us": -152835228
+       },
+       {
+        "previous_sample_us": 19685665,
+        "first_sample_us": 19865041,
+        "value": 1,
+        "commit_us": 19864640
+       },
+       {
+        "previous_sample_us": 36890604,
+        "first_sample_us": 36903029,
+        "value": 4,
+        "commit_us": 36902670
+       },
+       {
+        "previous_sample_us": 41439729,
+        "first_sample_us": 41908248,
+        "value": 5,
+        "commit_us": 41907963
+       },
+       {
+        "previous_sample_us": 66745687,
+        "first_sample_us": 66913879,
+        "value": 2,
+        "commit_us": 66913647
+       }
+      ],
+      "nav_state_user_intention": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -84830,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 19685665,
+        "first_sample_us": 19865041,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 66745687,
+        "first_sample_us": 66913879,
+        "value": 2
+       }
+      ],
+      "failsafe": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -84830,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 36890604,
+        "first_sample_us": 36903029,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 66745687,
+        "first_sample_us": 66913879,
+        "value": 0
+       }
+      ],
+      "vehicle_type": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -84830,
+        "value": 1
+       }
+      ],
+      "failsafe_and_user_took_over": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -84830,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 66745687,
+        "first_sample_us": 66913879,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 66913879,
+        "first_sample_us": 66924951,
+        "value": 0
+       }
+      ],
+      "failsafe_defer_state": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -84830,
+        "value": 0
+       }
+      ],
+      "gcs_connection_lost": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -84830,
+        "value": 0
+       }
+      ],
+      "in_transition_mode": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": -84830,
+        "value": 0
+       }
+      ]
+     }
+    }
+   },
+   "retrieved_date": "2026-10-04"
+  }
+ },
+ "geofence_observation": {
+  "sampled_breach_bracket_us": [
+   36578866,
+   36890594
+  ],
+  "hold_commit_us": 36902670,
+  "rtl_commit_us": 41907963,
+  "hold_to_rtl_commit_us": 5005293,
+  "logged_flag_to_hold_commit_us": 12076,
+  "logged_flag_to_rtl_commit_us": 5017369,
+  "sampled_flag_to_rtl_interval_us": [
+   5017369,
+   5329097
+  ],
+  "first_navigator_rtl_us": 41908525,
+  "commit_to_navigator_report_us": 562,
+  "geometric_crossing_us": null,
+  "geofence_detector_publication_us": null,
+  "selected_action_update_us": null,
+  "actuator_response_us": null,
+  "interpretation": "Bracket spans adjacent sampled flag states, not the geometric crossing. Unlogged toggles and consumed-update times are unknown. Navigator status is a mode report, not physical response. No timing pass/fail."
+ },
+ "source_manifest_sha256": "26b5d5939381c47ed2d4252e90f244cdea6e08c8165080f67fc42019c2dad2e3",
+ "firmware_source_manifest_sha256": "3cbae973dcd8414e28305ad2c1d7a250b633f96fa3d69d26d6309ff7b9a8a1e2",
+ "selection_registration": {
+  "recorded_utc": "2026-10-04T22:24:57.555783+00:00",
+  "sha256": "de1cc9aa137c8273daff97c17265d5359914e84dce45a5552ad04358aee5fbf3"
+ },
+ "raw_selection_registered_utc": "2026-10-04T22:29:59.461105+00:00"
+}

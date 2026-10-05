@@ -1,0 +1,13 @@
+{
+  "purpose": "development feasibility inspection of one public-flight event; no final-test evaluation",
+  "unit": "whole uploaded flight log; no tick-level or segment-level train/test split",
+  "candidate_limit": 3,
+  "selection": "Query official public browse metadata for the existing firmware pin first. If no candidate is available, inspect newest metadata matching failsafe, datalink or geofence, preferring rotary-wing logs with an admitted mode. Choose at most three logs before parsing their contents. Preserve all exclusions. A different firmware is a feasibility candidate only, not admitted model coverage.",
+  "firmware_pin": "d6f12ad1c4f70ad3230afd7d86e971421e02fef4",
+  "admitted_mechanisms": ["datalink loss", "geofence breach", "position accuracy"],
+  "replay_gate": "Recover exact firmware/build, effective parameters and changes, vehicle type, arming/mode/input history, competing flags, selector reset and delay history. Inspect matching logger source and actual topics/gaps. Do not use outputs as causal inputs. Compile only if a meaningful version-specific replay can be declared without inventing missing state.",
+  "metrics": ["metadata candidates considered and exclusions", "topic/field availability", "relative transition brackets", "observed sample-gap distribution", "parameter and firmware identity completeness"],
+  "tolerance": "No pass/fail threshold. Timing is reported as sampled intervals, with gaps and unobserved inputs explicit. No population agreement rate.",
+  "privacy": "Raw logs and source identifiers stay in the external ignored cache. Publish allowlisted de-located fields and relative time only. Credit PX4 under CC BY 4.0. Keep required source-level credit locally; if supplied identifying attribution conflicts with the privacy rule, do not redistribute that log's derived material.",
+  "holdout": "No held-out evaluation in this task; all inspected logs are development. Existing Study A seeds and blind holdouts remain unopened."
+}
