@@ -1,0 +1,28 @@
+{
+ "purpose": "development prerequisite inspection only; no confirmation case executed",
+ "gps_action_probe": {
+  "exception": "KeyError",
+  "missing_key": "gps_loss",
+  "interpretation": "GPS/estimator validity is absent from configured_action; position_low is a different modeled mechanism. This is repairable missing model behavior, not a D7 model-structure kill."
+ },
+ "configuration_rows": [
+  "px4-v1.17.0-sih-quadx-defaults",
+  "px4-v1.17.0-sih-quadx-hold",
+  "px4-v1.17.0-sih-quadx-rtl",
+  "px4-v1.17.0-sih-quadx-land",
+  "px4-v1.17.0-sih-quadx-rtl-delay0",
+  "px4-v1.17.0-sih-quadx-rtl-dll5",
+  "px4-v1.17.0-sih-quadx-rtl-gf-terminate"
+ ],
+ "native_adapter_flags": [
+  "gcs_connection_lost",
+  "geofence_breached",
+  "position_accuracy_low",
+  "manual_control_signal_lost"
+ ],
+ "scope_notes": [
+  "The existing single_event_campaign helper selects only RTL and Hold rows; protocol 7b requires each applicable matrix row. It is not a sufficient D25 freeze.",
+  "The observation patch records consumed GCS and geofence flags but not every competing flag or consumed takeover request.",
+  "The current hand-timeline verifier includes timing/window verdicts and is not the frozen discrete-only full-matrix model comparison required by 7b."
+ ]
+}

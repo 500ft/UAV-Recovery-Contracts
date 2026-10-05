@@ -1,0 +1,16 @@
+{
+ "cache": "/Users/redhose/.cache/uav-failsafe-composition/runs/observation-qualification-20261004",
+ "files_sha256": {
+  "build-instrumented.log": "b59ac9843f7e813d8fc721e38d4cfb2986f8a8a927064cf9b651a874a1d4203c",
+  "instrumented-libraries.txt": "b1f16de697dc8ed4ccc76186d5822f8003b76caa81ec3e09b80fff4055d4e1ed",
+  "build-comparison-before-key-normalization.json": "8ea40854e17c488f095d49b70822810bd47ab89263fc7d60bd345a384a236627",
+  "analysis-first-output.json": "11caf6133ff1fce10834019b4bf287b11ca51571bc8d807765595e278b389909",
+  "configure-control.log": "86fff271fe7e2174024fb8dcb0d12c030d7aa94d5ccdc990312e18ccb5f76f4b",
+  "build-control.log": "ead5584ec2e2cd41e114fb506ce471331a98163b0c807323cc1681050eb92a29",
+  "run-control.stdout": "7b1953762f4dc30afb9171ab9267ca64f3e7996079cab2ff5cb71c0497c3fa5b",
+  "control-libraries.txt": "6d74761e6bd7de2a2661b00b9d0b09934b61a09ed215fe3bb941158cc6b56b70",
+  "configure-instrumented.log": "3085998173b7f3366f57796bd0c9a12d21b2b8222b9ee55a250bef42a1a085d6",
+  "run-instrumented.stdout": "7b1953762f4dc30afb9171ab9267ca64f3e7996079cab2ff5cb71c0497c3fa5b"
+ },
+ "raw_runs": "Per-run hashes live in results.json; no raw trace or ULog is committed."
+}

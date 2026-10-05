@@ -1,0 +1,23 @@
+{
+ "translation_units_in_compile_database": {
+  "control": 824,
+  "instrumented": 824
+ },
+ "differing_normalized_compile_commands": [],
+ "normalization": "Replace only the isolated build-directory prefix in both file keys and commands. Preserve all flags and source-tree paths.",
+ "fresh_build_steps": {
+  "control": 1065,
+  "instrumented": 1065
+ },
+ "compiler_cache": "CMake CCACHE=OFF and command environment CCACHE_DISABLE=1 for both builds",
+ "comparison_iteration": "Initial comparison normalized commands but not generated-file keys, producing spurious differences. That output is retained externally; correcting the keys changes no build or runtime data.",
+ "installed_tools": {
+  "cmake": "cmake version 4.4.3\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake).",
+  "ninja": "1.13.2",
+  "sdk_version": "15.2",
+  "sdk_path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk"
+ },
+ "python": "3.11.8",
+ "pymavlink": "2.4.49",
+ "pyulog": "1.2.4"
+}

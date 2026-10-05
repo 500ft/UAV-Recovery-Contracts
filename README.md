@@ -41,6 +41,7 @@ quadrotor. Public-log firmware revisions and exclusions are reported separately.
 | Python model against PX4's compiled `Failsafe` class, same input sequences | After fixing eligibility and action-option errors found in development, 1,000 of 1,000 fresh reserved sequences agree exactly. Development had 495 disagreements in 1,500 random sequences and 11 in 36 directed sequences; all agree on replay after the fixes | [Results by mechanism](evidence/task-domain-2026-10-03/results.json), [domain and counterexamples](evidence/task-domain-2026-10-03/README.md) |
 | SITL datalink loss in Auto Loiter | Hold, then RTL, also on the unmodified PX4 binary | [Runtime record](evidence/task-runtime-2026-09-29/README.md) |
 | Runtime measurement prerequisites | The clean uninstrumented rebuild completed the matched datalink-loss control with the same full typed parameter values as both prior attempts. The earlier instrumented failure remains unlocalized | [Rebuild control](evidence/task-runtime-rebuild-2026-10-03/README.md), [results.json](evidence/task-runtime-rebuild-2026-10-03/results.json) |
+| Fresh-build observation qualification | Both cache-disabled development runs completed with identical typed parameters. The instrumented run recovered receive, detector, selection and navigator observations; the old failure did not recur. Confirmation remains blocked on required model/adapter inputs and the full cell comparison | [Qualification](evidence/task-observation-qualification-2026-10-04/README.md), [results.json](evidence/task-observation-qualification-2026-10-04/results.json) |
 | Public-log feasibility | Three logs inspected; one sampled geofence timeline reconstructed, zero admitted replays. The observed Hold-to-RTL commit interval was about 5.005 seconds on an older firmware revision | [Observations and exclusions](evidence/task-public-flight-2026-10-04/README.md), [results.json](evidence/task-public-flight-2026-10-04/results.json) |
 
 The position-accuracy/POSCTL defect is resolved, with its historical outputs
@@ -54,9 +55,11 @@ states the parameter and tick limits. This is not universal equivalence.
 The source trace identifies heartbeat aging and telemetry publication before
 commander's configured timeout. The last received heartbeat is distinct from
 both commander's timeout anchor and the runner's cached cut stamp. The
-uninstrumented rebuild did not reproduce the tracking failure. The instrumented
-runtime still needs a specific diagnosis before that whole chain can be measured. No new timing tolerance was calibrated; timing remains outside
-pass/fail, and Study A confirmation has not run.
+fresh matched builds did not reproduce the tracking failure, and the
+instrumented member captured the datalink path on its vehicle clock. This
+does not identify the old failure's cause or bound instrumentation overhead.
+No new timing tolerance was calibrated; timing remains outside pass/fail, and
+Study A confirmation has not run.
 
 The SITL result took a week to get right. Until then every run showed no
 failsafe action at all, whatever the hazard. The cause was the test harness:
@@ -98,12 +101,13 @@ git diff -- evidence/task-day3-2026-09-09/acquisition-ledger.json
 
 ## What's next
 
-The public-data-first step needs a permitted event log on the existing firmware
-pin with the history and consumed inputs needed for replay. The inspected
-geofence log provides a sampled timeline, but its version, mode history and
-missing selector updates prevent admission. The [roadmap](ROADMAP.md) keeps
-this acquisition need separate from runtime diagnosis and the required Study A
-cells. Physical validation remains later work.
+Study A next needs the missing estimator-validity behavior and required input
+adapters qualified in development, followed by the full D25 cell list and
+discrete comparison freeze. The successful datalink qualification does not
+admit the remaining mechanisms. The [roadmap](ROADMAP.md) keeps this work
+separate from public-log acquisition, which still needs a permitted event log
+with version-compatible history and replay inputs. Physical validation remains
+later work.
 
 ## Limits
 
