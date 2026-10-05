@@ -5,6 +5,10 @@ plan is in the [roadmap](../ROADMAP.md). The earlier, longer version of this
 log is kept at
 [commit 236c62b](https://github.com/500ft/uav-failsafe-composition/blob/236c62b0cd796592a38454a19fd87fd3901447f9/docs/SPRINT_PROGRESS.md).
 
+## Week of 2026-10-05
+
+- **10-04** Audited the declared-domain campaign (PR #45): corpus hash, freeze hashes, failure retention, disjoint sets, archive hash and reserved-after-freeze all pass (`scripts/audit_domain_campaign.py`). Gap: individual fix iterations were not recorded.
+
 ## Week of 2026-09-28
 
 - **09-30** Study A decisions signed off (owner-delegated). D7 and D9 stand
