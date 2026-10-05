@@ -1,0 +1,50 @@
+{
+ "recorded_before_launch_utc": "2026-10-05T02:19:00.525833+00:00",
+ "build": "/Users/redhose/.cache/uav-failsafe-composition/px4/PX4-Autopilot/build/observation-clean-control-20261004",
+ "compiler_cache_disabled": true,
+ "source_diff": "",
+ "artifacts": {
+  "CMakeCache.txt": "7ca9b96f4b980b95c2aaf8cfd84772dbb874c9583114aa70176658086558556e",
+  "build.ninja": "9ba7e240c310a8467dbc540b0ba457027907653878ebc706e939ba93a068f405",
+  "compile_commands.json": "f95c22ce8a5a7dd640410ed7b38aa8784669a92babaa1bf684c9d703e66604f9",
+  "parameters.xml": "639ef45050f77593983c94a37b15bb9a87c089a0533ac62f11c0b2756d827d7b",
+  "src/lib/parameters/px4_parameters.hpp": "b7169e5aad3159524da38408c6eeb7316b4039700d70b7717b547fe9f9777f94",
+  "bin/px4": "dd16d09fbe52046df10b2f045c72620adb48fc758dae5bb05461b748769e8820"
+ },
+ "configure_log_sha256": "86fff271fe7e2174024fb8dcb0d12c030d7aa94d5ccdc990312e18ccb5f76f4b",
+ "build_log_sha256": "ead5584ec2e2cd41e114fb506ce471331a98163b0c807323cc1681050eb92a29",
+ "target": "px4",
+ "parallel_jobs": 6,
+ "configure_arguments": [
+  "-G",
+  "Ninja",
+  "-DCONFIG=px4_sitl_default",
+  "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+  "-DCCACHE=OFF",
+  "-DPYTHON_EXECUTABLE=/Users/redhose/.cache/uav-failsafe-composition/venv/bin/python3"
+ ],
+ "command_environment": {
+  "CCACHE_DISABLE": "1",
+  "CCACHE_DIR": "/Users/redhose/.cache/uav-failsafe-composition/ccache"
+ },
+ "run_command": [
+  "/Users/redhose/.cache/uav-failsafe-composition/venv/bin/python",
+  "-m",
+  "harness.run_case",
+  "--config",
+  "px4-v1.17.0-sih-quadx-rtl",
+  "--event",
+  "datalink_loss",
+  "--seed",
+  "301",
+  "--development-offset-s",
+  "0",
+  "--full-parameter-snapshot",
+  "--intended-mode",
+  "auto_loiter",
+  "--px4-build",
+  "/Users/redhose/.cache/uav-failsafe-composition/px4/PX4-Autopilot/build/observation-clean-control-20261004",
+  "--out",
+  "/Users/redhose/.cache/uav-failsafe-composition/runs/observation-qualification-20261004/clean-control"
+ ]
+}
