@@ -21,15 +21,20 @@ computer or command link fails. The autopilot takes over, and what it does
 depends on the firmware version, airframe, full parameter set and the exact
 failure. Knowing that it runs PX4 is not enough.
 
-The first study (Study A) asks a narrower question. For one pinned PX4 build
-and configuration, can a model extracted from PX4's source predict which
-failsafe action fires, and when? If it can, the model can be used to check
-combinations of failures without simulating every one. If it can't, the
-recorded simulator runs are still a useful benchmark of what PX4 actually does.
+The first study (Study A) asks whether a model extracted from PX4's source
+predicts the discrete failsafe response across the required configurations
+and event classes on the pinned build. Timing remains descriptive under
+[protocol §7b](docs/specs/formal-composition/study-a-protocol.md#7b-amendment-2026-09-30--success-criterion-after-the-decision-sign-off).
+Composition claims need the later paired-event gate. The model and native
+comparison are infrastructure; agreement with PX4 does not independently
+establish mission safety. Recorded simulator runs remain useful if the model
+fails its coverage gate.
 
 Prior work already covers generic safety contracts, cross-autopilot wrappers
 and reconnection handling. The [source review](docs/day3-source-review.md)
-explains how that narrowed the question.
+explains how that narrowed the question. The
+[current prior-work contrasts](docs/prior-art.md#current-px4-comparison) cover
+PX4's own failsafe simulator, SaFUZZ, Nyctea and the autopilot-bug study.
 
 ## Where it stands
 
@@ -107,7 +112,8 @@ discrete comparison freeze. The successful datalink qualification does not
 admit the remaining mechanisms. The [roadmap](ROADMAP.md) keeps this work
 separate from public-log acquisition, which still needs a permitted event log
 with version-compatible history and replay inputs. Physical validation remains
-later work.
+later work. [Switch decisions U1–U3](ROADMAP.md#unanswered-owner-decisions)
+remain unanswered; Study A is still the active finish line.
 
 ## Limits
 
@@ -118,7 +124,11 @@ later work.
 - RC loss can't be injected in this simulator setup, so it is excluded.
 - Injection times are lower bounds; the injection latency has not been
   calibrated.
-- No safety ranking of autopilots or configurations is claimed.
+- No safety ranking of autopilots or configurations is claimed. Missing
+  physical outcomes limit physical-outcome claims; they do not by themselves
+  rule out logical-property studies. Logged state of charge is an estimate,
+  not a calibrated reserve for a specified maneuver (see PX4's
+  [battery fields](https://docs.px4.io/main/en/msg_docs/BatteryStatus)).
 - Flying any of this would need a site risk assessment, containment, an
   independent kill path, a trained safety operator and facility approval.
 - Implementation-sensitive contributions follow the

@@ -24,7 +24,7 @@ is the audit that produced it.
 | decision | reasoning lives in | consumes | validation | status |
 |---|---|---|---|---|
 | Scenario, execution and analysis are three identities | [identity.py](../harness/identity.py) | `Q-HORIZON`, `Q-INJECT-T`, `Q-SEED-OFFSETS` | `tests/test_identity.py`, 13 cases | **settled**; D25 |
-| The parameter readback is not a configuration | [identity.py](../harness/identity.py) | — | `test_the_parameter_readback_is_never_called_complete` | **settled**; a complete snapshot needs a new run |
+| The parameter readback is not a configuration | [identity.py](../harness/identity.py) | — | `test_the_parameter_readback_is_never_called_complete` | **historical readback limit retained**; [full typed capture](../evidence/task-timing-2026-10-03/README.md) and the [matched-pair comparison](../evidence/task-observation-qualification-2026-10-04/results.json) are now executed |
 | Legacy captures key on id plus content hash | [legacy-captures.json](../evidence/task-measurement-repair-2026-09-24/legacy-captures.json) | — | all 10 captures, 2 ambiguous ids reported | **settled** |
 
 ## Properties and obligations
@@ -43,8 +43,8 @@ is the audit that produced it.
 | decision | reasoning lives in | consumes | validation | status |
 |---|---|---|---|---|
 | The delay pot is shared and recharges at a quarter rate | [px4_failsafe.py](../model/px4_failsafe.py) | `Q-RECHARGE`, `Q-FAIL-ACT-T` | [11 sequences, model vs the real class, exact](../evidence/task-differential-2026-09-29/README.md); `tests/test_differential.py` | **differentially checked** on the action timeline; D27, D28 |
-| No delay below 0.1 s | [px4_failsafe.py](../model/px4_failsafe.py) | `Q-DELAY-EPS` | s8 and s9 probe both sides in the real class | **differentially checked**; the exact boundary is not probed |
-| The native class is the differential oracle | [oracle script](../oracle/run_native_failsafe_test.sh) | `Q-ORACLE-BUDGET` | [run 36222455516](../evidence/task-oracle-2026-09-26/README.md): 9/9 cases pass, binary hashed | **environment closed**; D14. The differential itself has not been run: D26 |
+| No delay below 0.1 s | [px4_failsafe.py](../model/px4_failsafe.py) | `Q-DELAY-EPS` | s8 and s9 probe both sides in the real class | **differentially checked**; subsequent timer cases and admitted ticks are recorded in the [declared-domain corpus](../evidence/task-domain-2026-10-03/README.md) |
+| The native class is the differential oracle | [oracle script](../oracle/run_native_failsafe_test.sh) | `Q-ORACLE-BUDGET` | [run 36222455516](../evidence/task-oracle-2026-09-26/README.md): 9/9 cases pass, binary hashed | **executed**; D26 has scoped differential evidence in the [reserved-corpus result](../evidence/task-domain-2026-10-03/results.json), with the [domain and exclusions](../evidence/task-domain-2026-10-03/README.md) retained |
 
 ## Literature identity
 
@@ -59,6 +59,15 @@ is the audit that produced it.
 | what is open | blocks | next action |
 |---|---|---|
 | `Q-RESIDUAL` has no bound | every timing verdict in this apparatus | a transport or timebase bound, or a causally post-event acknowledgment |
-| The selector agrees with the model but the anomaly is unexplained | Study A | instrument the running autopilot at `FailsafeBase::update` (layer C); the selector itself is now the least likely location |
-| The detector runs 1.4 to 2.0 s late against its documented timeout | T1, T2 and T5 | the oracle, then the runtime instrumentation |
-| No recovery action has ever been observed | Study A | layers A and B compared first, then the runtime instrumentation for layer C |
+| Required mechanism behavior and input adapters remain incomplete | Study A confirmation under D7 | qualify them in development, then freeze the full D25 cell list and discrete comparison; [executed inspection](../evidence/task-observation-qualification-2026-10-04/prerequisite-inspection.json) |
+| The old instrumented tracking failure's cause remains unknown | claims about its cause or logging overhead | the [fresh pair](../evidence/task-observation-qualification-2026-10-04/README.md) recovered the datalink path without identifying a cause; no defect attribution follows |
+| Public logs lack admitted replay histories | external-log model comparison | retain the [sampled reconstruction and exclusions](../evidence/task-public-flight-2026-10-04/README.md); human reconstruction check pending |
+| Switch U1–U3 remain unanswered | adoption and dependent mission-requirement work | await owner answers; see the [roadmap status](../ROADMAP.md#unanswered-owner-decisions); these are distinct from the property IDs above |
+
+The earlier no-response anomaly is resolved for the reproduced datalink case
+by the [integer-transport repair, D30](../evidence/task-runtime-2026-09-29/README.md).
+The [pinned detector source trace](../evidence/task-timing-2026-10-03/README.md#source-trace-and-observable-intervals-np-3)
+and [observed clock segments](../evidence/task-observation-qualification-2026-10-04/results.json)
+separate heartbeat receive, aging, telemetry publication, detector, selection,
+mode commit and navigator response. Their gaps do not establish a late detector
+or an upstream PX4 defect. The host-cut upper bound remains unresolved.

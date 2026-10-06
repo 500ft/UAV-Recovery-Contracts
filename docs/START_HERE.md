@@ -10,20 +10,35 @@ failsafe logic takes over. What it does depends on the firmware, airframe,
 parameters and the exact failure, so the unit of study here is a pinned PX4
 build with a complete parameter set.
 
-The project has a Python model of PX4's failsafe logic, written from the
-source. It agrees with PX4's compiled `Failsafe` class on 11 of 11 input
-sequences. The simulator harness now reproduces PX4's failsafes (Hold, then
-RTL after a datalink loss) after a parameter-encoding bug in the harness was
-fixed. The next step is Study A: every required single-event simulator cell compared
-with the model, judged by a coverage gate. Everything so far is simulation.
+The Python model agrees with the compiled PX4 failsafe class on the
+[fresh reserved corpus](../evidence/task-domain-2026-10-03/results.json), within
+its [declared input and state domain](../evidence/task-domain-2026-10-03/README.md#domain-recorded-before-execution).
+The repaired integer transport restores Hold then RTL in the
+[datalink SITL case](../evidence/task-runtime-2026-09-29/README.md). The
+[fresh matched builds](../evidence/task-observation-qualification-2026-10-04/README.md)
+recover the instrumented datalink path; the earlier tracking failure's cause
+remains unknown and injection timing remains open above.
+
+The [public-log inspection](../evidence/task-public-flight-2026-10-04/README.md)
+reconstructs a sampled geofence event. It admits no replay or native comparison:
+firmware, input-history and domain exclusions remain. This is distinct from
+component agreement, integrated SITL qualification and vehicle-level validation.
+No physical validation or Study A confirmation has run.
+
+The [current task](../ROADMAP.md#whats-left) is to qualify missing mechanism
+inputs and the comparison before freezing all required Study A cells under D7.
+[Switch decisions U1–U3](../ROADMAP.md#unanswered-owner-decisions) remain
+unanswered. The model is infrastructure, with no independent mission-safety
+claim. Source cross-checks by an AI agent are not independent human review;
+a human check of the public-event reconstruction remains pending.
 
 ## Reading paths
 
 | If you have | Read |
 | --- | --- |
 | Five minutes | The [README](../README.md), then the [roadmap](../ROADMAP.md) |
-| Half an hour | The [Study A protocol](specs/formal-composition/study-a-protocol.md) and its [decisions](specs/formal-composition/decisions-2026-09-19.md), then the [differential record](../evidence/task-differential-2026-09-29/README.md) |
-| A review to do | The [review index](REVIEW_READY.md) |
+| Half an hour | The [Study A protocol](specs/formal-composition/study-a-protocol.md) and its [decisions](specs/formal-composition/decisions-2026-09-19.md), then the [declared-domain result](../evidence/task-domain-2026-10-03/README.md) and [runtime qualification](../evidence/task-observation-qualification-2026-10-04/README.md) |
+| A review to do | The result packets above, then the historical [review index](REVIEW_READY.md) |
 | A question about a number | The [traceability index](traceability.md) and the [number-provenance audit](number-provenance-audit-2026-09-25.md) |
 | A question about novelty | The [source review](day3-source-review.md), then [prior art](prior-art.md). The novelty question is still partly open: 17 intake records are unread |
 

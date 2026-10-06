@@ -35,6 +35,16 @@ corpus and the Study A coverage gate remain in place.
 This is PX4 only. ArduPilot was dropped on 2026-09-24 because PX4's own
 behaviour was not yet explained ([critique](docs/specs/formal-composition/critique-2026-09-24.md)).
 
+## Unanswered owner decisions
+
+The switch handoff's U1 (adoption), U2 (requirement source and its operator or
+jurisdiction) and U3 (whether Study A becomes optional) remain unanswered.
+These switch IDs are separate from the U1–U4 property IDs in the protocol.
+The proposed replacement finish line remains outside this repository; the
+active finish line above is unchanged. A model-based claim still needs D7
+regardless of a future U3 decision. No new reconstruction pilot is authorized
+by this documentation reconciliation.
+
 ## Where it stands
 
 - **Public-log feasibility has an executed result.** The
