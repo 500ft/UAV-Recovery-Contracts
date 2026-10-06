@@ -1,5 +1,9 @@
 # UAV Recovery Contracts — long-term research backlog
 
+Historical study material. Active questions are superseded by the software
+pivot; Study A is paused. See the [history index](../history/README.md) for
+disposition and the retained evidence. This text does not authorize new runs.
+
 This is the long-term backlog. The current plan and finish line are in
 [ROADMAP.md](../ROADMAP.md); task status for the older 2026-09-05 sprint is in
 [SPRINT_TASKS.csv](SPRINT_TASKS.csv).

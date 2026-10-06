@@ -2,8 +2,11 @@
 
 ## Current state
 
-There are no experimental or simulation traces in this repository. The current visuals are an
-authored conceptual decision diagram and a source-reviewed dependency map; neither is a result.
+The [result index](../results/README.md) links committed derived observations
+and their external raw archives. Study A confirmation remains incomplete.
+The original conceptual diagrams are retained in the [history index](../history/README.md)
+and removed from the current narrative. This reconciliation creates no new
+failsafe figure or measurement.
 
 ## Planned data stages
 
@@ -42,7 +45,7 @@ Every future figure must state:
 
 Color is never the only semantic channel. Measured or held-out traces use solid lines with markers; model or calibration traces use dashed lines; thresholds are directly labeled.
 
-## Current figure manifest
+## Historical figure manifest
 
 | ID | Artifact | Claim | Evidence state |
 | --- | --- | --- | --- |

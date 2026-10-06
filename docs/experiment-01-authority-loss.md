@@ -1,5 +1,9 @@
 # Experiment 01 — Offboard-Authority-Loss Conformance Pilot
 
+Historical study material. Active questions are superseded by the software
+pivot; Study A is paused. See the [history index](../history/README.md) for
+disposition and the retained evidence. This text does not authorize new runs.
+
 ## Objective
 
 Determine whether completely configured PX4 and ArduPilot SITL vehicles exhibit operationally distinguishable native recovery behavior after offboard setpoints stop.

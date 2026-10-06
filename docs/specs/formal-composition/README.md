@@ -1,5 +1,9 @@
 # Formal-composition programme — index (proposed 2026-09-16)
 
+Historical study material. Active questions are superseded by the software
+pivot; Study A is paused. See the [history index](../../../history/README.md) for
+disposition and the retained evidence. This text does not authorize new runs.
+
 Status: PROPOSED. Owner edits these four documents in the PR; nothing in the backlog, ledger, rubric or records changes until the merged version says so. Base: main `d4c9b54` (after PR #15; URC-01 gate *partial*).
 
 | document | what it settles |
