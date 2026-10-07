@@ -62,7 +62,7 @@ is the audit that produced it.
 | Required mechanism behavior and input adapters remain incomplete | Study A confirmation under D7 | qualify them in development, then freeze the full D25 cell list and discrete comparison; [executed inspection](../evidence/task-observation-qualification-2026-10-04/prerequisite-inspection.json) |
 | The old instrumented tracking failure's cause remains unknown | claims about its cause or logging overhead | the [fresh pair](../evidence/task-observation-qualification-2026-10-04/README.md) recovered the datalink path without identifying a cause; no defect attribution follows |
 | Public logs lack admitted replay histories | external-log model comparison | retain the [sampled reconstruction and exclusions](../evidence/task-public-flight-2026-10-04/README.md); human reconstruction check pending |
-| Switch U1–U3 remain unanswered | adoption and dependent mission-requirement work | await owner answers; see the [roadmap status](../ROADMAP.md#unanswered-owner-decisions); these are distinct from the property IDs above |
+| Software pivot adopted; earlier switch questions superseded | [owner direction](decision-log.md#2026-10-06-adopt-the-control-prototype-deployment-investigation) | Study A paused; release/closure and public successor name pending in the [roadmap](../ROADMAP.md) |
 
 The earlier no-response anomaly is resolved for the reproduced datalink case
 by the [integer-transport repair, D30](../evidence/task-runtime-2026-09-29/README.md).

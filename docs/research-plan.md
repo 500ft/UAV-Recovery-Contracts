@@ -1,5 +1,9 @@
 # Research Plan
 
+Historical study material. Active questions are superseded by the software
+pivot; Study A is paused. See the [history index](../history/README.md) for
+disposition and the retained evidence. This text does not authorize new runs.
+
 ## Position
 
 The broad topics—UAV failsafes, contingency trajectories, collision avoidance, safety contracts, and health-aware task allocation—are established. This project does not claim those ideas as new.

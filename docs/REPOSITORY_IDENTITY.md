@@ -35,14 +35,10 @@ does not replace the authoritative protocol or task ledger.
 
 ## Visual provenance
 
-The README leads with [`media/project-overview.svg`](media/project-overview.svg),
-an editable diagram of the project's three steps and their status. It
-summarises results recorded elsewhere
-([differential](../evidence/task-differential-2026-09-29/README.md),
-[runtime](../evidence/task-runtime-2026-09-29/README.md)) and is not itself a
-result plot. Each step has a text label, so the meaning doesn't depend on
-colour, and the SVG has a title and description for screen readers. Update it
-in the same PR as any change to the roadmap's status.
+The [history index](../history/README.md) labels the original conceptual and
+status diagrams. They are retained at their original paths for historical
+references and are excluded from the current narrative. The numerical
+successor's figures belong with its local executed results.
 
 ## Keeping navigation reproducible
 

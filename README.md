@@ -1,11 +1,14 @@
 # UAV Failsafe Composition
 
-When a drone loses its command link or companion computer, the autopilot's
-failsafe logic decides what happens next. This project builds a model of PX4's
-failsafe logic from its source code, checks it against PX4 itself, and
-measures in simulation which action PX4 takes after each kind of command loss,
-and when. It also inspects public flight logs for separately reported event
-reconstruction and replay feasibility.
+This repository preserves scoped PX4 failsafe results and unfinished Study A.
+The owner has adopted a separate software investigation of control-prototype
+deployment under a strong back-to-back testing baseline. Its first numerical
+qualification is local sibling staging named `control-code-verification`;
+the public repository name remains pending.
+
+Study A is paused pending an explicit release or closure choice. See the
+[owner direction](docs/decision-log.md#2026-10-06-adopt-the-control-prototype-deployment-investigation)
+and [preserved history](history/README.md).
 
 [![Repository checks](https://github.com/500ft/uav-failsafe-composition/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/500ft/uav-failsafe-composition/actions/workflows/ci.yml)
 ![Evidence: development runs and public logs](https://img.shields.io/badge/evidence-development_runs_and_public_logs-415a77)
@@ -14,7 +17,15 @@ reconstruction and replay feasibility.
 [Where it stands](#where-it-stands) · [Roadmap](ROADMAP.md) ·
 [Quick start](#quick-start) · [Reviewer guide](docs/START_HERE.md)
 
-## The question
+## Adopted question
+
+Which defects remain after a costed back-to-back baseline at numerical,
+stateful and integration boundaries, and which additional checks reduce them?
+The successor separates generation from verification and includes reset, state
+and timing wherever the comparison boundary observes them. This repository
+contains the prior failsafe evidence indexed below.
+
+## Paused Study A question
 
 A fleet planner can't count on still controlling a drone after its companion
 computer or command link fails. The autopilot takes over, and what it does
@@ -106,14 +117,9 @@ git diff -- evidence/task-day3-2026-09-09/acquisition-ledger.json
 
 ## What's next
 
-Study A next needs the missing estimator-validity behavior and required input
-adapters qualified in development, followed by the full D25 cell list and
-discrete comparison freeze. The successful datalink qualification does not
-admit the remaining mechanisms. The [roadmap](ROADMAP.md) keeps this work
-separate from public-log acquisition, which still needs a permitted event log
-with version-compatible history and replay inputs. Physical validation remains
-later work. [Switch decisions U1–U3](ROADMAP.md#unanswered-owner-decisions)
-remain unanswered; Study A is still the active finish line.
+The [roadmap](ROADMAP.md) records the owner step: choose release or closure
+for the paused study and authorize the successor's public name. Existing
+checks below reproduce retained work; they do not complete Study A.
 
 ## Limits
 
@@ -144,7 +150,7 @@ remain unanswered; Study A is still the active finish line.
 | [Traceability index](docs/traceability.md) · [number provenance](docs/number-provenance-audit-2026-09-25.md) | Where each number comes from |
 | [Source review](docs/day3-source-review.md) · [prior art](docs/prior-art.md) | How prior work shaped the question |
 | [Claim ledger](docs/claim-ledger.md) | Each claim and its evidence |
-| [Results notice](results/README.md) | Why the results folder is empty |
+| [Result index](results/README.md) | Scoped results and unfinished confirmation |
 
 ## Contributing and license
 

@@ -25,12 +25,11 @@ firmware, input-history and domain exclusions remain. This is distinct from
 component agreement, integrated SITL qualification and vehicle-level validation.
 No physical validation or Study A confirmation has run.
 
-The [current task](../ROADMAP.md#whats-left) is to qualify missing mechanism
-inputs and the comparison before freezing all required Study A cells under D7.
-[Switch decisions U1–U3](../ROADMAP.md#unanswered-owner-decisions) remain
-unanswered. The model is infrastructure, with no independent mission-safety
-claim. Source cross-checks by an AI agent are not independent human review;
-a human check of the public-event reconstruction remains pending.
+The [owner direction](decision-log.md#2026-10-06-adopt-the-control-prototype-deployment-investigation)
+pauses Study A and adopts a separate software deployment investigation.
+The [roadmap](../ROADMAP.md) records the release/closure and successor-name
+choices still needed. Source cross-checks by an AI agent do not constitute
+independent human review.
 
 ## Reading paths
 
@@ -51,15 +50,9 @@ profiling, shared simulator integrations and reconnection handling, which
 narrowed the question. The 2026-09-24 critique then dropped the second
 autopilot (ArduPilot), because PX4's own behaviour wasn't explained yet.
 
-What remains is Study A, then a benchmark release. The envelope and fleet
-questions, with their original decision rules, are kept in
-[Experiment 01](experiment-01-authority-loss.md) and the
-[research plan](research-plan.md) as later work.
-
-![Original decision diagram: configured authority loss to measured recovery and a held-out gate, keeping a global envelope when individual envelopes don't justify expansion](../assets/recovery-contracts-overview.svg)
-
-*The original decision diagram for the envelope study, kept because it shows
-the alternative outcomes. It is not a result.*
+Study A and the earlier envelope questions are preserved in the
+[history index](../history/README.md). The original diagrams belong to that
+history and have been removed from this current reading path.
 
 ## Where things live
 
