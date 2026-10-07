@@ -1,0 +1,105 @@
+{
+ "executed_utc": "2026-10-05T02:35:11.959752+00:00",
+ "checks": [
+  {
+   "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+   ],
+   "exit_code": 0,
+   "external_log": "check-1.log",
+   "sha256": "d64d1e0e3f4cc4d4b75cfafad9aa80978c6355c48b9f24f98fb4a97f1686d6d8"
+  },
+  {
+   "command": [
+    "python",
+    "scripts/check_repo_contract.py"
+   ],
+   "exit_code": 0,
+   "external_log": "check-2.log",
+   "sha256": "75060c1145d33b7492fbb513a075067e653b15e25e38ffc4d111b1611513ad52"
+  },
+  {
+   "command": [
+    "python",
+    "scripts/acquisition_ledger.py",
+    "--check"
+   ],
+   "exit_code": 0,
+   "external_log": "check-3.log",
+   "sha256": "262db2f49fb8a34b0f0e394ec7f1b7df353b5f378ff4e8e3ed49d2dace71d638"
+  },
+  {
+   "command": [
+    "python",
+    "scripts/reference_coverage.py",
+    "--check"
+   ],
+   "exit_code": 0,
+   "external_log": "check-4.log",
+   "sha256": "dfa2bc03a5b2b8257749481da5a637a6b3c5d66899935516fd44295437d8c5a7"
+  },
+  {
+   "command": [
+    "python",
+    "evidence/task-2026-09-09/rerun_search.py",
+    "--audit",
+    "evidence/task-2026-09-11-public/database-export.json"
+   ],
+   "exit_code": 0,
+   "external_log": "check-5.log",
+   "sha256": "8557eede54d4d9d1c2486536a6023ea77f3bde56a8fa58c1a510adc4f3a48fdf"
+  },
+  {
+   "command": [
+    "python",
+    "tools/check_presentation.py",
+    ".",
+    "UAV Failsafe Composition",
+    "uav-failsafe-composition"
+   ],
+   "exit_code": 0,
+   "external_log": "check-6.log",
+   "sha256": "b54af0c95a44826823b46678ce563417cc25196e262ab0e0314036ddebe7303c"
+  },
+  {
+   "command": [
+    "python",
+    "tools/test_presentation.py"
+   ],
+   "exit_code": 0,
+   "external_log": "check-7.log",
+   "sha256": "e118810635968309af494306dffa6d36bf8530decae5bfb5745eb0a18d5fe790"
+  },
+  {
+   "command": [
+    "python",
+    "scripts/audit_domain_campaign.py"
+   ],
+   "exit_code": 0,
+   "external_log": "check-8.log",
+   "sha256": "001da9778922e78e2e4f3e97b9f3b45ce8e566545ab908b48f2b5f53a0685254"
+  },
+  {
+   "command": [
+    "git",
+    "diff",
+    "--check"
+   ],
+   "exit_code": 0,
+   "external_log": "check-whitespace.log",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+ ],
+ "reproduction": {
+  "byte_identical": true,
+  "results_sha256": "36e17f307ac318b1e15eee73feff4ebcd134848162722d3ac2d51e65011c06f5"
+ },
+ "self_review": "Reviewed raw clock records against printed observations, full parameter equality, exact-revision logger/source semantics, fresh build identities, CPU-field limitation, protocol gates and exclusions. No timing/CPU equivalence or cache-staleness cause claimed. Raw logs and coordinates remain external.",
+ "final_link_check_exit": 0
+}

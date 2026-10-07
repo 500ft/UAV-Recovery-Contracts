@@ -1,0 +1,22 @@
+{
+ "recorded_utc": "2026-10-05T02:30:21.959506+00:00",
+ "source_head": "d6f12ad1c4f70ad3230afd7d86e971421e02fef4",
+ "source_status": "",
+ "saved_binary_hashes_match": {
+  "/Users/redhose/.cache/uav-failsafe-composition/px4/PX4-Autopilot/build/px4_sitl_default/bin/px4": true,
+  "/Users/redhose/.cache/uav-failsafe-composition/runs/timing-task3-20261003/px4-original": true,
+  "/Users/redhose/.cache/uav-failsafe-composition/runs/timing-task3-20261003/px4-instrumented": true,
+  "/Users/redhose/.cache/uav-failsafe-composition/runs/runtime-rebuild-20261003/px4-rebuilt-uninstrumented": true
+ },
+ "method": "Reversed only the registered patch after the instrumented run. Original build and saved binaries were never replaced. New builds and captures remain isolated in the external cache.",
+ "source_sha256": {
+  "src/modules/logger/logged_topics.cpp": "33c1cd7c55dc81d4fa53153b7f269401b67c7f6edc929707ec536203096bcfe5",
+  "src/modules/logger/logged_topics.h": "fff2e812617d4d40e3d403471ad19aec2b71dc2aa9bb0c427c1a0c3f6117f3b3",
+  "src/modules/logger/logger.cpp": "2218ab36e3d327a805b52f0b62ac738c7af7774af2e819d23b65158d0edfec48",
+  "src/modules/load_mon/LoadMon.cpp": "47ff981e94af6fd6c055973698f3616db1cac045e6a1656c600f51156fa22737",
+  "src/modules/commander/Commander.cpp": "ab21f8b26e7c44d8569b5c34bdd5f629d72bf8c969723f4927bc46ac5a5fffff",
+  "src/modules/commander/failsafe/failsafe.cpp": "e5dd6b8148b308a8cf6346ceb09dad211bfd20efe016a5f7ae2ee5a6c43856cb",
+  "src/modules/commander/failsafe/framework.cpp": "6f7b9c1a08624c317965f8ae2195dad03f9baf03dc1e4dbb3d08c22a748e96c6",
+  "src/modules/commander/HealthAndArmingChecks/HealthAndArmingChecks.cpp": "5d0a2920534870e7f3eb1afeb6b3d65712dc92fa492a367dbefdb0f0d44a3d02"
+ }
+}

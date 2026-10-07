@@ -1,0 +1,51 @@
+{
+ "recorded_before_launch_utc": "2026-10-05T02:24:15.373756+00:00",
+ "build": "/Users/redhose/.cache/uav-failsafe-composition/px4/PX4-Autopilot/build/observation-clean-instrumented-20261004",
+ "compiler_cache_disabled": true,
+ "source_diff": "unchanged task-timing-2026-10-03/instrumentation.patch",
+ "artifacts": {
+  "CMakeCache.txt": "b7ddf52f67ecc9a6496a10bf7ae74e585038cd066d1c4a20e39ee998298f11ca",
+  "build.ninja": "3424d530bfa34d53ca3eab01de7142bf036ff0af0f6660ea2938cf4c46817fb9",
+  "compile_commands.json": "3b8b4d46aed0007b886ad3440fddb53ea07c9c9d88c8b53c5f26d450ec8e9f61",
+  "parameters.xml": "639ef45050f77593983c94a37b15bb9a87c089a0533ac62f11c0b2756d827d7b",
+  "src/lib/parameters/px4_parameters.hpp": "b7169e5aad3159524da38408c6eeb7316b4039700d70b7717b547fe9f9777f94",
+  "bin/px4": "95581441137619d8eac583117a1d296aaf0b1d89defc6e738f5f8c3c1fabfed2"
+ },
+ "configure_log_sha256": "3085998173b7f3366f57796bd0c9a12d21b2b8222b9ee55a250bef42a1a085d6",
+ "build_log_sha256": "b59ac9843f7e813d8fc721e38d4cfb2986f8a8a927064cf9b651a874a1d4203c",
+ "target": "px4",
+ "parallel_jobs": 6,
+ "configure_arguments": [
+  "-G",
+  "Ninja",
+  "-DCONFIG=px4_sitl_default",
+  "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+  "-DCCACHE=OFF",
+  "-DPYTHON_EXECUTABLE=/Users/redhose/.cache/uav-failsafe-composition/venv/bin/python3"
+ ],
+ "command_environment": {
+  "CCACHE_DISABLE": "1",
+  "CCACHE_DIR": "/Users/redhose/.cache/uav-failsafe-composition/ccache"
+ },
+ "run_command": [
+  "/Users/redhose/.cache/uav-failsafe-composition/venv/bin/python",
+  "-m",
+  "harness.run_case",
+  "--config",
+  "px4-v1.17.0-sih-quadx-rtl",
+  "--event",
+  "datalink_loss",
+  "--seed",
+  "301",
+  "--development-offset-s",
+  "0",
+  "--full-parameter-snapshot",
+  "--intended-mode",
+  "auto_loiter",
+  "--px4-build",
+  "/Users/redhose/.cache/uav-failsafe-composition/px4/PX4-Autopilot/build/observation-clean-instrumented-20261004",
+  "--out",
+  "/Users/redhose/.cache/uav-failsafe-composition/runs/observation-qualification-20261004/clean-instrumented"
+ ],
+ "source_diff_sha256": "15a7bf7e36811baadda70ff466a71d6780e9c9c7d384ab604c792db09d3ee88f"
+}

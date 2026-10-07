@@ -35,6 +35,16 @@ corpus and the Study A coverage gate remain in place.
 This is PX4 only. ArduPilot was dropped on 2026-09-24 because PX4's own
 behaviour was not yet explained ([critique](docs/specs/formal-composition/critique-2026-09-24.md)).
 
+## Unanswered owner decisions
+
+The switch handoff's U1 (adoption), U2 (requirement source and its operator or
+jurisdiction) and U3 (whether Study A becomes optional) remain unanswered.
+These switch IDs are separate from the U1–U4 property IDs in the protocol.
+The proposed replacement finish line remains outside this repository; the
+active finish line above is unchanged. A model-based claim still needs D7
+regardless of a future U3 decision. No new reconstruction pilot is authorized
+by this documentation reconciliation.
+
 ## Where it stands
 
 - **Public-log feasibility has an executed result.** The
@@ -68,12 +78,19 @@ behaviour was not yet explained ([critique](docs/specs/formal-composition/critiq
   completed datalink loss with identical pre-arm parameter values. A subsequent
   [uninstrumented rebuild control](evidence/task-runtime-rebuild-2026-10-03/README.md)
   also completed after recompiling the affected sources. The instrumented
-  interruption remains unlocalized; no repair was selected. The source trace
-  identifies heartbeat aging and telemetry publication before commander's
-  configured timeout. Full-chain measurement is blocked on diagnosing the
-  instrumented runtime's tracking failure. NP-6 sets no replacement tolerance:
-  host stream cessation still has no vehicle-clock upper bound, so timing remains
-  outside pass/fail under the signed protocol.
+  interruption did not recur in a subsequent
+  [fresh, cache-disabled matched pair](evidence/task-observation-qualification-2026-10-04/README.md).
+  That instrumented run recovered the datalink receive, aging, detector,
+  selection, mode-commit and navigator observations. The old cause remains
+  unknown; no cache-staleness or timing-equivalence claim follows. NP-6 sets
+  no replacement tolerance: host stream cessation still has no vehicle-clock
+  upper bound, so timing remains outside pass/fail under the signed protocol.
+- **Confirmation remains blocked on mechanism coverage.** The
+  [prerequisite inspection](evidence/task-observation-qualification-2026-10-04/prerequisite-inspection.json)
+  finds missing estimator-validity behavior, incomplete required input adapters
+  and a campaign helper that omits configuration rows. These are development
+  gaps that can be repaired using state present in PX4. No confirmation cell,
+  reduced matrix or D25 freeze was run after the successful datalink pair.
 - RC loss can't be injected in this simulator setup (decision D13), so Study A
   covers the other event classes.
 
@@ -84,9 +101,9 @@ behaviour was not yet explained ([critique](docs/specs/formal-composition/critiq
 | 1 | Sign off decisions D1–D13 | Owner | Done 2026-09-30 ([addendum](docs/specs/formal-composition/decisions-2026-09-19.md)) |
 | 2 | Reproduce and fix armed-state handling against the pinned native class | Agent | Done for the exercised cases; [evidence](evidence/task-armed-2026-10-03/README.md) |
 | 3 | Define the supported domain, resolve the recorded mode counterexample, then run directed and stratified random cases with reserved verification | Agent | Done for the [executed corpus](evidence/task-domain-2026-10-03/README.md); no universal equivalence claim |
-| 4 | Inspect a small public-log candidate set and reconstruct an event or establish the replay blocker | Agent | Done for the [executed candidates](evidence/task-public-flight-2026-10-04/README.md). **Current step:** obtain the missing version-compatible event history before admitting replay or expanding cohorts |
-| 5 | Close NP-3, NP-4 and NP-6; separate observable timing segments on one vehicle clock | Agent | Independent Study A prerequisite. NP-4 executed. NP-3 source traced; runtime segmentation blocked by the retained tracking failure. NP-6 remains uncalibrated. The matched clean rebuild completed. Localize the instrumented sensor interruption before selecting a repair or resuming timing observations |
-| 6 | Commit the required cell list as scenario identities (D25), then run every cell and compare each with the model | Agent | Traces committed; every cell classified |
+| 4 | Inspect a small public-log candidate set and reconstruct an event or establish the replay blocker | Agent | Done for the [executed candidates](evidence/task-public-flight-2026-10-04/README.md). Obtain the missing version-compatible event history before admitting replay or expanding cohorts |
+| 5 | Close NP-3, NP-4 and NP-6; separate observable timing segments on one vehicle clock | Agent | NP-4 executed. NP-3 datalink segments recovered in the [fresh pair](evidence/task-observation-qualification-2026-10-04/README.md); other mechanism inputs remain unqualified. NP-6 remains uncalibrated and timing non-gating. The old instrumented failure's cause remains unresolved |
+| 6 | Qualify remaining mechanism inputs and the comparison, commit all required D25 cells, then run them under a freeze | Agent | **Current step:** repair and qualify the missing modeled behavior and adapters in development. Only then freeze the full required cell list, code, parameters and discrete comparison before confirmation |
 | 7 | Apply the D7 gate. If the model holds, run the first supported hazard pair (D9) | Agent | Gate result and any blocked subdomains recorded |
 | 8 | Release the benchmark: configurations, harness, traces, model, comparison report | Agent | Tagged release with a README that states the verdict and separately reports external-log evaluation |
 

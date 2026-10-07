@@ -1,5 +1,29 @@
 # Prior-Art Boundary
 
+## Current PX4 comparison
+
+The scoped Python model and native differential are infrastructure. Agreement
+with the implementation checks correspondence; mission safety needs an
+independently specified requirement and the relevant outcome evidence.
+The [active finish line](../ROADMAP.md#finish-line) remains Study A under D7.
+No new mission-requirement or firmware-migration result is claimed here.
+
+The following primary-source passages were inspected for this reconciliation.
+The contrast column describes this repository's executed scope, not an absence
+claim about the rest of the literature.
+
+| Source and inspected passage | Established work | Contrast with this repository's result |
+| --- | --- | --- |
+| [PX4 failsafe simulator](https://docs.px4.io/main/en/config/safety_simulation), description and usage | Runs the vehicle's failsafe code in a browser, tracks current code and includes configured delays | Our [native comparison](../evidence/task-domain-2026-10-03/README.md) pins the source and checks a separate Python implementation on declared sequences. Executing failsafe logic itself is existing tooling |
+| [SaFUZZ, arXiv v1](https://arxiv.org/html/2601.05449v1), abstract and introduction | State-aware testing of transitions, failsafes and operator interactions under timing and environmental changes; simulation results checked in field tests | Our current evidence is component comparison and local SIH qualification, with public-log reconstruction separately excluded from replay. Cross-layer failsafe testing is established |
+| [Nyctea, author-posted paper](https://lijuanru.com/publications/tosem25.pdf), introduction and §3–4 | Detects flight-state deviation and uses a learned agent to change control parameters during flight | Our executed work checks failsafe selection correspondence and observation. It performs no online configuration repair; configuration correction is established prior work |
+| [Wang et al., ESEC/FSE 2021](https://yuleisui.github.io/publications/fse21.pdf), abstract and introduction | Classifies bugs, root causes and repair patterns from PX4 and ArduPilot histories | Our minimized adapter/model counterexamples concern a declared input domain. They are not a census of deployed configuration violations or a new general autopilot-bug taxonomy |
+
+This targeted source cross-check adds no experiment or novelty verdict. It does
+not close the historical unread-source or formal-axis review below. The dated
+sections preserve the earlier fleet/envelope question and its superseded
+conclusions; they do not replace the current roadmap.
+
 ## 2026-09-08 source review
 
 [Dated exact-gap/tooling review](prior-art-search-2026-09-08.md) records executed
@@ -26,9 +50,11 @@ This is a scoped source map, not a claim of an exhaustive systematic review. Sou
 | Dynamic spatial reservations | [Dynamic air corridors](https://doi.org/10.1016/j.robot.2026.105359) | Space-time corridor reservation under communication loss is not new in general. |
 | Operational RTL hazard | [ATSB AO-2023-033](https://www.atsb.gov.au/investigations/ao-2023-033) | A large-drone-operation investigation provides motivation for composing recovery behavior before coordination is lost. |
 
-## Candidate gap
+<a id="candidate-gap"></a>
 
-The working gap is not “failsafe coordination.” It is:
+## Historical candidate gap
+
+The earlier fleet/envelope proposal used this candidate gap:
 
 > Physical and simulated composition of empirically calibrated native recovery traces from completely configured autopilot systems after companion-level command authority is lost, including mode transitions and reconnection behavior.
 

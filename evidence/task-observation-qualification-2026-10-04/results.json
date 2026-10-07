@@ -1,0 +1,2308 @@
+{
+ "evidence_state": "executed development observation qualification",
+ "attempts": 2,
+ "injected_runs": 2,
+ "valid_runs": 2,
+ "confirmation_runs": 0,
+ "logger_alternative_runs": 0,
+ "agreement_verdict": null,
+ "timing_pass_fail": false,
+ "calibrated_tolerance": null,
+ "parameter_differences": [],
+ "same_discrete_transition_sequence": true,
+ "runs": {
+  "clean-control": {
+   "summary": {
+    "case_id": "px4-v1.17.0-sih-quadx-rtl__datalink_loss__development301_offset0",
+    "exit": 0,
+    "valid": {
+     "valid": true,
+     "reasons": []
+    },
+    "transitions": [
+     {
+      "from": "AUTO_LOITER",
+      "to": "AUTO_TAKEOFF",
+      "vehicle_status_failsafe": false
+     },
+     {
+      "from": "AUTO_TAKEOFF",
+      "to": "AUTO_LOITER",
+      "vehicle_status_failsafe": false
+     },
+     {
+      "from": "AUTO_LOITER",
+      "to": "AUTO_RTL",
+      "vehicle_status_failsafe": true
+     },
+     {
+      "from": "AUTO_RTL",
+      "to": "AUTO_LOITER",
+      "vehicle_status_failsafe": false
+     }
+    ]
+   },
+   "stages": [
+    {
+     "kind": "stage",
+     "stage": "launch",
+     "status": "ok",
+     "evidence": "/Users/redhose/.cache/uav-failsafe-composition/runs/observation-qualification-20261004/clean-control/px4-v1.17.0-sih-quadx-rtl__datalink_loss__development301_offset0/px4.log",
+     "detail": {
+      "pid": 42243
+     },
+     "t_host_s": 0.4144
+    },
+    {
+     "kind": "stage",
+     "stage": "configuration_applied",
+     "status": "ok",
+     "evidence": "param_export in raw.jsonl",
+     "detail": {
+      "requested": 15,
+      "mismatched": {}
+     },
+     "t_host_s": 4.954
+    },
+    {
+     "kind": "stage",
+     "stage": "normal_tracking",
+     "status": "ok",
+     "evidence": "takeoff_complete event",
+     "detail": {},
+     "t_host_s": 22.8487
+    },
+    {
+     "kind": "stage",
+     "stage": "injection",
+     "status": "ok",
+     "evidence": "injection event in raw.jsonl",
+     "detail": {
+      "scheduled_vehicle_s": 58.26,
+      "observed_vehicle_s": 58.268,
+      "surviving_publishers": {
+       "gcs_heartbeat": false,
+       "offboard_setpoints": false
+      }
+     },
+     "t_host_s": 71.5014
+    }
+   ],
+   "failures": [],
+   "binary_sha256": "dd16d09fbe52046df10b2f045c72620adb48fc758dae5bb05461b748769e8820",
+   "instrumentation": "none",
+   "snapshot_complete": true,
+   "parameter_count": 1794,
+   "registry_sha256": {
+    "parameters.xml": "639ef45050f77593983c94a37b15bb9a87c089a0533ac62f11c0b2756d827d7b",
+    "src/lib/parameters/px4_parameters.hpp": "b7169e5aad3159524da38408c6eeb7316b4039700d70b7717b547fe9f9777f94"
+   },
+   "injection_observed": true,
+   "clock": "PX4 HRT microseconds on this boot; host elapsed seconds are separate. No cross-clock upper bound.",
+   "topics": {
+    "cpuload/0": {
+     "samples": 196,
+     "first_us": 20000,
+     "last_us": 97516000,
+     "gap_us": {
+      "min": 496000,
+      "median": 500000,
+      "max": 500000
+     },
+     "changes": {}
+    },
+    "failsafe_flags/0": {
+     "samples": 184,
+     "first_us": 148000,
+     "last_us": 97756000,
+     "gap_us": {
+      "min": 108000,
+      "median": 540000,
+      "max": 588000
+     },
+     "changes": {
+      "mode_req_angular_velocity": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 8312190
+       }
+      ],
+      "mode_req_attitude": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 8311166
+       }
+      ],
+      "mode_req_local_alt": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 8257918
+       }
+      ],
+      "mode_req_local_position": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 7995448
+       }
+      ],
+      "mode_req_local_position_relaxed": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 262212
+       }
+      ],
+      "mode_req_global_position": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 56
+       }
+      ],
+      "mode_req_global_position_relaxed": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "mode_req_mission": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 8
+       }
+      ],
+      "mode_req_offboard_signal": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 16384
+       }
+      ],
+      "mode_req_home_position": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 32
+       }
+      ],
+      "mode_req_wind_and_flight_time_compliance": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 2621464
+       }
+      ],
+      "mode_req_prevent_arming": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 3944480
+       }
+      ],
+      "mode_req_manual_control": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 34119
+       }
+      ],
+      "mode_req_other": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 2139095040
+       }
+      ],
+      "angular_velocity_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "attitude_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 1108000,
+        "first_sample_us": 1648000,
+        "value": 0
+       }
+      ],
+      "local_altitude_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 256000,
+        "first_sample_us": 796000,
+        "value": 0
+       }
+      ],
+      "local_position_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 3388000,
+        "first_sample_us": 3808000,
+        "value": 0
+       }
+      ],
+      "local_position_invalid_relaxed": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 3388000,
+        "first_sample_us": 3808000,
+        "value": 0
+       }
+      ],
+      "local_velocity_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 3388000,
+        "first_sample_us": 3808000,
+        "value": 0
+       }
+      ],
+      "global_position_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 3388000,
+        "first_sample_us": 3808000,
+        "value": 0
+       }
+      ],
+      "global_position_invalid_relaxed": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 3388000,
+        "first_sample_us": 3808000,
+        "value": 0
+       }
+      ],
+      "auto_mission_missing": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       }
+      ],
+      "offboard_control_signal_lost": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       }
+      ],
+      "home_position_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "manual_control_signal_lost": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       }
+      ],
+      "gcs_connection_lost": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 2188000,
+        "first_sample_us": 2524000,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 69688000,
+        "first_sample_us": 70120000,
+        "value": 1
+       }
+      ],
+      "battery_warning": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "battery_low_remaining_time": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "battery_unhealthy": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "geofence_breached": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "mission_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "vtol_fixed_wing_system_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "wind_limit_exceeded": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "flight_time_limit_exceeded": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "position_accuracy_low": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "navigator_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "fd_critical_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "fd_esc_arming_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "fd_imbalanced_prop": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "fd_motor_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ]
+     }
+    },
+    "navigator_status/0": {
+     "samples": 195,
+     "first_us": 76000,
+     "last_us": 97288000,
+     "gap_us": {
+      "min": 116000,
+      "median": 504000.0,
+      "max": 552000
+     },
+     "changes": {
+      "nav_state": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 4
+       },
+       {
+        "previous_sample_us": 5220000,
+        "first_sample_us": 5392000,
+        "value": 17
+       },
+       {
+        "previous_sample_us": 16480000,
+        "first_sample_us": 16984000,
+        "value": 4
+       },
+       {
+        "previous_sample_us": 75020000,
+        "first_sample_us": 75136000,
+        "value": 5
+       },
+       {
+        "previous_sample_us": 96324000,
+        "first_sample_us": 96784000,
+        "value": 4
+       }
+      ],
+      "failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 0
+       }
+      ]
+     }
+    },
+    "position_setpoint_triplet/0": {
+     "samples": 38,
+     "first_us": 96000,
+     "last_us": 97588000,
+     "gap_us": {
+      "min": 48000,
+      "median": 200000,
+      "max": 58152000
+     },
+     "changes": {
+      "current.valid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 96000,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 5172000,
+        "first_sample_us": 5392000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 16984000,
+        "first_sample_us": 75136000,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 75136000,
+        "first_sample_us": 75188000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 75340000,
+        "first_sample_us": 96784000,
+        "value": 0
+       }
+      ],
+      "current.type": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 96000,
+        "value": 5
+       },
+       {
+        "previous_sample_us": 5172000,
+        "first_sample_us": 5392000,
+        "value": 3
+       },
+       {
+        "previous_sample_us": 5392000,
+        "first_sample_us": 16984000,
+        "value": 2
+       },
+       {
+        "previous_sample_us": 16984000,
+        "first_sample_us": 75136000,
+        "value": 5
+       },
+       {
+        "previous_sample_us": 75136000,
+        "first_sample_us": 75188000,
+        "value": 2
+       },
+       {
+        "previous_sample_us": 75188000,
+        "first_sample_us": 75292000,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 75292000,
+        "first_sample_us": 75340000,
+        "value": 4
+       },
+       {
+        "previous_sample_us": 75340000,
+        "first_sample_us": 96784000,
+        "value": 5
+       }
+      ]
+     }
+    },
+    "sensor_baro/0": {
+     "samples": 97,
+     "first_us": 960000,
+     "last_us": 96960000,
+     "gap_us": {
+      "min": 1000000,
+      "median": 1000000.0,
+      "max": 1000000
+     },
+     "changes": {}
+    },
+    "sensor_gps/0": {
+     "samples": 97,
+     "first_us": 1008000,
+     "last_us": 97008000,
+     "gap_us": {
+      "min": 1000000,
+      "median": 1000000.0,
+      "max": 1000000
+     },
+     "changes": {}
+    },
+    "sensor_mag/0": {
+     "samples": 97,
+     "first_us": 1052000,
+     "last_us": 97052000,
+     "gap_us": {
+      "min": 1000000,
+      "median": 1000000.0,
+      "max": 1000000
+     },
+     "changes": {}
+    },
+    "telemetry_status/0": {
+     "samples": 97,
+     "first_us": 1000000,
+     "last_us": 96772000,
+     "gap_us": {
+      "min": 252000,
+      "median": 884000.0,
+      "max": 1772000
+     },
+     "changes": {
+      "heartbeat_type_gcs": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 1000000,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 2000000,
+        "first_sample_us": 2512000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 60112000,
+        "first_sample_us": 60368000,
+        "value": 0
+       }
+      ]
+     }
+    },
+    "telemetry_status/1": {
+     "samples": 97,
+     "first_us": 1000000,
+     "last_us": 96648000,
+     "gap_us": {
+      "min": 248000,
+      "median": 1252000.0,
+      "max": 1264000
+     },
+     "changes": {
+      "heartbeat_type_gcs": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 1000000,
+        "value": 0
+       }
+      ]
+     }
+    },
+    "telemetry_status/2": {
+     "samples": 97,
+     "first_us": 1000000,
+     "last_us": 96600000,
+     "gap_us": {
+      "min": 252000,
+      "median": 1252000.0,
+      "max": 1264000
+     },
+     "changes": {
+      "heartbeat_type_gcs": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 1000000,
+        "value": 0
+       }
+      ]
+     }
+    },
+    "telemetry_status/3": {
+     "samples": 97,
+     "first_us": 1000000,
+     "last_us": 96644000,
+     "gap_us": {
+      "min": 252000,
+      "median": 1252000.0,
+      "max": 1264000
+     },
+     "changes": {
+      "heartbeat_type_gcs": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 1000000,
+        "value": 0
+       }
+      ]
+     }
+    },
+    "vehicle_global_position_groundtruth/0": {
+     "samples": 977,
+     "first_us": 220000,
+     "last_us": 97720000,
+     "gap_us": {
+      "min": 4000,
+      "median": 100000.0,
+      "max": 100000
+     },
+     "changes": {}
+    },
+    "vehicle_local_position/0": {
+     "samples": 12193,
+     "first_us": 244000,
+     "last_us": 97780000,
+     "gap_us": {
+      "min": 8000,
+      "median": 8000.0,
+      "max": 8000
+     },
+     "changes": {
+      "xy_valid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 244000,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 2780000,
+        "first_sample_us": 2788000,
+        "value": 1
+       }
+      ],
+      "z_valid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 244000,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 780000,
+        "first_sample_us": 788000,
+        "value": 1
+       }
+      ]
+     }
+    },
+    "vehicle_status/0": {
+     "samples": 203,
+     "first_us": 76000,
+     "last_us": 97288000,
+     "gap_us": {
+      "min": 12000,
+      "median": 504000.0,
+      "max": 504000
+     },
+     "changes": {
+      "arming_state": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 5320000,
+        "first_sample_us": 5368000,
+        "value": 2
+       },
+       {
+        "previous_sample_us": 96328000,
+        "first_sample_us": 96784000,
+        "value": 1
+       }
+      ],
+      "nav_state": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 4,
+        "commit_us": 40000
+       },
+       {
+        "previous_sample_us": 5380000,
+        "first_sample_us": 5392000,
+        "value": 17,
+        "commit_us": 5392000
+       },
+       {
+        "previous_sample_us": 16480000,
+        "first_sample_us": 16984000,
+        "value": 4,
+        "commit_us": 16984000
+       },
+       {
+        "previous_sample_us": 74668000,
+        "first_sample_us": 75136000,
+        "value": 5,
+        "commit_us": 75136000
+       },
+       {
+        "previous_sample_us": 96328000,
+        "first_sample_us": 96784000,
+        "value": 4,
+        "commit_us": 96784000
+       }
+      ],
+      "nav_state_user_intention": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 4
+       },
+       {
+        "previous_sample_us": 5380000,
+        "first_sample_us": 5392000,
+        "value": 17
+       },
+       {
+        "previous_sample_us": 16480000,
+        "first_sample_us": 16984000,
+        "value": 4
+       }
+      ],
+      "failsafe": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 70120000,
+        "first_sample_us": 70132000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 96328000,
+        "first_sample_us": 96784000,
+        "value": 0
+       }
+      ],
+      "vehicle_type": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 1
+       }
+      ],
+      "failsafe_and_user_took_over": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 0
+       }
+      ],
+      "failsafe_defer_state": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 0
+       }
+      ],
+      "gcs_connection_lost": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 2512000,
+        "first_sample_us": 2524000,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 69904000,
+        "first_sample_us": 70120000,
+        "value": 1
+       }
+      ],
+      "in_transition_mode": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 0
+       }
+      ]
+     }
+    }
+   },
+   "cpu_observed": {
+    "load": {
+     "min": 0.0,
+     "mean": 0.0,
+     "max": 0.0
+    },
+    "ram_usage": {
+     "min": 0.0,
+     "mean": 0.0,
+     "max": 0.0
+    }
+   },
+   "cpu_measurement_available": false,
+   "cpu_limit": "Pinned LoadMon.cpp has no Darwin load/RAM calculation branch; zero-initialized fields are published. The recorded zeros cannot bound CPU cost.",
+   "ulog_dropouts": [],
+   "uav_time_records": {},
+   "native": {
+    "valid": {
+     "valid": true,
+     "reasons": []
+    },
+    "binary_sha256": "dd16d09fbe52046df10b2f045c72620adb48fc758dae5bb05461b748769e8820",
+    "instrumentation": "none",
+    "reported_override_readback": {
+     "COM_DLL_EXCEPT": 0,
+     "COM_LOW_BAT_ACT": 1,
+     "COM_OBL_RC_ACT": 3,
+     "COM_POS_LOW_ACT": 3,
+     "COM_RCL_EXCEPT": 0,
+     "COM_RC_IN_MODE": 3,
+     "GF_ACTION": 3,
+     "GF_PREDICT": 0,
+     "MIS_TAKEOFF_ALT": 10.0,
+     "NAV_DLL_ACT": 2,
+     "NAV_RCL_ACT": 2,
+     "RTL_DESCEND_ALT": 30.0,
+     "RTL_LAND_DELAY": 0.0,
+     "RTL_RETURN_ALT": 60.0,
+     "SYS_FAILURE_EN": 1
+    },
+    "injection_cached_vehicle_s": 58.268,
+    "injection_timing_scope": "lower bound only; no calibrated injection latency",
+    "native_log_counts": {},
+    "joined_check_update_commit": 0,
+    "complete_native_tuples": 0,
+    "incomplete_native_tuples": 0,
+    "armed_gcs_loss_updates": 0,
+    "effective_nav_dll_act": [],
+    "selected_actions_during_armed_gcs_loss": [],
+    "committed_modes_during_armed_gcs_loss": [],
+    "first_consumed_armed_gcs_loss_us": null,
+    "first_selected_rtl_us": null,
+    "selected_rtl_after_consumed_flag_s": null,
+    "state_changes": [],
+    "post_injection_native_mode_events": [
+     {
+      "t_vehicle_s": 75.136,
+      "from": "AUTO_LOITER",
+      "to": "AUTO_RTL",
+      "vehicle_status_failsafe": true
+     },
+     {
+      "t_vehicle_s": 96.784,
+      "from": "AUTO_RTL",
+      "to": "AUTO_LOITER",
+      "vehicle_status_failsafe": false
+     }
+    ],
+    "observation_limit": "logging can perturb scheduling; this is a development diagnostic"
+   },
+   "timing": {
+    "host_injection_elapsed_s": 71.5013,
+    "cached_vehicle_injection_interval_us": [
+     58268000,
+     null
+    ],
+    "sampled_flag_rise": {
+     "previous_sample_us": 69688000,
+     "first_sample_us": 70120000,
+     "value": 1
+    },
+    "rtl_mode_change": {
+     "previous_sample_us": 74668000,
+     "first_sample_us": 75136000,
+     "value": 5,
+     "commit_us": 75136000
+    },
+    "navigator_rtl": {
+     "previous_sample_us": 75020000,
+     "first_sample_us": 75136000,
+     "value": 5
+    },
+    "logged_flag_to_rtl_commit_us": 5016000,
+    "sampled_flag_to_commit_interval_us": [
+     5016000,
+     5448000
+    ],
+    "commit_to_navigator_report_us": 0,
+    "native_segments": null
+   },
+   "backpressure_limit": "ULog dropouts and sampled CPU load do not measure every console/uORB queue wait or blocked callback.",
+   "raw_sha256": {
+    "case.json": "52736e9dbb4cdbbbf668aeb8f59c865ff8ec2848b8d52f0cfb12d1366b9087bd",
+    "flight.ulg": "8663bb1e737e99883caf4b05d7cbee9c03806b85f872be911b26de91ec62f1b0",
+    "parameters-full.json": "6cebf7ee381ddfa78b95a8718933db9fb5a70de4e7976e7b356f60b21fc58cf3",
+    "px4.log": "38743c80c71925f985e27a7cc06f62f9a83f5556658d75fc0eda23d3692cc3ef",
+    "raw.jsonl": "d2e32340b9bed869a1241092c33e23f2320cf42acc74294ef286a4df676fcc6f",
+    "summary.json": "f59d30be56e9ee3cc1bd1712294137f0d88398c26d8045c4e371950f876c8f92",
+    "trace.json": "999ccebc0cf2bfbaa72b9a136316b16fe0d7df30c072ebc8c182eac5db69195f"
+   }
+  },
+  "clean-instrumented": {
+   "summary": {
+    "case_id": "px4-v1.17.0-sih-quadx-rtl__datalink_loss__development301_offset0",
+    "exit": 0,
+    "valid": {
+     "valid": true,
+     "reasons": []
+    },
+    "transitions": [
+     {
+      "from": "AUTO_LOITER",
+      "to": "AUTO_TAKEOFF",
+      "vehicle_status_failsafe": false
+     },
+     {
+      "from": "AUTO_TAKEOFF",
+      "to": "AUTO_LOITER",
+      "vehicle_status_failsafe": false
+     },
+     {
+      "from": "AUTO_LOITER",
+      "to": "AUTO_RTL",
+      "vehicle_status_failsafe": true
+     },
+     {
+      "from": "AUTO_RTL",
+      "to": "AUTO_LOITER",
+      "vehicle_status_failsafe": false
+     }
+    ]
+   },
+   "stages": [
+    {
+     "kind": "stage",
+     "stage": "launch",
+     "status": "ok",
+     "evidence": "/Users/redhose/.cache/uav-failsafe-composition/runs/observation-qualification-20261004/clean-instrumented/px4-v1.17.0-sih-quadx-rtl__datalink_loss__development301_offset0/px4.log",
+     "detail": {
+      "pid": 47461
+     },
+     "t_host_s": 0.3655
+    },
+    {
+     "kind": "stage",
+     "stage": "configuration_applied",
+     "status": "ok",
+     "evidence": "param_export in raw.jsonl",
+     "detail": {
+      "requested": 15,
+      "mismatched": {}
+     },
+     "t_host_s": 4.7835
+    },
+    {
+     "kind": "stage",
+     "stage": "normal_tracking",
+     "status": "ok",
+     "evidence": "takeoff_complete event",
+     "detail": {},
+     "t_host_s": 21.0853
+    },
+    {
+     "kind": "stage",
+     "stage": "injection",
+     "status": "ok",
+     "evidence": "injection event in raw.jsonl",
+     "detail": {
+      "scheduled_vehicle_s": 58.524,
+      "observed_vehicle_s": 58.536,
+      "surviving_publishers": {
+       "gcs_heartbeat": false,
+       "offboard_setpoints": false
+      }
+     },
+     "t_host_s": 65.5094
+    }
+   ],
+   "failures": [],
+   "binary_sha256": "95581441137619d8eac583117a1d296aaf0b1d89defc6e738f5f8c3c1fabfed2",
+   "instrumentation": "15a7bf7e36811baadda70ff466a71d6780e9c9c7d384ab604c792db09d3ee88f",
+   "snapshot_complete": true,
+   "parameter_count": 1794,
+   "registry_sha256": {
+    "parameters.xml": "639ef45050f77593983c94a37b15bb9a87c089a0533ac62f11c0b2756d827d7b",
+    "src/lib/parameters/px4_parameters.hpp": "b7169e5aad3159524da38408c6eeb7316b4039700d70b7717b547fe9f9777f94"
+   },
+   "injection_observed": true,
+   "clock": "PX4 HRT microseconds on this boot; host elapsed seconds are separate. No cross-clock upper bound.",
+   "topics": {
+    "cpuload/0": {
+     "samples": 196,
+     "first_us": 20000,
+     "last_us": 97516000,
+     "gap_us": {
+      "min": 496000,
+      "median": 500000,
+      "max": 500000
+     },
+     "changes": {}
+    },
+    "failsafe_flags/0": {
+     "samples": 183,
+     "first_us": 148000,
+     "last_us": 97212000,
+     "gap_us": {
+      "min": 216000,
+      "median": 540000.0,
+      "max": 576000
+     },
+     "changes": {
+      "mode_req_angular_velocity": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 8312190
+       }
+      ],
+      "mode_req_attitude": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 8311166
+       }
+      ],
+      "mode_req_local_alt": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 8257918
+       }
+      ],
+      "mode_req_local_position": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 7995448
+       }
+      ],
+      "mode_req_local_position_relaxed": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 262212
+       }
+      ],
+      "mode_req_global_position": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 56
+       }
+      ],
+      "mode_req_global_position_relaxed": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "mode_req_mission": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 8
+       }
+      ],
+      "mode_req_offboard_signal": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 16384
+       }
+      ],
+      "mode_req_home_position": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 32
+       }
+      ],
+      "mode_req_wind_and_flight_time_compliance": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 2621464
+       }
+      ],
+      "mode_req_prevent_arming": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 3944480
+       }
+      ],
+      "mode_req_manual_control": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 34119
+       }
+      ],
+      "mode_req_other": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 2139095040
+       }
+      ],
+      "angular_velocity_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "attitude_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 1108000,
+        "first_sample_us": 1648000,
+        "value": 0
+       }
+      ],
+      "local_altitude_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 364000,
+        "first_sample_us": 796000,
+        "value": 0
+       }
+      ],
+      "local_position_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 3388000,
+        "first_sample_us": 3820000,
+        "value": 0
+       }
+      ],
+      "local_position_invalid_relaxed": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 3388000,
+        "first_sample_us": 3820000,
+        "value": 0
+       }
+      ],
+      "local_velocity_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 3388000,
+        "first_sample_us": 3820000,
+        "value": 0
+       }
+      ],
+      "global_position_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 3388000,
+        "first_sample_us": 3820000,
+        "value": 0
+       }
+      ],
+      "global_position_invalid_relaxed": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 3388000,
+        "first_sample_us": 3820000,
+        "value": 0
+       }
+      ],
+      "auto_mission_missing": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       }
+      ],
+      "offboard_control_signal_lost": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       }
+      ],
+      "home_position_invalid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "manual_control_signal_lost": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       }
+      ],
+      "gcs_connection_lost": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 2188000,
+        "first_sample_us": 2524000,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 69768000,
+        "first_sample_us": 70140000,
+        "value": 1
+       }
+      ],
+      "battery_warning": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "battery_low_remaining_time": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "battery_unhealthy": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "geofence_breached": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "mission_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "vtol_fixed_wing_system_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "wind_limit_exceeded": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "flight_time_limit_exceeded": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "position_accuracy_low": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "navigator_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "fd_critical_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "fd_esc_arming_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "fd_imbalanced_prop": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ],
+      "fd_motor_failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 148000,
+        "value": 0
+       }
+      ]
+     }
+    },
+    "navigator_status/0": {
+     "samples": 196,
+     "first_us": 72000,
+     "last_us": 97068000,
+     "gap_us": {
+      "min": 24000,
+      "median": 504000,
+      "max": 552000
+     },
+     "changes": {
+      "nav_state": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 72000,
+        "value": 4
+       },
+       {
+        "previous_sample_us": 5776000,
+        "first_sample_us": 5800000,
+        "value": 17
+       },
+       {
+        "previous_sample_us": 17392000,
+        "first_sample_us": 17500000,
+        "value": 4
+       },
+       {
+        "previous_sample_us": 75044000,
+        "first_sample_us": 75156000,
+        "value": 5
+       },
+       {
+        "previous_sample_us": 96436000,
+        "first_sample_us": 96564000,
+        "value": 4
+       }
+      ],
+      "failure": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 72000,
+        "value": 0
+       }
+      ]
+     }
+    },
+    "position_setpoint_triplet/0": {
+     "samples": 40,
+     "first_us": 92000,
+     "last_us": 97364000,
+     "gap_us": {
+      "min": 8000,
+      "median": 200000,
+      "max": 57656000
+     },
+     "changes": {
+      "current.valid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 92000,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 5572000,
+        "first_sample_us": 5800000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 17500000,
+        "first_sample_us": 75156000,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 75156000,
+        "first_sample_us": 75212000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 75356000,
+        "first_sample_us": 96564000,
+        "value": 0
+       }
+      ],
+      "current.type": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 92000,
+        "value": 5
+       },
+       {
+        "previous_sample_us": 5572000,
+        "first_sample_us": 5800000,
+        "value": 3
+       },
+       {
+        "previous_sample_us": 5800000,
+        "first_sample_us": 17492000,
+        "value": 2
+       },
+       {
+        "previous_sample_us": 17500000,
+        "first_sample_us": 75156000,
+        "value": 5
+       },
+       {
+        "previous_sample_us": 75156000,
+        "first_sample_us": 75212000,
+        "value": 2
+       },
+       {
+        "previous_sample_us": 75212000,
+        "first_sample_us": 75356000,
+        "value": 4
+       },
+       {
+        "previous_sample_us": 75356000,
+        "first_sample_us": 96564000,
+        "value": 5
+       }
+      ]
+     }
+    },
+    "sensor_baro/0": {
+     "samples": 97,
+     "first_us": 960000,
+     "last_us": 96960000,
+     "gap_us": {
+      "min": 1000000,
+      "median": 1000000.0,
+      "max": 1000000
+     },
+     "changes": {}
+    },
+    "sensor_gps/0": {
+     "samples": 97,
+     "first_us": 1008000,
+     "last_us": 97008000,
+     "gap_us": {
+      "min": 1000000,
+      "median": 1000000.0,
+      "max": 1000000
+     },
+     "changes": {}
+    },
+    "sensor_mag/0": {
+     "samples": 97,
+     "first_us": 1052000,
+     "last_us": 97052000,
+     "gap_us": {
+      "min": 1000000,
+      "median": 1000000.0,
+      "max": 1000000
+     },
+     "changes": {}
+    },
+    "telemetry_status/0": {
+     "samples": 97,
+     "first_us": 1000000,
+     "last_us": 96804000,
+     "gap_us": {
+      "min": 252000,
+      "median": 940000.0,
+      "max": 1884000
+     },
+     "changes": {
+      "heartbeat_type_gcs": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 1000000,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 2000000,
+        "first_sample_us": 2660000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 60132000,
+        "first_sample_us": 60388000,
+        "value": 0
+       }
+      ]
+     }
+    },
+    "telemetry_status/1": {
+     "samples": 97,
+     "first_us": 1000000,
+     "last_us": 96684000,
+     "gap_us": {
+      "min": 252000,
+      "median": 1252000.0,
+      "max": 1260000
+     },
+     "changes": {
+      "heartbeat_type_gcs": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 1000000,
+        "value": 0
+       }
+      ]
+     }
+    },
+    "telemetry_status/2": {
+     "samples": 97,
+     "first_us": 1000000,
+     "last_us": 96672000,
+     "gap_us": {
+      "min": 252000,
+      "median": 1252000.0,
+      "max": 1260000
+     },
+     "changes": {
+      "heartbeat_type_gcs": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 1000000,
+        "value": 0
+       }
+      ]
+     }
+    },
+    "telemetry_status/3": {
+     "samples": 97,
+     "first_us": 1000000,
+     "last_us": 96668000,
+     "gap_us": {
+      "min": 252000,
+      "median": 1252000.0,
+      "max": 1260000
+     },
+     "changes": {
+      "heartbeat_type_gcs": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 1000000,
+        "value": 0
+       }
+      ]
+     }
+    },
+    "vehicle_global_position_groundtruth/0": {
+     "samples": 975,
+     "first_us": 220000,
+     "last_us": 97520000,
+     "gap_us": {
+      "min": 4000,
+      "median": 100000.0,
+      "max": 104000
+     },
+     "changes": {}
+    },
+    "vehicle_local_position/0": {
+     "samples": 12163,
+     "first_us": 260000,
+     "last_us": 97556000,
+     "gap_us": {
+      "min": 8000,
+      "median": 8000.0,
+      "max": 8000
+     },
+     "changes": {
+      "xy_valid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 260000,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 2780000,
+        "first_sample_us": 2788000,
+        "value": 1
+       }
+      ],
+      "z_valid": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 260000,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 780000,
+        "first_sample_us": 788000,
+        "value": 1
+       }
+      ]
+     }
+    },
+    "vehicle_status/0": {
+     "samples": 203,
+     "first_us": 76000,
+     "last_us": 97068000,
+     "gap_us": {
+      "min": 0,
+      "median": 504000.0,
+      "max": 504000
+     },
+     "changes": {
+      "arming_state": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 5272000,
+        "first_sample_us": 5776000,
+        "value": 2
+       },
+       {
+        "previous_sample_us": 96084000,
+        "first_sample_us": 96564000,
+        "value": 1
+       }
+      ],
+      "nav_state": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 4,
+        "commit_us": 40000
+       },
+       {
+        "previous_sample_us": 5788000,
+        "first_sample_us": 5800000,
+        "value": 17,
+        "commit_us": 5800000
+       },
+       {
+        "previous_sample_us": 17392000,
+        "first_sample_us": 17500000,
+        "value": 4,
+        "commit_us": 17500000
+       },
+       {
+        "previous_sample_us": 74688000,
+        "first_sample_us": 75156000,
+        "value": 5,
+        "commit_us": 75156000
+       },
+       {
+        "previous_sample_us": 96084000,
+        "first_sample_us": 96564000,
+        "value": 4,
+        "commit_us": 96564000
+       }
+      ],
+      "nav_state_user_intention": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 4
+       },
+       {
+        "previous_sample_us": 5788000,
+        "first_sample_us": 5800000,
+        "value": 17
+       },
+       {
+        "previous_sample_us": 17392000,
+        "first_sample_us": 17500000,
+        "value": 4
+       }
+      ],
+      "failsafe": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 70140000,
+        "first_sample_us": 70152000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 96084000,
+        "first_sample_us": 96564000,
+        "value": 0
+       }
+      ],
+      "vehicle_type": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 1
+       }
+      ],
+      "failsafe_and_user_took_over": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 0
+       }
+      ],
+      "failsafe_defer_state": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 0
+       }
+      ],
+      "gcs_connection_lost": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 1
+       },
+       {
+        "previous_sample_us": 2512000,
+        "first_sample_us": 2524000,
+        "value": 0
+       },
+       {
+        "previous_sample_us": 69912000,
+        "first_sample_us": 70140000,
+        "value": 1
+       }
+      ],
+      "in_transition_mode": [
+       {
+        "previous_sample_us": null,
+        "first_sample_us": 76000,
+        "value": 0
+       }
+      ]
+     }
+    }
+   },
+   "cpu_observed": {
+    "load": {
+     "min": 0.0,
+     "mean": 0.0,
+     "max": 0.0
+    },
+    "ram_usage": {
+     "min": 0.0,
+     "mean": 0.0,
+     "max": 0.0
+    }
+   },
+   "cpu_measurement_available": false,
+   "cpu_limit": "Pinned LoadMon.cpp has no Darwin load/RAM calculation branch; zero-initialized fields are published. The recorded zeros cannot bound CPU cost.",
+   "ulog_dropouts": [],
+   "uav_time_records": {
+    "detector": {
+     "count": 8627,
+     "first": {
+      "t": 40000,
+      "end": 40000,
+      "anchor": 0,
+      "lost": 1
+     },
+     "last": {
+      "t": 103536000,
+      "end": 103536000,
+      "anchor": 60132000,
+      "lost": 1
+     },
+     "max_adjacent_t_gap_us": 20000
+    },
+    "selected": {
+     "count": 8627,
+     "first": {
+      "t": 40000,
+      "update": 40000,
+      "action": 0
+     },
+     "last": {
+      "t": 103536000,
+      "update": 103536000,
+      "action": 0
+     },
+     "max_adjacent_t_gap_us": 16000
+    },
+    "commit": {
+     "count": 8627,
+     "first": {
+      "t": 40000,
+      "update": 40000,
+      "nav": 4
+     },
+     "last": {
+      "t": 103536000,
+      "update": 103536000,
+      "nav": 4
+     },
+     "max_adjacent_t_gap_us": 20000
+    },
+    "navigator": {
+     "count": 2200,
+     "first": {
+      "t": 72000,
+      "end": 72000,
+      "nav": 4,
+      "mode": -1,
+      "sp": 1
+     },
+     "last": {
+      "t": 103516000,
+      "end": 103516000,
+      "nav": 4,
+      "mode": -1,
+      "sp": 1
+     },
+     "max_adjacent_t_gap_us": 168000
+    },
+    "telem": {
+     "count": 787,
+     "first": {
+      "t": 1000000,
+      "ch": 3,
+      "gcs": 0
+     },
+     "last": {
+      "t": 103088000,
+      "ch": 0,
+      "gcs": 0
+     },
+     "max_adjacent_t_gap_us": 1000000
+    },
+    "rx": {
+     "count": 61,
+     "first": {
+      "t": 1712000,
+      "ch": 0,
+      "sys": 255,
+      "comp": 190
+     },
+     "last": {
+      "t": 57872000,
+      "ch": 0,
+      "sys": 255,
+      "comp": 190
+     },
+     "max_adjacent_t_gap_us": 952000
+    },
+    "age": {
+     "count": 421,
+     "first": {
+      "t": 2508000,
+      "ch": 2,
+      "last": 0,
+      "gcs": 0
+     },
+     "last": {
+      "t": 103084000,
+      "ch": 0,
+      "last": 57872000,
+      "gcs": 0
+     },
+     "max_adjacent_t_gap_us": 1124000
+    }
+   },
+   "native": {
+    "valid": {
+     "valid": true,
+     "reasons": []
+    },
+    "binary_sha256": "95581441137619d8eac583117a1d296aaf0b1d89defc6e738f5f8c3c1fabfed2",
+    "instrumentation": "15a7bf7e36811baadda70ff466a71d6780e9c9c7d384ab604c792db09d3ee88f",
+    "reported_override_readback": {
+     "COM_DLL_EXCEPT": 0,
+     "COM_LOW_BAT_ACT": 1,
+     "COM_OBL_RC_ACT": 3,
+     "COM_POS_LOW_ACT": 3,
+     "COM_RCL_EXCEPT": 0,
+     "COM_RC_IN_MODE": 3,
+     "GF_ACTION": 3,
+     "GF_PREDICT": 0,
+     "MIS_TAKEOFF_ALT": 10.0,
+     "NAV_DLL_ACT": 2,
+     "NAV_RCL_ACT": 2,
+     "RTL_DESCEND_ALT": 30.0,
+     "RTL_LAND_DELAY": 0.0,
+     "RTL_RETURN_ALT": 60.0,
+     "SYS_FAILURE_EN": 1
+    },
+    "injection_cached_vehicle_s": 58.536,
+    "injection_timing_scope": "lower bound only; no calibrated injection latency",
+    "native_log_counts": {
+     "init": 1,
+     "check": 8627,
+     "params": 8627,
+     "update": 8627,
+     "delay": 8627,
+     "commit": 8627
+    },
+    "joined_check_update_commit": 8627,
+    "complete_native_tuples": 8627,
+    "incomplete_native_tuples": 0,
+    "armed_gcs_loss_updates": 2203,
+    "effective_nav_dll_act": [
+     2
+    ],
+    "selected_actions_during_armed_gcs_loss": [
+     5,
+     6
+    ],
+    "committed_modes_during_armed_gcs_loss": [
+     4,
+     5
+    ],
+    "first_consumed_armed_gcs_loss_us": 70152000,
+    "first_selected_rtl_us": 75156000,
+    "selected_rtl_after_consumed_flag_s": 5.004,
+    "state_changes": [
+     {
+      "t_us": 40000,
+      "armed": 0,
+      "gcs": 0,
+      "intended": 4,
+      "dll": 0,
+      "ignored": 0,
+      "action": 0,
+      "delayed": 0,
+      "takeover": 0,
+      "deferred": 0,
+      "nav": 4
+     },
+     {
+      "t_us": 52000,
+      "armed": 0,
+      "gcs": 1,
+      "intended": 4,
+      "dll": 0,
+      "ignored": 0,
+      "action": 0,
+      "delayed": 0,
+      "takeover": 0,
+      "deferred": 0,
+      "nav": 4
+     },
+     {
+      "t_us": 2536000,
+      "armed": 0,
+      "gcs": 0,
+      "intended": 4,
+      "dll": 0,
+      "ignored": 0,
+      "action": 0,
+      "delayed": 0,
+      "takeover": 0,
+      "deferred": 0,
+      "nav": 4
+     },
+     {
+      "t_us": 3832000,
+      "armed": 0,
+      "gcs": 0,
+      "intended": 4,
+      "dll": 2,
+      "ignored": 0,
+      "action": 0,
+      "delayed": 0,
+      "takeover": 0,
+      "deferred": 0,
+      "nav": 4
+     },
+     {
+      "t_us": 5788000,
+      "armed": 1,
+      "gcs": 0,
+      "intended": 4,
+      "dll": 2,
+      "ignored": 0,
+      "action": 0,
+      "delayed": 0,
+      "takeover": 0,
+      "deferred": 0,
+      "nav": 4
+     },
+     {
+      "t_us": 5800000,
+      "armed": 1,
+      "gcs": 0,
+      "intended": 17,
+      "dll": 2,
+      "ignored": 0,
+      "action": 0,
+      "delayed": 0,
+      "takeover": 0,
+      "deferred": 0,
+      "nav": 17
+     },
+     {
+      "t_us": 17500000,
+      "armed": 1,
+      "gcs": 0,
+      "intended": 4,
+      "dll": 2,
+      "ignored": 0,
+      "action": 0,
+      "delayed": 0,
+      "takeover": 0,
+      "deferred": 0,
+      "nav": 4
+     },
+     {
+      "t_us": 70152000,
+      "armed": 1,
+      "gcs": 1,
+      "intended": 4,
+      "dll": 2,
+      "ignored": 0,
+      "action": 5,
+      "delayed": 6,
+      "takeover": 0,
+      "deferred": 0,
+      "nav": 4
+     },
+     {
+      "t_us": 75156000,
+      "armed": 1,
+      "gcs": 1,
+      "intended": 4,
+      "dll": 2,
+      "ignored": 0,
+      "action": 6,
+      "delayed": 0,
+      "takeover": 0,
+      "deferred": 0,
+      "nav": 5
+     },
+     {
+      "t_us": 96564000,
+      "armed": 0,
+      "gcs": 1,
+      "intended": 4,
+      "dll": 2,
+      "ignored": 0,
+      "action": 0,
+      "delayed": 0,
+      "takeover": 0,
+      "deferred": 0,
+      "nav": 4
+     }
+    ],
+    "post_injection_native_mode_events": [
+     {
+      "t_vehicle_s": 75.156,
+      "from": "AUTO_LOITER",
+      "to": "AUTO_RTL",
+      "vehicle_status_failsafe": true
+     },
+     {
+      "t_vehicle_s": 96.564,
+      "from": "AUTO_RTL",
+      "to": "AUTO_LOITER",
+      "vehicle_status_failsafe": false
+     }
+    ],
+    "observation_limit": "logging can perturb scheduling; this is a development diagnostic"
+   },
+   "timing": {
+    "host_injection_elapsed_s": 65.5093,
+    "cached_vehicle_injection_interval_us": [
+     58536000,
+     null
+    ],
+    "sampled_flag_rise": {
+     "previous_sample_us": 69768000,
+     "first_sample_us": 70140000,
+     "value": 1
+    },
+    "rtl_mode_change": {
+     "previous_sample_us": 74688000,
+     "first_sample_us": 75156000,
+     "value": 5,
+     "commit_us": 75156000
+    },
+    "navigator_rtl": {
+     "previous_sample_us": 75044000,
+     "first_sample_us": 75156000,
+     "value": 5
+    },
+    "logged_flag_to_rtl_commit_us": 5016000,
+    "sampled_flag_to_commit_interval_us": [
+     5016000,
+     5388000
+    ],
+    "commit_to_navigator_report_us": 0,
+    "native_segments": {
+     "last_observed_qualifying_receive": {
+      "t": 57872000,
+      "ch": 0,
+      "sys": 255,
+      "comp": 190
+     },
+     "first_observed_aged_false": {
+      "t": 60384000,
+      "ch": 0,
+      "last": 57872000,
+      "gcs": 0
+     },
+     "receive_channels": [
+      0
+     ],
+     "publications_matching_detector_anchor": [
+      {
+       "t": 60132000,
+       "ch": 0,
+       "gcs": 1
+      }
+     ],
+     "first_false_telemetry_publication": {
+      "t": 60388000,
+      "ch": 0,
+      "gcs": 0
+     },
+     "first_lost_detector_bracket": {
+      "t": 70140000,
+      "end": 70140000,
+      "anchor": 60132000,
+      "lost": 1
+     },
+     "first_selected_hold": {
+      "t": 70152000,
+      "update": 70152000,
+      "action": 5
+     },
+     "first_selected_rtl": {
+      "t": 75156000,
+      "update": 75156000,
+      "action": 6
+     },
+     "first_navigator_rtl_execution_bracket": {
+      "t": 75156000,
+      "end": 75156000,
+      "nav": 5,
+      "mode": 5,
+      "sp": 1
+     },
+     "receive_to_detector_interval_us": [
+      12268000,
+      12268000
+     ],
+     "receive_to_selected_rtl_us": 17284000,
+     "clock_limit": "HRT is quantized by SIH lockstep. Equal entry/exit stamps do not prove zero host execution time. The observed receive is not the host cut instant.",
+     "commit_marker_limit": "UAV_TIME commit follows nav field assignment but precedes nav_state_timestamp assignment; use the ULog nav_state_timestamp for that official stamp."
+    }
+   },
+   "backpressure_limit": "ULog dropouts and sampled CPU load do not measure every console/uORB queue wait or blocked callback.",
+   "raw_sha256": {
+    "case.json": "52736e9dbb4cdbbbf668aeb8f59c865ff8ec2848b8d52f0cfb12d1366b9087bd",
+    "flight.ulg": "1328c09d153719302b325cb3d7a9da5411a2d5680f3bceba6900c467c089037a",
+    "parameters-full.json": "465f20a5dfe82c9656ad8fe96e939c7dbf83915cc1bb43d63e5779ad4bd0ebf7",
+    "px4.log": "5065f9bb7fb3093d3d9c86c82d6fae6c585b9bb3af940c7d387f2155d2e2b089",
+    "raw.jsonl": "18f385a551f73e530f9dd10e2859671ce70679dbb21a77a32c9504885c917214",
+    "source.patch": "15a7bf7e36811baadda70ff466a71d6780e9c9c7d384ab604c792db09d3ee88f",
+    "summary.json": "f59d30be56e9ee3cc1bd1712294137f0d88398c26d8045c4e371950f876c8f92",
+    "trace.json": "d86dc1840a4a482eb5163bdbcb6068b8188db38b8f9cf68441669966872598b4"
+   }
+  }
+ },
+ "interpretation": "A matched fresh-build pair does not identify compiler-cache staleness or a specific scheduling cause. Apply the qualification and protocol gates before any confirmation.",
+ "analyzer_sha256": "733e81a93dd65ceaf2a443480f4d940f53dc6cf7b8494745e4dfd2c914dbab42",
+ "reused_analysis_sha256": {
+  "task-public-flight-2026-10-04/analyze.py": "75a6518cb9a51d5c163d11b363840591b70fcbd196026c83f00768a39f9a9548",
+  "task-runtime-2026-09-29/analyze.py": "6109e9f8c118946f7466e0b0a4fbdee384c0efccfe5b85b50945ec5a17d55500"
+ }
+}
