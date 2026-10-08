@@ -1,4 +1,4 @@
-# Start here — UAV Failsafe Composition
+# Start here — PX4 Failsafe Differential Testing
 
 [Project overview](../README.md) · [Run the checks](../README.md#quick-start) ·
 [Roadmap](../ROADMAP.md) · [Review index](REVIEW_READY.md)

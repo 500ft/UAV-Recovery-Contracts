@@ -1,4 +1,4 @@
-# UAV Failsafe Composition
+# PX4 Failsafe Differential Testing
 
 This repository preserves scoped PX4 failsafe results and unfinished Study A.
 The owner has adopted a separate software investigation of control-prototype
@@ -10,7 +10,7 @@ Study A is paused pending an explicit release or closure choice. See the
 [owner direction](docs/decision-log.md#2026-10-06-adopt-the-control-prototype-deployment-investigation)
 and [preserved history](history/README.md).
 
-[![Repository checks](https://github.com/500ft/uav-failsafe-composition/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/500ft/uav-failsafe-composition/actions/workflows/ci.yml)
+[![Repository checks](https://github.com/500ft/px4-failsafe-differential-testing/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/500ft/px4-failsafe-differential-testing/actions/workflows/ci.yml)
 ![Evidence: development runs and public logs](https://img.shields.io/badge/evidence-development_runs_and_public_logs-415a77)
 [![License: MIT](https://img.shields.io/badge/license-MIT-276c6b)](LICENSE)
 
@@ -91,8 +91,8 @@ Python 3.11 (the CI version) and Git. The only dependency is pinned in
 hardware.
 
 ```bash
-git clone https://github.com/500ft/uav-failsafe-composition.git
-cd uav-failsafe-composition
+git clone https://github.com/500ft/px4-failsafe-differential-testing.git
+cd px4-failsafe-differential-testing
 python3.11 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
@@ -163,7 +163,7 @@ checks below reproduce retained work; they do not complete Study A.
 Reproduction reports, source corrections and protocol critiques are welcome.
 Include the commit, the command or source location, and what you expected and
 saw. Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a
-[pull request or issue](https://github.com/500ft/uav-failsafe-composition/issues).
+[pull request or issue](https://github.com/500ft/px4-failsafe-differential-testing/issues).
 
 Software is [MIT licensed](LICENSE); third-party publications keep their own
 licenses. The new public-log observations credit PX4 under

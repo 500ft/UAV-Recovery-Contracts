@@ -28,5 +28,5 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Check README links, identity and negative controls
         run: |
-          python tools/check_presentation.py . "UAV Failsafe Composition" uav-failsafe-composition
+          python tools/check_presentation.py . "PX4 Failsafe Differential Testing" px4-failsafe-differential-testing
           python tools/test_presentation.py
