@@ -44,8 +44,9 @@ firmware revision prevent an admitted comparison. No result from it is combined
 with the SIH clock. The historical dependency map remains a source-audit diagram,
 not a quantitative result, and is unchanged.
 
-The separate local successor has an existing core-qualification plot and its
-own generator/manifest. Its local restyling is not published in this repository.
+The [separate successor](https://github.com/500ft/control-code-verification) has a
+core-qualification plot and its own generator/manifest. Its restyling is
+published there; no successor code or figure is copied into this repository.
 The scientific roadmap and pending decisions are unchanged.
 
 ## Planned data stages

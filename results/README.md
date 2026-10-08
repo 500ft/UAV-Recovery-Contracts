@@ -42,8 +42,9 @@ Each packet states its pin, inputs, exclusions, source hashes and raw-archive
 location. The [README checks](../README.md#quick-start) exercise retained code.
 Component agreement and development observations do not complete the
 [Study A coverage gate](../docs/specs/formal-composition/study-a-protocol.md).
-The software successor's numerical result remains in local sibling staging
-`control-code-verification`, pending authorization of its public name.
+The software successor's numerical result and hosted reproduction are published
+in [control-code-verification](https://github.com/500ft/control-code-verification).
+They qualify development numerical agreement; integration remains unqualified.
 
 The development runs are never held-out confirmation and never a measured
 physical-flight result.

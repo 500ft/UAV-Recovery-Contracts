@@ -3,8 +3,10 @@
 This repository preserves scoped PX4 failsafe results and unfinished Study A.
 The owner has adopted a separate software investigation of control-prototype
 deployment under a strong back-to-back testing baseline. Its first numerical
-qualification is local sibling staging named `control-code-verification`;
-the public repository name remains pending.
+qualification is published separately in
+[control-code-verification](https://github.com/500ft/control-code-verification).
+Its [hosted development reproduction](https://github.com/500ft/control-code-verification/actions/runs/37854170219) passes;
+functional branch requirements and reviewer assignment remain unresolved.
 
 Study A is paused pending an explicit release or closure choice. See the
 [owner direction](docs/decision-log.md#2026-10-06-adopt-the-control-prototype-deployment-investigation)
@@ -66,7 +68,7 @@ breakdown and counterexamples.
 | SIH datalink runtime | Hold then RTL after the typed parameter transport repair | [Runtime record](evidence/task-runtime-2026-09-29/README.md); harness correction |
 | Matched rebuilds | Clean control and fresh instrumented runs completed | [Rebuild](evidence/task-runtime-rebuild-2026-10-03/README.md) and [qualification](evidence/task-observation-qualification-2026-10-04/README.md); earlier failure remains unlocalized |
 | Public-log feasibility | Sampled geofence timeline reconstructed; no replay admitted | [Observations and exclusions](evidence/task-public-flight-2026-10-04/README.md); older firmware and incomplete inputs |
-| Successor numerical translation | Local development result only | Separate local staging; no qualified integration or public code here |
+| Successor numerical translation | Published development result and hosted reproduction | [Separate source repository](https://github.com/500ft/control-code-verification); integration remains unqualified |
 
 The [result guide](results/README.md) separates the component counts from the
 observed runtime timeline. The [figure guide](docs/data-and-figures.md) gives
@@ -130,13 +132,13 @@ git diff -- evidence/task-day3-2026-09-09/acquisition-ledger.json
 ## What's next
 
 The [dependency roadmap](ROADMAP.md) separates prerequisites from completion
-evidence for the local successor and the paused study. Obsolete campaign
+evidence for the published successor and the paused study. Obsolete campaign
 enumeration, alternate plans and conceptual figures have been removed; the
 [cleanup record](history/README.md#removed-active-material) explains retained
 reproduction sources.
 
-The remaining owner decisions are release or closure for the paused study
-and the successor's public name. Existing
+The remaining owner decision here is release or closure for the paused study.
+The successor still needs functional review. Existing
 checks below reproduce retained work; they do not complete Study A.
 
 ## Limits

@@ -11,26 +11,29 @@ locates the prior study and its unresolved gates.
 
 The successor asks which deployment defects remain after a costed back-to-back
 comparison, and which extra checks catch them at what marginal cost. Its
-implementation is in local staging `control-code-verification`, with its own
-roadmap. Deployment code does not live here; a public name remains pending.
+implementation is in [control-code-verification](https://github.com/500ft/control-code-verification),
+with its own [roadmap](https://github.com/500ft/control-code-verification/blob/main/ROADMAP.md).
+The existing staging name was used under the owner's delegated instruction.
+Deployment code remains in that separate repository.
 
 ## Verified work and current dependencies
 
 | State | Work | Prerequisites | Completion evidence |
 | --- | --- | --- | --- |
 | Done, scoped | Preserve Python/native failsafe comparison and runtime observations | Pinned source, declared inputs and retained raw records | [Result index](results/README.md), including corpus exclusions and reproduction commands |
-| Done, local successor | Numerical filter qualification | Explicit state/reset/dt semantics, units, types, domain and derived error bounds before comparisons | Successor `spec.json`, `registration.json`, `NUMERICS.md` and `evidence/results.json`; development agreement only |
-| Current, owner-blocked | Decide old-study disposition and successor publication | Owner release/closure choice and public-name authorization | Recorded decisions, then a separately authorized release/closure or publication; none has occurred |
+| Done, successor | Numerical filter qualification | Explicit state/reset/dt semantics, units, types, domain and derived error bounds before comparisons | [Successor result](https://github.com/500ft/control-code-verification/blob/main/evidence/results.json) and its registered specification; development agreement only |
+| Done, successor | Publish source and reproduce in CI | Reviewed tracked history and pinned dependencies | [Public source](https://github.com/500ft/control-code-verification) and [executed hosted reproduction](https://github.com/500ft/control-code-verification/actions/runs/37854170219); workflow under PR review |
+| Current, owner-blocked | Decide old-study disposition | Owner release/closure choice | Recorded decision followed by the authorized action; neither has occurred |
 | Current, successor-blocked | Review functional branch requirements | Assigned second reviewer and the recorded threshold-uncertainty cases | Reviewed branch-use requirements before an integration wrapper is qualified |
 
 ## Conditional successor order
 
-These are dependencies for the local successor, not active failsafe campaigns.
+These are dependencies for the separate successor, not active failsafe campaigns.
 Its roadmap owns the executable tasks and detailed completion criteria.
 
 1. **Setup and generator qualification.** Use the existing local result as the
-   starting point. A public remote needs name approval; CI needs a reproducible
-   toolchain. Any additional precision path needs its own inspected generated
+   starting point. Public source and hosted core reproduction are complete.
+   Any additional precision path needs its own inspected generated
    types, flags and reference checks. Firmware is selected through actual
    support and replay qualification, rather than inheriting this study's pin.
 2. **Reference-qualified controller.** Requires explicit requirements and
