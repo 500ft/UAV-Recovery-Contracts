@@ -55,7 +55,7 @@ completes the floor rather than becoming a renamed fleet-safety success.
 
 ## What this audit does not establish
 
-- Novelty remains unresolved until [`URC-01`](TASKS.md#urc-01--close-the-exact-gap-and-tooling-search) completes a dated literature and patent search.
+- Novelty remains unresolved until [`URC-01`](https://github.com/500ft/uav-failsafe-composition/blob/cdb7b36d01085527529fde3bead4543c1e038e43/docs/TASKS.md#urc-01--close-the-exact-gap-and-tooling-search) completes a dated literature and patent search.
 - An edge records a documented prerequisite; it does not prove that the proposed method will work.
 - No node represents simulation, HITL, flight, or safety evidence because none exists yet.
 - Repository centrality is not used to rank scientific importance.

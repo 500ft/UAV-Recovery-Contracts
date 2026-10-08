@@ -51,13 +51,14 @@ narrowed the question. The 2026-09-24 critique then dropped the second
 autopilot (ArduPilot), because PX4's own behaviour wasn't explained yet.
 
 Study A and the earlier envelope questions are preserved in the
-[history index](../history/README.md). The original diagrams belong to that
-history and have been removed from this current reading path.
+[history index](../history/README.md). Obsolete diagrams and alternate plans
+have been deleted from the working tree; the history index links their
+immutable versions.
 
 ## Where things live
 
 - [Roadmap](../ROADMAP.md): finish line and remaining steps.
-- [Long-term backlog](TASKS.md): later tasks, including hardware work.
+- [History index](../history/README.md): retired proposals and retained evidence.
 - [Decision log](decision-log.md): directions that were dropped, and why.
 - [Claim ledger](claim-ledger.md): each claim and its evidence.
 - [CONTRIBUTING.md](../CONTRIBUTING.md): evidence language, sources and the

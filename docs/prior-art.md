@@ -5,7 +5,7 @@
 The scoped Python model and native differential are infrastructure. Agreement
 with the implementation checks correspondence; mission safety needs an
 independently specified requirement and the relevant outcome evidence.
-Study A is [paused](../ROADMAP.md#finish-line), with D7 retained for any
+Study A is [paused](../ROADMAP.md#disposition-and-finish-line), with D7 retained for any
 resumption or claim based on that model. These contrasts describe the preserved
 failsafe study. The separate [adopted software question](decision-log.md#2026-10-06-adopt-the-control-prototype-deployment-investigation)
 has its numerical evidence in local successor staging. No new mission-requirement
@@ -87,7 +87,7 @@ Answers to these questions must be added with dated search strings and primary s
 
 **Superseded the same day** by the [URC-01 decision under the replacement plan](#urc-01-decision--2026-09-15-replacement-plan) below. The executed-query table and the criteria in this section stand; its source table, axis summary and conclusion do not: the clarified axis definitions changed 18 judgments and the full intake screen exposed 17 unread candidates.
 
-This section meets the URC-01 done-when in [TASKS.md](TASKS.md#urc-01--close-the-exact-gap-and-tooling-search):
+This section meets the URC-01 done-when in [TASKS.md](https://github.com/500ft/uav-failsafe-composition/blob/cdb7b36d01085527529fde3bead4543c1e038e43/docs/TASKS.md#urc-01--close-the-exact-gap-and-tooling-search):
 search strings, inclusion/exclusion criteria, a source table, and a conclusion in one of the two allowed forms.
 It is bounded by the inspected set below. It is not an exhaustive systematic review.
 
@@ -195,7 +195,7 @@ URC-S08 or any owner gate. It must be re-run before any submission.
 
 ## URC-01 decision — 2026-09-15 (replacement plan)
 
-Written against the URC-01 done-when in [TASKS.md](TASKS.md#urc-01--close-the-exact-gap-and-tooling-search),
+Written against the URC-01 done-when in [TASKS.md](https://github.com/500ft/uav-failsafe-composition/blob/cdb7b36d01085527529fde3bead4543c1e038e43/docs/TASKS.md#urc-01--close-the-exact-gap-and-tooling-search),
 clause by clause, under [docs/specs/prior-art-closeout/plan.md](specs/prior-art-closeout/plan.md). Evidence:
 [execution README](../evidence/task-prior-art-closeout-2026-09-15/README.md),
 [sources.json](../evidence/task-prior-art-closeout-2026-09-15/sources.json).

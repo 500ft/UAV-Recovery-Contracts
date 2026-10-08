@@ -21,9 +21,6 @@ NOT_INJECTABLE = {
                "(2026-09-20: manual_control_signal_lost stayed true while the stream ran at 10 Hz), so there is "
                "no RC signal to remove. Decision D13; needs a simulated RC source or a joystick bridge.",
 }
-INJECTABLE_CLASSES = tuple(c for c in EVENT_CLASSES if c not in NOT_INJECTABLE)
-SINGLE_EVENT_SEEDS = (1, 2, 3, 5, 8)
-PAIRED_SEEDS = (11, 13, 17)
 # D12: horizon = injection + 45 s or terminal mode, whichever comes first.
 # Decision: how long to watch after the stimulus.  [Q-HORIZON in protocols/quantities.json]
 #
@@ -91,9 +88,3 @@ def resolve(configuration_id: str, event: str, seed: int, *, development_offset_
         parameters_sha256=row["parameters_sha256"],
         parameters={**MATRIX["common_params"], **row["deltas_from_defaults"]},
     )
-
-
-def single_event_campaign() -> list[dict]:
-    """The registered validation tier: every frozen class against the two link-loss intentions, five seeds."""
-    configs = ("px4-v1.17.0-sih-quadx-rtl", "px4-v1.17.0-sih-quadx-hold")
-    return [resolve(c, e, s) for e in INJECTABLE_CLASSES for c in configs for s in SINGLE_EVENT_SEEDS]
