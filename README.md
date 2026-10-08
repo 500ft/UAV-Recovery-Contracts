@@ -52,13 +52,25 @@ PX4's own failsafe simulator, SaFUZZ, Nyctea and the autopilot-bug study.
 The simulation setup is PX4 v1.17.0 (commit `d6f12ad`) with its built-in SIH
 quadrotor. Public-log firmware revisions and exclusions are reported separately.
 
-| Check | Result | Evidence |
+![Sequence agreement before fixes, on development replay and on the separate fresh reserved corpus](results/figures/component-agreement.png)
+
+The panels use separate count scales. Each unit is a complete sequence;
+development replays reuse inputs. [Accessible counts and CSV](results/figures/tables.md#component-comparison)
+retain attempted, excluded and invalid denominators. The
+[domain packet](evidence/task-domain-2026-10-03/README.md) holds the mechanism
+breakdown and counterexamples.
+
+| Evidence boundary | Observed result | Scope and source |
 | --- | --- | --- |
-| Python model against PX4's compiled `Failsafe` class, same input sequences | After fixing eligibility and action-option errors found in development, 1,000 of 1,000 fresh reserved sequences agree exactly. Development had 495 disagreements in 1,500 random sequences and 11 in 36 directed sequences; all agree on replay after the fixes | [Results by mechanism](evidence/task-domain-2026-10-03/results.json), [domain and counterexamples](evidence/task-domain-2026-10-03/README.md) |
-| SITL datalink loss in Auto Loiter | Hold, then RTL, also on the unmodified PX4 binary | [Runtime record](evidence/task-runtime-2026-09-29/README.md) |
-| Runtime measurement prerequisites | The clean uninstrumented rebuild completed the matched datalink-loss control with the same full typed parameter values as both prior attempts. The earlier instrumented failure remains unlocalized | [Rebuild control](evidence/task-runtime-rebuild-2026-10-03/README.md), [results.json](evidence/task-runtime-rebuild-2026-10-03/results.json) |
-| Fresh-build observation qualification | Both cache-disabled development runs completed with identical typed parameters. The instrumented run recovered receive, detector, selection and navigator observations; the old failure did not recur. Confirmation remains blocked on required model/adapter inputs and the full cell comparison | [Qualification](evidence/task-observation-qualification-2026-10-04/README.md), [results.json](evidence/task-observation-qualification-2026-10-04/results.json) |
-| Public-log feasibility | Three logs inspected; one sampled geofence timeline reconstructed, zero admitted replays. The observed Hold-to-RTL commit interval was about 5.005 seconds on an older firmware revision | [Observations and exclusions](evidence/task-public-flight-2026-10-04/README.md), [results.json](evidence/task-public-flight-2026-10-04/results.json) |
+| Python model / native class | Agreement after model and adapter repairs | [Declared component domain](evidence/task-domain-2026-10-03/results.json); exercised sequences only |
+| SIH datalink runtime | Hold then RTL after the typed parameter transport repair | [Runtime record](evidence/task-runtime-2026-09-29/README.md); harness correction |
+| Matched rebuilds | Clean control and fresh instrumented runs completed | [Rebuild](evidence/task-runtime-rebuild-2026-10-03/README.md) and [qualification](evidence/task-observation-qualification-2026-10-04/README.md); earlier failure remains unlocalized |
+| Public-log feasibility | Sampled geofence timeline reconstructed; no replay admitted | [Observations and exclusions](evidence/task-public-flight-2026-10-04/README.md); older firmware and incomplete inputs |
+| Successor numerical translation | Local development result only | Separate local staging; no qualified integration or public code here |
+
+The [result guide](results/README.md) separates the component counts from the
+observed runtime timeline. The [figure guide](docs/data-and-figures.md) gives
+reproduction commands and input hashes.
 
 The position-accuracy/POSCTL defect is resolved, with its historical outputs
 preserved. Agreement covers only the exercised corpus: datalink loss, geofence

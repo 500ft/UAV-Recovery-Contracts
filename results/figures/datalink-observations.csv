@@ -1,0 +1,11 @@
+stage,vehicle_hrt_us,since_last_receive_us,observation
+Last qualifying receive,57872000,0,receiver marker
+Last true telemetry publication,60132000,2260000,detector anchor
+First observed aged-false heartbeat,60384000,2512000,aging marker
+First false telemetry publication,60388000,2516000,publication marker
+GCS-loss detector,70140000,12268000,entry/end bracket
+Consumed GCS-loss input,70152000,12280000,class update marker
+Selected Hold,70152000,12280000,selector marker
+Selected RTL,75156000,17284000,selector marker
+Committed RTL nav_state,75156000,17284000,ULog nav_state_timestamp
+Navigator RTL execution,75156000,17284000,entry/end bracket
