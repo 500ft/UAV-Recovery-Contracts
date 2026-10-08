@@ -1,5 +1,14 @@
 # Decision Log
 
+## Dependency roadmap and cleanup
+
+The owner authorized a date-free dependency roadmap and deletion of obsolete
+active planning and implementation. This changes neither the paused Study A
+disposition nor the pending successor name, reviewer and branch requirements.
+[ROADMAP.md](../ROADMAP.md) is the only active roadmap in this repository.
+The [cleanup record](../history/README.md#removed-active-material) identifies
+removed material and its immutable source. No study was restarted.
+
 ## 2026-10-06: adopt the control-prototype deployment investigation
 
 The owner authorized implementation of the reviewed v2 software pivot and

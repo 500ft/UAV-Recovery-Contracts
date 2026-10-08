@@ -14,13 +14,6 @@ def run(args):
 
 
 class CaseResolutionTests(unittest.TestCase):
-    def test_case_ids_are_deterministic_and_unique(self):
-        campaign = cases.single_event_campaign()
-        ids = [c["case_id"] for c in campaign]
-        self.assertEqual(len(ids), len(set(ids)))
-        self.assertEqual(len(ids), len(cases.INJECTABLE_CLASSES) * 2 * len(cases.SINGLE_EVENT_SEEDS))
-        self.assertEqual(ids, [c["case_id"] for c in cases.single_event_campaign()])
-
     def test_resolution_refuses_anything_not_frozen(self):
         for kwargs in (dict(configuration_id="no-such-config", event="datalink_loss", seed=1),
                        dict(configuration_id="px4-v1.17.0-sih-quadx-rtl", event="alien_ray", seed=1),
@@ -28,10 +21,9 @@ class CaseResolutionTests(unittest.TestCase):
             with self.subTest(**kwargs), self.assertRaises(ValueError):
                 cases.resolve(**kwargs)
 
-    def test_campaign_excludes_classes_this_rig_cannot_inject(self):
+    def test_non_injectable_class_remains_documented(self):
         self.assertIn("rc_loss", cases.EVENT_CLASSES)
         self.assertIn("rc_loss", cases.NOT_INJECTABLE)
-        self.assertNotIn("rc_loss", {c["event"] for c in cases.single_event_campaign()})
         self.assertTrue(cases.NOT_INJECTABLE["rc_loss"].strip())
 
     def test_runner_refuses_a_non_injectable_class_with_the_reason(self):

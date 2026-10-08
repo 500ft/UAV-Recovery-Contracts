@@ -7,7 +7,6 @@ import json
 import math
 import re
 import sys
-import xml.etree.ElementTree as ET
 from pathlib import Path
 from urllib.parse import unquote
 
@@ -20,7 +19,6 @@ REQUIRED_FILES = (
     "ROADMAP.md",
     "CONTRIBUTING.md",
     "LICENSE",
-    "assets/recovery-contracts-overview.svg",
     "docs/research-plan.md",
     "docs/prior-art.md",
     "docs/experiment-01-authority-loss.md",
@@ -178,12 +176,6 @@ def run_checks() -> list[str]:
                 "research dependency graph contains a dangling endpoint: "
                 f"{edge['source']} -> {edge['target']}"
             )
-
-    hero = ET.parse(ROOT / "assets/recovery-contracts-overview.svg").getroot()
-    if hero.get("width") != "1280" or hero.get("height") != "640":
-        errors.append("hero visual must remain 1280x640")
-    if hero.get("role") != "img" or not hero.get("aria-labelledby"):
-        errors.append("hero visual must preserve accessible image metadata")
 
     for markdown in ROOT.rglob("*.md"):
         if ".git" in markdown.parts:

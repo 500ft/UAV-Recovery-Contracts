@@ -9,8 +9,8 @@ Status: PROPOSED. Owner edits these four documents in the PR; nothing in the bac
 | document | what it settles |
 | --- | --- |
 | [steelman.md](steelman.md) | Fair pressure on the proposed thesis (formal composition of failsafes, Studies A–D) against the repo's own evidence; verdict and the revision it needs. |
-| [directions.md](directions.md) | Three evidence-traced project directions, scored, each with a two-week first experiment and a kill criterion; how they merge into one thesis. |
-| [scope.md](scope.md) | Must-have / nice-to-have / trigger-gated / out, with the milestone watch. |
+| [directions.md](https://github.com/500ft/uav-failsafe-composition/blob/cdb7b36d01085527529fde3bead4543c1e038e43/docs/specs/formal-composition/directions.md) | Three evidence-traced project directions, scored, each with a two-week first experiment and a kill criterion; how they merge into one thesis. |
+| [scope.md](https://github.com/500ft/uav-failsafe-composition/blob/cdb7b36d01085527529fde3bead4543c1e038e43/docs/specs/formal-composition/scope.md) | Must-have / nice-to-have / trigger-gated / out, with the milestone watch. |
 | [critique-2026-09-24.md](critique-2026-09-24.md) | The owner's 2026-09-24 literature critique assessed against the code: which of its twelve findings hold, where it needs correcting, and what was repaired. |
 | [study-a-protocol.md](study-a-protocol.md) | The first executable study, written to design-review standard: framing, assumptions, preregistered agreement thresholds, verification, failure modes. |
 

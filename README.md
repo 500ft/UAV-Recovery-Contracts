@@ -117,8 +117,14 @@ git diff -- evidence/task-day3-2026-09-09/acquisition-ledger.json
 
 ## What's next
 
-The [roadmap](ROADMAP.md) records the owner step: choose release or closure
-for the paused study and authorize the successor's public name. Existing
+The [dependency roadmap](ROADMAP.md) separates prerequisites from completion
+evidence for the local successor and the paused study. Obsolete campaign
+enumeration, alternate plans and conceptual figures have been removed; the
+[cleanup record](history/README.md#removed-active-material) explains retained
+reproduction sources.
+
+The remaining owner decisions are release or closure for the paused study
+and the successor's public name. Existing
 checks below reproduce retained work; they do not complete Study A.
 
 ## Limits
