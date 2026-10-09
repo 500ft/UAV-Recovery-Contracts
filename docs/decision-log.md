@@ -1,5 +1,20 @@
 # Decision Log
 
+## Successor source publication and hosted reproduction
+
+The owner authorized publication and CI reproduction of the existing local
+successor, delegating use of its staging name. The code is now public in
+[control-code-verification](https://github.com/500ft/control-code-verification). This is an implementation
+choice under that instruction, not a separate owner selection of the spelling.
+The [hosted run](https://github.com/500ft/control-code-verification/actions/runs/37854170219)
+regenerated and compiled the C and reproduced the existing development result.
+[The CI workflow PR](https://github.com/500ft/control-code-verification/pull/1) remains under review.
+
+This resolves the earlier public-name blocker. Functional branch requirements
+and second-reviewer sign-off remain pending before wrapper qualification. Source
+publication does not release a paper, reopen Study A or answer physical/funding
+decisions. The failsafe study remains paused pending release or closure.
+
 ## Dependency roadmap and cleanup
 
 The owner authorized a date-free dependency roadmap and deletion of obsolete

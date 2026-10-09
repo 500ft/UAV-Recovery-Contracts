@@ -3,8 +3,10 @@
 This repository preserves scoped PX4 failsafe results and unfinished Study A.
 The owner has adopted a separate software investigation of control-prototype
 deployment under a strong back-to-back testing baseline. Its first numerical
-qualification is local sibling staging named `control-code-verification`;
-the public repository name remains pending.
+qualification is published separately in
+[control-code-verification](https://github.com/500ft/control-code-verification).
+Its [hosted development reproduction](https://github.com/500ft/control-code-verification/actions/runs/37854170219) passes;
+functional branch requirements and reviewer assignment remain unresolved.
 
 Study A is paused pending an explicit release or closure choice. See the
 [owner direction](docs/decision-log.md#2026-10-06-adopt-the-control-prototype-deployment-investigation)
@@ -52,13 +54,25 @@ PX4's own failsafe simulator, SaFUZZ, Nyctea and the autopilot-bug study.
 The simulation setup is PX4 v1.17.0 (commit `d6f12ad`) with its built-in SIH
 quadrotor. Public-log firmware revisions and exclusions are reported separately.
 
-| Check | Result | Evidence |
+![Sequence agreement before fixes, on development replay and on the separate fresh reserved corpus](results/figures/component-agreement.png)
+
+The panels use separate count scales. Each unit is a complete sequence;
+development replays reuse inputs. [Accessible counts and CSV](results/figures/tables.md#component-comparison)
+retain attempted, excluded and invalid denominators. The
+[domain packet](evidence/task-domain-2026-10-03/README.md) holds the mechanism
+breakdown and counterexamples.
+
+| Evidence boundary | Observed result | Scope and source |
 | --- | --- | --- |
-| Python model against PX4's compiled `Failsafe` class, same input sequences | After fixing eligibility and action-option errors found in development, 1,000 of 1,000 fresh reserved sequences agree exactly. Development had 495 disagreements in 1,500 random sequences and 11 in 36 directed sequences; all agree on replay after the fixes | [Results by mechanism](evidence/task-domain-2026-10-03/results.json), [domain and counterexamples](evidence/task-domain-2026-10-03/README.md) |
-| SITL datalink loss in Auto Loiter | Hold, then RTL, also on the unmodified PX4 binary | [Runtime record](evidence/task-runtime-2026-09-29/README.md) |
-| Runtime measurement prerequisites | The clean uninstrumented rebuild completed the matched datalink-loss control with the same full typed parameter values as both prior attempts. The earlier instrumented failure remains unlocalized | [Rebuild control](evidence/task-runtime-rebuild-2026-10-03/README.md), [results.json](evidence/task-runtime-rebuild-2026-10-03/results.json) |
-| Fresh-build observation qualification | Both cache-disabled development runs completed with identical typed parameters. The instrumented run recovered receive, detector, selection and navigator observations; the old failure did not recur. Confirmation remains blocked on required model/adapter inputs and the full cell comparison | [Qualification](evidence/task-observation-qualification-2026-10-04/README.md), [results.json](evidence/task-observation-qualification-2026-10-04/results.json) |
-| Public-log feasibility | Three logs inspected; one sampled geofence timeline reconstructed, zero admitted replays. The observed Hold-to-RTL commit interval was about 5.005 seconds on an older firmware revision | [Observations and exclusions](evidence/task-public-flight-2026-10-04/README.md), [results.json](evidence/task-public-flight-2026-10-04/results.json) |
+| Python model / native class | Agreement after model and adapter repairs | [Declared component domain](evidence/task-domain-2026-10-03/results.json); exercised sequences only |
+| SIH datalink runtime | Hold then RTL after the typed parameter transport repair | [Runtime record](evidence/task-runtime-2026-09-29/README.md); harness correction |
+| Matched rebuilds | Clean control and fresh instrumented runs completed | [Rebuild](evidence/task-runtime-rebuild-2026-10-03/README.md) and [qualification](evidence/task-observation-qualification-2026-10-04/README.md); earlier failure remains unlocalized |
+| Public-log feasibility | Sampled geofence timeline reconstructed; no replay admitted | [Observations and exclusions](evidence/task-public-flight-2026-10-04/README.md); older firmware and incomplete inputs |
+| Successor numerical translation | Published development result and hosted reproduction | [Separate source repository](https://github.com/500ft/control-code-verification); integration remains unqualified |
+
+The [result guide](results/README.md) separates the component counts from the
+observed runtime timeline. The [figure guide](docs/data-and-figures.md) gives
+reproduction commands and input hashes.
 
 The position-accuracy/POSCTL defect is resolved, with its historical outputs
 preserved. Agreement covers only the exercised corpus: datalink loss, geofence
@@ -118,13 +132,13 @@ git diff -- evidence/task-day3-2026-09-09/acquisition-ledger.json
 ## What's next
 
 The [dependency roadmap](ROADMAP.md) separates prerequisites from completion
-evidence for the local successor and the paused study. Obsolete campaign
+evidence for the published successor and the paused study. Obsolete campaign
 enumeration, alternate plans and conceptual figures have been removed; the
 [cleanup record](history/README.md#removed-active-material) explains retained
 reproduction sources.
 
-The remaining owner decisions are release or closure for the paused study
-and the successor's public name. Existing
+The remaining owner decision here is release or closure for the paused study.
+The successor still needs functional review. Existing
 checks below reproduce retained work; they do not complete Study A.
 
 ## Limits

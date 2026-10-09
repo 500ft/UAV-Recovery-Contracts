@@ -27,8 +27,8 @@ No physical validation or Study A confirmation has run.
 
 The [owner direction](decision-log.md#2026-10-06-adopt-the-control-prototype-deployment-investigation)
 pauses Study A and adopts a separate software deployment investigation.
-The [roadmap](../ROADMAP.md) records the release/closure and successor-name
-choices still needed. Source cross-checks by an AI agent do not constitute
+The [roadmap](../ROADMAP.md) records the remaining release/closure choice and
+the [published successor](https://github.com/500ft/control-code-verification) with its functional-review gate. Source cross-checks by an AI agent do not constitute
 independent human review.
 
 ## Reading paths

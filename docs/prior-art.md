@@ -8,7 +8,7 @@ independently specified requirement and the relevant outcome evidence.
 Study A is [paused](../ROADMAP.md#disposition-and-finish-line), with D7 retained for any
 resumption or claim based on that model. These contrasts describe the preserved
 failsafe study. The separate [adopted software question](decision-log.md#2026-10-06-adopt-the-control-prototype-deployment-investigation)
-has its numerical evidence in local successor staging. No new mission-requirement
+has its numerical evidence in the [published successor](https://github.com/500ft/control-code-verification). No new mission-requirement
 or firmware-migration result is claimed here.
 
 The following primary-source passages were inspected for this reconciliation.

@@ -5,8 +5,49 @@
 The [result index](../results/README.md) links committed derived observations
 and their external raw archives. Study A confirmation remains incomplete.
 The original conceptual diagrams are removed from the working tree. The
-[history index](../history/README.md) links their immutable versions. This
-reconciliation creates no new failsafe figure or measurement.
+[history index](../history/README.md) links their immutable versions. The active summaries below render existing results without new measurements.
+
+## Active figures and tables
+
+| Summary | Input and evidence status | Editable generator / output |
+| --- | --- | --- |
+| Sequence agreement by phase | Committed [component counts](../evidence/task-domain-2026-10-03/results.json); declared-domain comparison | [Generator](../scripts/plot_retained_results.py), [PNG](../results/figures/component-agreement.png), [SVG](../results/figures/component-agreement.svg) |
+| Datalink event observations | Committed [runtime result](../evidence/task-observation-qualification-2026-10-04/results.json); one instrumented SIH development run | Same generator, [PNG](../results/figures/datalink-observations.png), [SVG](../results/figures/datalink-observations.svg) |
+| Accessible result tables | Derived views of those same JSON records, with integer counts and clock units | [Markdown and CSV links](../results/figures/tables.md) |
+
+Use an environment with Matplotlib (the rendered version is in the
+[manifest](../results/figures/manifest.json)):
+
+```sh
+python scripts/plot_retained_results.py
+```
+
+The generator only reads committed aggregate results. It writes figures,
+downloadable tables and input/output hashes. It does not execute the model,
+autopilot, raw-log extraction or reserved cases. Repository validation still
+uses the existing dependency set; Matplotlib is only needed to redraw figures.
+
+The visual reference is the owner's enclosure [bias generator](https://github.com/500ft/sensor-enclosure-thermal-design/blob/bad572fc0902437445a5446bb5bc43098cc6211f/analysis/thermal_bias.py)
+and its rendered bias/transient figures at that commit. White panels, explicit
+units, restrained grids and marker/hatch redundancy carry over. Different
+component sample counts use explicitly labeled axes; runtime events use a
+single clock. Neither summary invents uncertainty bands.
+
+## Inventory and retained material
+
+The public repository had no scientific PNG/SVG plots after cleanup. The
+README's long result table is now a compact boundary table plus the component
+figure; the active result index adds the runtime view. Archived evidence tables
+remain unchanged because they record original execution and exclusions. The
+public-log observation stays a linked table: incomplete histories and an older
+firmware revision prevent an admitted comparison. No result from it is combined
+with the SIH clock. The historical dependency map remains a source-audit diagram,
+not a quantitative result, and is unchanged.
+
+The [separate successor](https://github.com/500ft/control-code-verification) has a
+core-qualification plot and its own generator/manifest. Its restyling is
+published there; no successor code or figure is copied into this repository.
+The scientific roadmap and pending decisions are unchanged.
 
 ## Planned data stages
 

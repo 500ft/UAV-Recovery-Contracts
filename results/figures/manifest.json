@@ -1,0 +1,21 @@
+{
+  "generator": "scripts/plot_retained_results.py",
+  "command": "python scripts/plot_retained_results.py",
+  "matplotlib": "3.11.2",
+  "generator_sha256": "1793833ff73e83bb32ab21b6df9bc7d5abfea5725b6862906f221ebca7c49b74",
+  "inputs": {
+    "evidence/task-domain-2026-10-03/results.json": "934244a2d849aa77b5cbafdea12b20ccf8971dc207c01a395ba509a7f9f85cf3",
+    "evidence/task-observation-qualification-2026-10-04/results.json": "36e17f307ac318b1e15eee73feff4ebcd134848162722d3ac2d51e65011c06f5"
+  },
+  "outputs": {
+    "component-agreement.csv": "495dd0321ed7d4e07028016dc0e4fba5895fd4371cbb033697ea58c65f6248a7",
+    "component-agreement.png": "26edbfc3f60d89158ef64623a02a8bbd7103f469cce83d56a82b62f2cb28dbb8",
+    "component-agreement.svg": "38f89af9a7cbb7ce3347147cc47a4d88dd8fefc985e36851eb1671b8b79439b3",
+    "datalink-observations.csv": "a9a77f28fa877ea42e2940863c214477b9d46eadb559c767175323ca7a7c0d0f",
+    "datalink-observations.png": "b48215a2dd85c86e48a75f901865afa24675ce542852d09b5529f8c66e92e3fa",
+    "datalink-observations.svg": "734c9a4c6f22b3cc18055c45c515300897318ae336c2dcbff5b8771dca75730e",
+    "tables.md": "56777869f4d7ef1bdbedb58b4a054ecc6be26b49a903f20c9ac9e850cb28e7cb"
+  },
+  "evidence": "existing component comparisons and instrumented runtime development observations",
+  "reference_commit": "bad572fc0902437445a5446bb5bc43098cc6211f"
+}

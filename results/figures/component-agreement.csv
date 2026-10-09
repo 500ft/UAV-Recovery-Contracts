@@ -1,0 +1,6 @@
+cohort,phase,attempted,excluded,invalid,executed,agree,disagree
+Directed development,Before fixes,36,0,0,36,25,11
+Directed development,Replayed,36,0,0,36,36,0
+Random development,Before fixes,1500,0,0,1500,1005,495
+Random development,Replayed,1500,0,0,1500,1500,0
+Fresh reserved corpus,After fixes,1000,0,0,1000,1000,0
