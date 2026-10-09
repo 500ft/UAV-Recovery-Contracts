@@ -1,8 +1,9 @@
 # Repository identity and reading conventions
 
-Updated September 10, 2026. The project is now **UAV Failsafe Composition**, at
-[`500ft/uav-failsafe-composition`](https://github.com/500ft/uav-failsafe-composition).
-Its previous repository name was `UAV-Recovery-Contracts`; this is a rename of the same
+Updated October 8, 2026. The project is now **PX4 Failsafe Differential Testing**, at
+[`500ft/px4-failsafe-differential-testing`](https://github.com/500ft/px4-failsafe-differential-testing). The name describes
+the executed result this paused repository preserves; see the [roadmap](../ROADMAP.md). Its previous
+repository names were `uav-failsafe-composition` and `UAV-Recovery-Contracts`; each is a rename of the same
 repository, not a new project or release.
 
 ## What the rename changes
@@ -16,7 +17,7 @@ rename an import or command-line API.
 To update an existing clone without moving its files:
 
 ```sh
-git remote set-url origin https://github.com/500ft/uav-failsafe-composition.git
+git remote set-url origin https://github.com/500ft/px4-failsafe-differential-testing.git
 git remote -v
 ```
 
@@ -45,7 +46,7 @@ belong with its local executed results.
 From the repository root:
 
 ```sh
-python tools/check_presentation.py . "UAV Failsafe Composition" uav-failsafe-composition
+python tools/check_presentation.py . "PX4 Failsafe Differential Testing" px4-failsafe-differential-testing
 python tools/test_presentation.py
 ```
 

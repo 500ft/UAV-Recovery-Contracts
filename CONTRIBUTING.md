@@ -19,7 +19,7 @@ python -m unittest discover -s tests -v
 python scripts/acquisition_ledger.py --check
 python scripts/reference_coverage.py --check
 python evidence/task-2026-09-09/rerun_search.py --audit evidence/task-2026-09-11-public/database-export.json
-python tools/check_presentation.py . "UAV Failsafe Composition" uav-failsafe-composition
+python tools/check_presentation.py . "PX4 Failsafe Differential Testing" px4-failsafe-differential-testing
 python tools/test_presentation.py
 git diff --check
 ```
